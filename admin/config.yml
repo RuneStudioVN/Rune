@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: RuneStudioVN/Rune
+  name: git-gateway
   branch: main
 
 locale: vi
