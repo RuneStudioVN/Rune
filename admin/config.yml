@@ -15,7 +15,10 @@ collections:
         label: "Liên hệ & mạng xã hội"
         file: "content/site.json"
         fields:
-          - { label: "Tên thương hiệu", name: "brand", widget: "string" }
+          - { label: "Logo (ảnh ngang, nền trong suốt .png/.svg, cao ~80px)", name: "logo", widget: "image", required: false, hint: "Để trống = hiện chữ thương hiệu" }
+          - { label: "Logo cho footer (nền tối) — để trống thì dùng logo trên", name: "logo_footer", widget: "image", required: false }
+          - { label: "Favicon (icon tab trình duyệt, vuông 512x512)", name: "favicon", widget: "image", required: false }
+          - { label: "Tên thương hiệu (dùng khi chưa có logo)", name: "brand", widget: "string" }
           - { label: "Slogan (footer)", name: "tagline", widget: "string" }
           - { label: "Số điện thoại", name: "phone", widget: "string" }
           - { label: "Email", name: "email", widget: "string" }

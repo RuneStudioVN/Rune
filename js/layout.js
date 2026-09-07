@@ -26,7 +26,7 @@ window.SITE_READY = (async () => {
 
   document.getElementById('header').innerHTML = `
     <header class="header"><div class="wrap">
-      <a class="logo" href="index.html"><i></i>${S.brand || 'RUNESTUDIO'}</a>
+      <a class="logo" href="index.html">${S.logo ? `<img src="${S.logo}" alt="${S.brand || ''}">` : `<i></i>${S.brand || 'RUNESTUDIO'}`}</a>
       <button class="nav-toggle" aria-label="Mở menu" aria-expanded="false">Menu</button>
       <nav class="nav">${links}</nav>
     </div></header>`;
@@ -35,7 +35,7 @@ window.SITE_READY = (async () => {
     <footer class="footer"><div class="wrap">
       <div class="grid">
         <div>
-          <div class="logo"><i></i>${S.brand || ''}</div>
+          <div class="logo">${S.logo_footer || S.logo ? `<img src="${S.logo_footer || S.logo}" alt="${S.brand || ''}">` : `<i></i>${S.brand || ''}`}</div>
           <p>${S.tagline || ''}</p>
           <p style="margin-top:12px">${S.address || ''}<br>${S.phone || ''}<br>${S.email || ''}</p>
         </div>
@@ -56,6 +56,11 @@ window.SITE_READY = (async () => {
       <div class="bottom"><span>© ${new Date().getFullYear()} ${S.brand || ''}. All rights reserved.</span><span>Made in Việt Nam</span></div>
     </div></footer>`;
 
+  if (S.favicon) {
+    let ic = document.querySelector('link[rel="icon"]');
+    if (!ic) { ic = document.createElement('link'); ic.rel = 'icon'; document.head.appendChild(ic); }
+    ic.href = S.favicon;
+  }
   const btn = document.querySelector('.nav-toggle'), nav = document.querySelector('.nav');
   btn.addEventListener('click', () => { const o = nav.classList.toggle('is-open'); btn.setAttribute('aria-expanded', o); });
 
