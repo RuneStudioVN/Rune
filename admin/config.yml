@@ -1,0 +1,98 @@
+backend:
+  name: git-gateway
+  branch: main
+
+locale: vi
+site_url: /
+media_folder: "assets/uploads"
+public_folder: "assets/uploads"
+
+collections:
+  - name: "site"
+    label: "Thông tin chung"
+    files:
+      - name: "site"
+        label: "Liên hệ & mạng xã hội"
+        file: "content/site.json"
+        fields:
+          - { label: "Tên thương hiệu", name: "brand", widget: "string" }
+          - { label: "Slogan (footer)", name: "tagline", widget: "string" }
+          - { label: "Số điện thoại", name: "phone", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Địa chỉ", name: "address", widget: "string" }
+          - { label: "Giờ làm việc", name: "hours", widget: "string" }
+          - { label: "Link Zalo (https://zalo.me/SỐĐT)", name: "zalo", widget: "string" }
+          - { label: "Link Messenger (https://m.me/TÊNPAGE)", name: "messenger", widget: "string" }
+          - { label: "Link TikTok", name: "tiktok", widget: "string" }
+          - { label: "Link Facebook", name: "facebook", widget: "string" }
+
+      - name: "services"
+        label: "Dịch vụ"
+        file: "content/services.json"
+        fields:
+          - label: "Danh sách dịch vụ"
+            name: "services"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Tên dịch vụ", name: "title", widget: "string" }
+              - { label: "Mã (không dấu, dùng cho link)", name: "slug", widget: "string" }
+              - { label: "Mô tả ngắn", name: "summary", widget: "text" }
+              - { label: "Điểm chính", name: "items", widget: "list", field: { label: "Ý", name: "item", widget: "string" } }
+              - { label: "Ảnh", name: "image", widget: "image", required: false }
+
+  - name: "projects"
+    label: "Dự án"
+    files:
+      - name: "projects"
+        label: "Danh sách dự án"
+        file: "content/projects.json"
+        fields:
+          - label: "Dự án"
+            name: "projects"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Tên dự án", name: "title", widget: "string" }
+              - { label: "Mã (không dấu, dùng cho link)", name: "slug", widget: "string" }
+              - label: "Ngành"
+                name: "category"
+                widget: "select"
+                options:
+                  - { label: "F&B", value: "fnb" }
+                  - { label: "Beauty", value: "beauty" }
+                  - { label: "Technology", value: "technology" }
+                  - { label: "Wedding", value: "wedding" }
+                  - { label: "Fashion", value: "fashion" }
+                  - { label: "Education", value: "education" }
+                  - { label: "Retail", value: "retail" }
+                  - { label: "Personal Brand", value: "personal" }
+                  - { label: "Design", value: "design" }
+              - { label: "Khách hàng", name: "client", widget: "string", required: false }
+              - { label: "Dịch vụ đã làm", name: "services", widget: "list", field: { label: "Dịch vụ", name: "s", widget: "string" } }
+              - { label: "Kết quả (1 dòng)", name: "result", widget: "string", required: false }
+              - { label: "Ảnh đại diện", name: "image", widget: "image", required: false }
+              - { label: "Link video TikTok/YouTube", name: "video", widget: "string", required: false, hint: "Dán link video, web tự hiện player" }
+              - { label: "Hiện ở Trang chủ", name: "featured", widget: "boolean", default: false }
+              - { label: "Nội dung chi tiết", name: "body", widget: "markdown" }
+
+  - name: "posts"
+    label: "Tin tức"
+    files:
+      - name: "posts"
+        label: "Danh sách bài viết"
+        file: "content/posts.json"
+        fields:
+          - label: "Bài viết"
+            name: "posts"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Tiêu đề", name: "title", widget: "string" }
+              - { label: "Mã (không dấu, dùng cho link)", name: "slug", widget: "string" }
+              - { label: "Ngày", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+              - { label: "Chủ đề", name: "tag", widget: "string" }
+              - { label: "Tóm tắt", name: "excerpt", widget: "text" }
+              - { label: "Ảnh", name: "image", widget: "image", required: false }
+              - { label: "Link video TikTok/YouTube", name: "video", widget: "string", required: false }
+              - { label: "Nội dung", name: "body", widget: "markdown" }

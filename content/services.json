@@ -1,0 +1,8 @@
+{"services": [
+  {"title": "Content & Social", "slug": "content-social", "summary": "Lên kế hoạch, viết, quay, đăng và đo — cho Facebook, TikTok, Instagram.", "items": ["Lịch đăng 12–20 nội dung/tháng", "Kịch bản theo trục kích comment", "Báo cáo tuần: view, giữ chân, tin nhắn"], "image": ""},
+  {"title": "TikTok", "slug": "tiktok", "summary": "Xây kênh từ số 0, vận hành hàng tuần, tối ưu FYP và chuyển đổi.", "items": ["Định vị kênh & 30 video khởi động", "Vận hành 5–10 video/tuần", "Tối ưu FYP theo dữ liệu retention", "Creator / KOC / UGC & hệ tài khoản vệ tinh"], "image": ""},
+  {"title": "KOC / UGC", "slug": "koc-ugc", "summary": "Tuyển và điều phối creator, video review thật, seeding có kiểm soát.", "items": ["Mạng lưới creator theo ngành & khu vực", "Brief chuẩn – không lộ mùi quảng cáo", "Seeding comment có kịch bản"], "image": ""},
+  {"title": "Personal Branding", "slug": "personal-branding", "summary": "Đưa chủ doanh nghiệp lên hình: giọng nói, góc nhìn, series dài hơi.", "items": ["Guide giọng nói cá nhân", "Series theo mùa: 20–40 tập", "Huấn luyện đứng trước máy"], "image": ""},
+  {"title": "Creative Production", "slug": "production", "summary": "Quay dựng video ngắn, TVC nhỏ, ảnh sản phẩm — gọn và đúng nền tảng.", "items": ["Ekip 2–4 người, quay tại chỗ", "Dựng theo quy trình tự động, giao nhanh", "Caption, overlay nhấn mạnh, SFX"], "image": ""},
+  {"title": "Design & Branding", "slug": "design", "summary": "Logo, nhận diện, key visual, social design, ấn phẩm chiến dịch.", "items": ["Brand guideline gọn, dùng được ngay", "Key visual cho sản phẩm & mùa", "Template social đồng bộ với kênh"], "image": ""}
+]}
