@@ -149,3 +149,50 @@ async function renderHero() {
     if (H.highlight_image) $('hl-img').innerHTML = `<img src="${esc(H.highlight_image)}" alt="">`;
   } else hl.style.display = 'none';
 }
+
+/* Gửi form Project Brief về email (Web3Forms) */
+function initBriefForm() {
+  const form = document.getElementById('brief-form');
+  if (!form) return;
+  const btn = document.getElementById('brief-submit');
+  const msg = document.getElementById('brief-msg');
+  const ok = document.getElementById('brief-ok');
+  const key = (window.SITE || {}).form_key;
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const name = form.querySelector('[name="Tên"]');
+    const phone = form.querySelector('[name="Điện thoại"]');
+    if (!name.value.trim() || !phone.value.trim()) {
+      msg.innerHTML = '<span style="color:#C0392B">Vui lòng điền tên và số điện thoại.</span>';
+      (!name.value.trim() ? name : phone).focus();
+      return;
+    }
+    if (!key) {
+      msg.innerHTML = '<span style="color:#C0392B">Form chưa được cấu hình. Bạn vui lòng nhắn qua Zalo giúp mình nhé.</span>';
+      return;
+    }
+
+    btn.disabled = true;
+    const old = btn.textContent;
+    btn.textContent = 'Đang gửi…';
+    msg.textContent = '';
+
+    const data = { access_key: key, subject: 'Brief mới từ website Rune Studio', from_name: 'Website Rune Studio' };
+    new FormData(form).forEach((v, k) => { if (v) data[k] = v; });
+
+    try {
+      const r = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const j = await r.json();
+      if (j.success) { form.style.display = 'none'; ok.style.display = 'block'; }
+      else throw new Error(j.message || 'Lỗi gửi');
+    } catch (err) {
+      msg.innerHTML = '<span style="color:#C0392B">Gửi không thành công. Bạn nhắn giúp mình qua Zalo hoặc Messenger nhé.</span>';
+      btn.disabled = false; btn.textContent = old;
+    }
+  });
+}

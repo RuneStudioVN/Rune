@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: RuneStudioVN/Rune
   branch: main
 
 locale: vi
@@ -30,6 +31,7 @@ collections:
           - { label: "Link TikTok", name: "tiktok", widget: "string" }
           - { label: "Link Facebook", name: "facebook", widget: "string" }
           - { label: "Link YouTube", name: "youtube", widget: "string", required: false, hint: "Để trống thì cột nút bên phải không hiện YouTube" }
+          - { label: "Mã nhận form (Web3Forms Access Key)", name: "form_key", widget: "string", required: false, hint: "Lấy miễn phí ở web3forms.com — brief khách gửi sẽ về Gmail" }
 
       - name: "hero"
         label: "Đầu trang chủ (Hero)"

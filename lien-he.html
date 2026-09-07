@@ -27,9 +27,8 @@
     <h3>Project Brief</h3>
     <p class="small" style="margin:8px 0 4px">Điền vài dòng, Rune Studio phản hồi trong 24 giờ làm việc.</p>
 
-    <form class="form" name="project-brief" method="POST" data-netlify="true" netlify-honeypot="website" action="/cam-on.html">
-      <input type="hidden" name="form-name" value="project-brief">
-      <p class="hp"><label>Đừng điền ô này: <input name="website" tabindex="-1" autocomplete="off"></label></p>
+    <form class="form" id="brief-form" novalidate>
+      <p class="hp"><label>Đừng điền ô này: <input name="botcheck" tabindex="-1" autocomplete="off"></label></p>
 
       <div class="field-row">
         <div class="field">
@@ -74,14 +73,19 @@
         <textarea id="f-msg" name="Nội dung" placeholder="VD: Mình bán trà sữa ở Biên Hòa, khách chủ yếu là học sinh cấp 3 quanh khu vực. Quán mở 4 tháng rồi, tối cuối tuần đông nhưng ngày thường vắng. Mục tiêu 3 tháng tới là mỗi tuần có khoảng 20 tin nhắn đặt bàn đến từ TikTok."></textarea>
       </div>
 
-      <button class="btn btn--signal" type="submit">Gửi brief</button>
-      <p class="form-note">Hoặc nhắn nhanh qua <a data-contact="zalo" href="#" target="_blank" rel="noopener" style="text-decoration:underline">Zalo</a> · <a data-contact="messenger" href="#" target="_blank" rel="noopener" style="text-decoration:underline">Messenger</a></p>
+      <button class="btn btn--signal" type="submit" id="brief-submit">Gửi brief</button>
+      <p class="form-note" id="brief-msg">Hoặc nhắn nhanh qua <a data-contact="zalo" href="#" target="_blank" rel="noopener" style="text-decoration:underline">Zalo</a> · <a data-contact="messenger" href="#" target="_blank" rel="noopener" style="text-decoration:underline">Messenger</a></p>
     </form>
+    <div class="form-ok" id="brief-ok">
+      <h3>Đã nhận brief của bạn</h3>
+      <p>Cảm ơn bạn. Rune Studio sẽ phản hồi trong 24 giờ làm việc qua số điện thoại hoặc Zalo bạn để lại.</p>
+    </div>
   </div></section>
 <div id="footer"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 <script src="js/layout.js"></script>
 <script src="js/main.js"></script>
+<script>SITE_READY.then(initBriefForm);</script>
 
 </body>
 </html>
