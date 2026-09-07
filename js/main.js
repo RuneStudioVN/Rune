@@ -127,3 +127,25 @@ async function renderServiceBlocks(sel, subnavSel) {
   </section>`).join('');
   if (location.hash) setTimeout(() => document.querySelector(location.hash)?.scrollIntoView(), 100);
 }
+
+/* Hero trang chủ từ content/hero.json */
+async function renderHero() {
+  let H; try { H = await loadJSON('content/hero.json'); } catch (e) { return; }
+  const $ = id => document.getElementById(id);
+  if (H.hero_title) $('hero-title').textContent = H.hero_title;
+  if (H.hero_subtitle) $('hero-sub').textContent = H.hero_subtitle;
+  if (H.hero_btn1) { $('hero-btn1').innerHTML = esc(H.hero_btn1) + ' <span>→</span>'; $('hero-btn1').href = H.hero_btn1_link || '#'; }
+  if (H.hero_btn2) { $('hero-btn2').textContent = H.hero_btn2; if (H.hero_btn2_link) { $('hero-btn2').href = H.hero_btn2_link; $('hero-btn2').removeAttribute('data-contact'); } }
+  $('hero-stats').innerHTML = (H.stats || []).slice(0, 4).map(s => `<div class="stat"><span>${esc(s.label)}</span><b>${esc(s.value)}</b></div>`).join('');
+  if (H.hero_poster) $('hero-poster').innerHTML = `<img src="${esc(H.hero_poster)}" alt="">`;
+  const hl = $('hero-highlight');
+  if (H.highlight_title) {
+    hl.href = H.highlight_link || '#';
+    $('hl-label').textContent = H.highlight_label || '';
+    $('hl-title').textContent = H.highlight_title;
+    $('hl-meta1').textContent = H.highlight_meta1 || '';
+    $('hl-meta2').textContent = H.highlight_meta2 || '';
+    $('hl-btn').textContent = H.highlight_btn || 'Xem';
+    if (H.highlight_image) $('hl-img').innerHTML = `<img src="${esc(H.highlight_image)}" alt="">`;
+  } else hl.style.display = 'none';
+}

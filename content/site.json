@@ -1,12 +1,13 @@
 {
-  "facebook": "https://facebook.com/runestudio",
-  "brand": "Rune Studio",
-  "zalo": "https://zalo.me/0900000000",
-  "phone": "0876 697 687",
+  "brand": "RUNESTUDIO",
   "tagline": "Content, TikTok & Creative cho thương hiệu Việt.",
+  "phone": "0900 000 000",
+  "email": "hello@runestudio.vn",
+  "address": "Biên Hòa, Đồng Nai",
   "hours": "Làm việc thứ 2 – thứ 7, 9:00 – 18:00",
+  "zalo": "https://zalo.me/0900000000",
   "messenger": "https://m.me/runestudio",
-  "address": "Tp. Đồng Nai",
   "tiktok": "https://tiktok.com/@runestudio",
-  "email": "Runestudio.vn@gmail.com"
+  "facebook": "https://facebook.com/runestudio",
+  "chat_bubble": "Bạn cần tư vấn? Nhắn mình nha!"
 }

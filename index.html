@@ -10,20 +10,34 @@
 <body>
 <div id="header"></div>
 
-<!-- ===== HERO ===== -->
-<section class="hero" id="hero"><div class="wrap">
-  <h1><span class="line">Nội dung có người xem.</span><span class="line">Kênh có người mua.</span></h1>
-  <div class="hero-row">
-    <p class="lead">RUNESTUDIO làm content, TikTok và creative cho thương hiệu Việt — từ lúc chưa có kênh tới lúc kênh tự nuôi được cửa hàng.</p>
+<!-- ===== HERO (nội dung sửa trong /admin → Đầu trang chủ) ===== -->
+<section class="hero2" id="hero"><div class="wrap hero2-grid">
+  <div class="hero2-left">
+    <h1 id="hero-title">Nội dung có người xem, kênh có người mua.</h1>
+    <p class="lead" id="hero-sub">Content, TikTok &amp; creative cho thương hiệu Việt.</p>
     <div class="btn-row">
-      <a class="btn btn--signal" href="lien-he.html">Gửi brief dự án</a>
-      <a class="btn btn--ghost" href="du-an.html">Xem dự án</a>
+      <a class="btn btn--signal" id="hero-btn1" href="dich-vu.html">Xem dịch vụ <span>→</span></a>
+      <a class="btn btn--ghost" id="hero-btn2" data-contact="messenger" href="#" target="_blank" rel="noopener">Tư vấn qua Messenger</a>
     </div>
+    <div class="stats" id="hero-stats"></div>
+    <a class="highlight" id="hero-highlight" href="du-an.html">
+      <div class="ph ph--wide" id="hl-img">Ảnh</div>
+      <div class="highlight-body">
+        <span class="highlight-label" id="hl-label">Dự án mới nhất</span>
+        <h3 id="hl-title">—</h3>
+        <p class="small" id="hl-meta1"></p>
+        <p class="small" id="hl-meta2"></p>
+        <span class="btn btn--ghost btn--sm" id="hl-btn">Xem dự án</span>
+      </div>
+    </a>
+  </div>
+  <div class="hero2-right">
+    <div class="poster" id="hero-poster"><div class="ph ph--square ph--dark">Poster / key visual</div></div>
   </div>
 </div>
 <div class="ticker"><div class="ticker-track">
-  <span>F&B</span><span>Beauty</span><span>Technology</span><span>Wedding</span><span>Fashion</span><span>Education</span><span>Retail</span><span>Personal Brand</span><span><b>TikTok</b></span><span><b>KOC / UGC</b></span><span><b>Design</b></span><span>Content & Social</span>
-  <span>F&B</span><span>Beauty</span><span>Technology</span><span>Wedding</span><span>Fashion</span><span>Education</span><span>Retail</span><span>Personal Brand</span><span><b>TikTok</b></span><span><b>KOC / UGC</b></span><span><b>Design</b></span><span>Content & Social</span>
+  <span>F&amp;B</span><span>Beauty</span><span>Technology</span><span>Wedding</span><span>Fashion</span><span>Education</span><span>Retail</span><span>Personal Brand</span><span><b>TikTok</b></span><span><b>KOC / UGC</b></span><span><b>Design</b></span><span>Content &amp; Social</span>
+  <span>F&amp;B</span><span>Beauty</span><span>Technology</span><span>Wedding</span><span>Fashion</span><span>Education</span><span>Retail</span><span>Personal Brand</span><span><b>TikTok</b></span><span><b>KOC / UGC</b></span><span><b>Design</b></span><span>Content &amp; Social</span>
 </div></div>
 </section>
 
@@ -150,6 +164,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 <script src="js/layout.js"></script>
 <script src="js/main.js"></script>
-<script>SITE_READY.then(()=>{renderServiceCards("#home-services");renderProjects("#featured",{featured:true,limit:4});renderPosts("#home-posts",3);});</script>
+<script>SITE_READY.then(()=>{renderHero();renderServiceCards("#home-services");renderProjects("#featured",{featured:true,limit:4});renderPosts("#home-posts",3);});</script>
 </body>
 </html>

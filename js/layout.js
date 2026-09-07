@@ -59,6 +59,9 @@ window.SITE_READY = (async () => {
   const btn = document.querySelector('.nav-toggle'), nav = document.querySelector('.nav');
   btn.addEventListener('click', () => { const o = nav.classList.toggle('is-open'); btn.setAttribute('aria-expanded', o); });
 
+  if (S.chat_bubble && S.messenger) {
+    document.body.insertAdjacentHTML('beforeend', `<div class="chatbub"><a class="chatbub-msg" href="${S.messenger}" target="_blank" rel="noopener">${S.chat_bubble}</a><a class="chatbub-btn" href="${S.messenger}" target="_blank" rel="noopener" aria-label="Nhắn tin">💬</a></div>`);
+  }
   document.querySelectorAll('[data-contact="zalo"]').forEach(a => a.href = S.zalo || '#');
   document.querySelectorAll('[data-contact="messenger"]').forEach(a => a.href = S.messenger || '#');
   document.querySelectorAll('[data-site]').forEach(el => {

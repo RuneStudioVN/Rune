@@ -25,6 +25,33 @@ collections:
           - { label: "Link Messenger (https://m.me/TÊNPAGE)", name: "messenger", widget: "string" }
           - { label: "Link TikTok", name: "tiktok", widget: "string" }
           - { label: "Link Facebook", name: "facebook", widget: "string" }
+          - { label: "Chat bong bóng góc dưới (chữ)", name: "chat_bubble", widget: "string", required: false }
+
+      - name: "hero"
+        label: "Đầu trang chủ (Hero)"
+        file: "content/hero.json"
+        fields:
+          - { label: "Tiêu đề lớn", name: "hero_title", widget: "string" }
+          - { label: "Mô tả ngắn", name: "hero_subtitle", widget: "text" }
+          - { label: "Nút 1 (chữ)", name: "hero_btn1", widget: "string" }
+          - { label: "Nút 1 (link)", name: "hero_btn1_link", widget: "string", hint: "VD: dich-vu.html" }
+          - { label: "Nút 2 (chữ)", name: "hero_btn2", widget: "string" }
+          - { label: "Nút 2 (link)", name: "hero_btn2_link", widget: "string", required: false, hint: "Để trống = tự dùng link Messenger" }
+          - { label: "Poster bên phải (ảnh vuông ~1000x1000)", name: "hero_poster", widget: "image", required: false }
+          - label: "4 ô số liệu"
+            name: "stats"
+            widget: "list"
+            max: 4
+            fields:
+              - { label: "Nhãn", name: "label", widget: "string" }
+              - { label: "Số", name: "value", widget: "string" }
+          - { label: "Thẻ nổi bật — nhãn nhỏ", name: "highlight_label", widget: "string" }
+          - { label: "Thẻ nổi bật — tiêu đề", name: "highlight_title", widget: "string" }
+          - { label: "Thẻ nổi bật — dòng 1", name: "highlight_meta1", widget: "string", required: false }
+          - { label: "Thẻ nổi bật — dòng 2", name: "highlight_meta2", widget: "string", required: false }
+          - { label: "Thẻ nổi bật — nút (chữ)", name: "highlight_btn", widget: "string" }
+          - { label: "Thẻ nổi bật — nút (link)", name: "highlight_link", widget: "string" }
+          - { label: "Thẻ nổi bật — ảnh (ngang 16:9)", name: "highlight_image", widget: "image", required: false }
 
       - name: "services"
         label: "Dịch vụ"

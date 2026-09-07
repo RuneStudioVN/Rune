@@ -1,0 +1,34 @@
+{
+  "hero_title": "Nội dung có người xem, kênh có người mua.",
+  "hero_subtitle": "Content, TikTok & creative cho thương hiệu Việt — từ lúc chưa có kênh tới lúc kênh tự nuôi được cửa hàng.",
+  "hero_btn1": "Xem dịch vụ",
+  "hero_btn1_link": "dich-vu.html",
+  "hero_btn2": "Tư vấn qua Messenger",
+  "hero_btn2_link": "",
+  "hero_poster": "",
+  "stats": [
+    {
+      "label": "Dự án",
+      "value": "60+"
+    },
+    {
+      "label": "Khách hàng",
+      "value": "35+"
+    },
+    {
+      "label": "Lượt xem",
+      "value": "25M+"
+    },
+    {
+      "label": "Đang vận hành",
+      "value": "12"
+    }
+  ],
+  "highlight_label": "Dự án mới nhất",
+  "highlight_title": "Gánh Kèo Nè — 1.2M view/tháng từ kênh TikTok quán nhậu",
+  "highlight_meta1": "TikTok · Content · Vận hành kênh",
+  "highlight_meta2": "Biên Hòa, Đồng Nai",
+  "highlight_btn": "Xem dự án",
+  "highlight_link": "du-an.html?id=ganh-keo-ne",
+  "highlight_image": ""
+}
