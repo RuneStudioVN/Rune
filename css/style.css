@@ -64,7 +64,7 @@ p{max-width:64ch}
 
 /* ---------- Header ---------- */
 .header{position:sticky;top:0;z-index:50;background:rgba(245,246,248,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--mist)}
-.header .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;position:relative}
+.header .wrap{display:flex;align-items:center;justify-content:space-between;height:76px;position:relative}
 .logo{font-weight:800;font-size:22px;letter-spacing:-.04em;display:flex;align-items:center;gap:8px}
 .logo i{width:12px;height:12px;background:var(--signal);border-radius:2px;transform:rotate(45deg)}
 .nav{display:flex;gap:4px}
@@ -249,7 +249,13 @@ p{max-width:64ch}
 @media (max-width:600px){.chatbub-msg{display:none}}
 
 /* ---------- Logo ảnh (up trong /admin) ---------- */
-.logo img{height:34px;width:auto;display:block}
-.footer .logo img{height:32px;filter:brightness(0) invert(1)}
-.footer .logo{display:block}
-@media (max-width:600px){.logo img{height:28px}}
+.header{--header-h:76px}
+.header .wrap{height:76px}
+.logo{gap:10px}
+.logo img{height:52px;width:auto;display:block;object-fit:contain}
+.logo span{white-space:nowrap}
+.footer .logo{display:flex;align-items:center;gap:10px}
+.footer .logo img{height:44px}
+@media (max-width:900px){.header .wrap{height:68px}.logo img{height:42px}}
+@media (max-width:600px){.logo img{height:38px}.logo{font-size:19px}}
+@media (max-width:900px){.nav{top:68px}}

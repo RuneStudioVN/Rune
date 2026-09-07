@@ -26,7 +26,7 @@ window.SITE_READY = (async () => {
 
   document.getElementById('header').innerHTML = `
     <header class="header"><div class="wrap">
-      <a class="logo" href="index.html">${S.logo ? `<img src="${S.logo}" alt="${S.brand || ''}">` : `<i></i>${S.brand || 'RUNESTUDIO'}`}</a>
+      <a class="logo" href="index.html">${S.logo ? `<img src="${S.logo}" alt="">` : '<i></i>'}${S.logo && S.hide_brand_text ? '' : `<span>${S.brand || 'RUNESTUDIO'}</span>`}</a>
       <button class="nav-toggle" aria-label="Mở menu" aria-expanded="false">Menu</button>
       <nav class="nav">${links}</nav>
     </div></header>`;
@@ -35,7 +35,7 @@ window.SITE_READY = (async () => {
     <footer class="footer"><div class="wrap">
       <div class="grid">
         <div>
-          <div class="logo">${S.logo_footer || S.logo ? `<img src="${S.logo_footer || S.logo}" alt="${S.brand || ''}">` : `<i></i>${S.brand || ''}`}</div>
+          <div class="logo">${S.logo_footer || S.logo ? `<img src="${S.logo_footer || S.logo}" alt="">` : '<i></i>'}${(S.logo_footer || S.logo) && S.hide_brand_text ? '' : `<span>${S.brand || ''}</span>`}</div>
           <p>${S.tagline || ''}</p>
           <p style="margin-top:12px">${S.address || ''}<br>${S.phone || ''}<br>${S.email || ''}</p>
         </div>
