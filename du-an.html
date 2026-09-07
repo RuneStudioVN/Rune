@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dự án — RUNESTUDIO</title>
+<meta name="description" content="Dự án RUNESTUDIO theo ngành: F&B, Beauty, Technology, Wedding, Fashion, Education, Retail, Personal Brand, Design.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="header"></div>
+<div id="project-list">
+<section class="page-hero"><div class="wrap">
+  <h1>Dự án</h1>
+  <p class="lead">Lọc theo ngành để xem RUNESTUDIO làm gì cho từng kiểu khách.</p>
+</div></section>
+<section class="section"><div class="wrap">
+  <div class="filters" id="filters"></div>
+  <div class="grid grid-3" id="projects"></div>
+</div></section>
+<section class="cta"><div class="wrap"><h2>Dự án tiếp theo là của bạn?</h2><a class="btn" href="lien-he.html">Gửi brief dự án</a></div></section>
+</div>
+<div id="project-detail" style="display:none"></div>
+<div id="footer"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+<script>SITE_READY.then(async()=>{ if(!(await renderProjectDetail("#project-list","#project-detail"))) renderFilters("#filters","#projects"); });</script>
+</body>
+</html>
