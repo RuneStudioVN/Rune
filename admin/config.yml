@@ -29,7 +29,7 @@ collections:
           - { label: "Link Messenger (https://m.me/TÊNPAGE)", name: "messenger", widget: "string" }
           - { label: "Link TikTok", name: "tiktok", widget: "string" }
           - { label: "Link Facebook", name: "facebook", widget: "string" }
-          - { label: "Chat bong bóng góc dưới (chữ)", name: "chat_bubble", widget: "string", required: false }
+          - { label: "Link YouTube", name: "youtube", widget: "string", required: false, hint: "Để trống thì cột nút bên phải không hiện YouTube" }
 
       - name: "hero"
         label: "Đầu trang chủ (Hero)"

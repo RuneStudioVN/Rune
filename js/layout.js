@@ -64,9 +64,31 @@ window.SITE_READY = (async () => {
   const btn = document.querySelector('.nav-toggle'), nav = document.querySelector('.nav');
   btn.addEventListener('click', () => { const o = nav.classList.toggle('is-open'); btn.setAttribute('aria-expanded', o); });
 
-  if (S.chat_bubble && S.messenger) {
-    document.body.insertAdjacentHTML('beforeend', `<div class="chatbub"><a class="chatbub-msg" href="${S.messenger}" target="_blank" rel="noopener">${S.chat_bubble}</a><a class="chatbub-btn" href="${S.messenger}" target="_blank" rel="noopener" aria-label="Nhắn tin">💬</a></div>`);
-  }
+  /* ---- Cột nút liên hệ nổi bên phải (cố định) ---- */
+  (function buildDock() {
+    const ic = {
+      phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>',
+      facebook: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg>',
+      messenger: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.3 2 2 6.2 2 11.8c0 3 1.4 5.6 3.6 7.4V23l3.3-1.8c.9.2 1.8.4 2.8.4 5.7 0 10-4.2 10-9.8S17.7 2 12 2zm1 13.2-2.5-2.7-4.9 2.7 5.4-5.7 2.6 2.7 4.8-2.7-5.4 5.7z"/></svg>',
+      zalo: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 5.9 2 10.7c0 2.7 1.4 5.1 3.7 6.7-.1.6-.5 2-.6 2.3-.2.5.2.5.4.4.2-.1 2.5-1.6 3.5-2.3.9.2 2 .3 3 .3 5.5 0 10-3.9 10-8.7S17.5 2 12 2z"/></svg>'
+    };
+    const items = [];
+    if (S.phone) items.push(['tel:' + S.phone.replace(/\s/g, ''), ic.phone, 'Gọi ' + S.phone, '']);
+    if (S.facebook) items.push([S.facebook, ic.facebook, 'Fanpage', '_blank']);
+    if (S.messenger) items.push([S.messenger, ic.messenger, 'Messenger', '_blank']);
+    if (S.zalo) items.push([S.zalo, ic.zalo, 'Zalo', '_blank']);
+    if (!items.length) return;
+
+    const note = S.chat_bubble ? `<a class="dock-note" href="lien-he.html">${S.chat_bubble}</a>` : '';
+    const btns = items.map(([href, svg, label, tg]) =>
+      `<a class="dock-btn" href="${href}" ${tg ? 'target="_blank" rel="noopener"' : ''} aria-label="${label}"><span class="dock-ico">${svg}</span><span class="dock-tip">${label}</span></a>`).join('');
+
+    const dock = document.createElement('div');
+    dock.className = 'dock';
+    dock.innerHTML = note + btns;
+    document.body.appendChild(dock);
+  })();
+
   document.querySelectorAll('[data-contact="zalo"]').forEach(a => a.href = S.zalo || '#');
   document.querySelectorAll('[data-contact="messenger"]').forEach(a => a.href = S.messenger || '#');
   document.querySelectorAll('[data-site]').forEach(el => {

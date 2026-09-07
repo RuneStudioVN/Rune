@@ -242,20 +242,38 @@ p{max-width:64ch}
 .poster img,.poster .ph{width:100%;height:100%;object-fit:cover;aspect-ratio:1;border-radius:0}
 @media (max-width:960px){.poster{transform:none;max-width:520px;margin:0 auto}}
 .hero2 .ticker{margin-top:clamp(40px,6vw,72px)}
-/* chat bubble */
-.chatbub{position:fixed;right:20px;bottom:20px;z-index:60;display:flex;align-items:center;gap:10px}
-.chatbub-msg{background:var(--white);border:1px solid var(--mist);border-radius:14px;padding:10px 14px;font-size:14px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.08)}
-.chatbub-btn{width:52px;height:52px;border-radius:50%;background:var(--signal);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 8px 24px rgba(47,167,154,.4)}
-@media (max-width:600px){.chatbub-msg{display:none}}
+/* ---------- Cột nút liên hệ nổi bên phải ---------- */
+.dock{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:70;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.dock-note{max-width:210px;background:var(--white);border:1px solid var(--mist);border-radius:14px;padding:10px 14px;font-size:13px;font-weight:600;line-height:1.4;box-shadow:0 8px 24px rgba(0,0,0,.10);margin-bottom:2px}
+.dock-note:hover{border-color:var(--signal)}
+.dock-btn{width:48px;height:48px;border:0;padding:0;border-radius:50%;background:var(--signal);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(47,167,154,.35);transition:transform .15s;position:relative}
+.dock-btn:hover{transform:scale(1.08)}
+.dock-ico{width:24px;height:24px;display:block}
+.dock-ico svg{width:100%;height:100%;display:block}
+.dock-tip{position:absolute;right:58px;top:50%;transform:translateY(-50%);background:var(--ink);color:#fff;font-size:13px;font-weight:600;padding:6px 10px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s}
+.dock-btn:hover .dock-tip{opacity:1}
+@media (max-width:900px){
+  .dock{right:10px;gap:8px}
+  .dock-note{display:none}
+  .dock-btn{width:42px;height:42px}
+  .dock-ico{width:21px;height:21px}
+  .dock-tip{display:none}
+}
 
-/* ---------- Logo ảnh (up trong /admin) ---------- */
-.header{--header-h:76px}
-.header .wrap{height:76px}
-.logo{gap:10px}
-.logo img{height:52px;width:auto;display:block;object-fit:contain}
-.logo span{white-space:nowrap}
-.footer .logo{display:flex;align-items:center;gap:10px}
-.footer .logo img{height:44px}
-@media (max-width:900px){.header .wrap{height:68px}.logo img{height:42px}}
-@media (max-width:600px){.logo img{height:38px}.logo{font-size:19px}}
-@media (max-width:900px){.nav{top:68px}}
+/* ---------- Form liên hệ ---------- */
+.form{display:flex;flex-direction:column;gap:16px;margin-top:8px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:13px;font-weight:700}
+.field .hint{font-size:12px;color:var(--smoke);font-weight:400}
+.field input,.field textarea{font:inherit;font-size:15px;text-overflow:ellipsis;padding:12px 14px;border:1px solid var(--mist);border-radius:10px;background:var(--white);color:var(--ink);width:100%}
+.field textarea{min-height:110px;resize:vertical}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--signal);box-shadow:0 0 0 3px rgba(47,167,154,.15)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:600px){.field-row{grid-template-columns:1fr}}
+.field input::placeholder,.field textarea::placeholder{color:#A3ABB5;font-style:italic}
+.form .btn{align-self:flex-start;border:0;cursor:pointer}
+.form-note{font-size:13px;color:var(--smoke)}
+.form-ok{display:none;background:#EAF6F4;border:1px solid var(--signal);border-radius:12px;padding:20px;margin-top:8px}
+.form-ok h3{font-size:18px;margin-bottom:6px}
+.form-ok p{font-size:15px;color:var(--smoke)}
+.hp{position:absolute;left:-9999px}
