@@ -21,12 +21,13 @@ window.SITE_READY = (async () => {
   let S = {};
   try { S = await loadJSON('content/site.json'); } catch (e) { console.warn('site.json', e); }
   window.SITE = S;
+  const SLOGAN = (S.slogan === undefined || S.slogan === null) ? 'Sáng tạo để tạo dấu ấn' : S.slogan;
   const here = location.pathname.split('/').pop() || 'index.html';
   const links = MENU.map(([t, h]) => `<a href="${h}" ${h === here ? 'class="is-active"' : ''}>${t}</a>`).join('');
 
   document.getElementById('header').innerHTML = `
     <header class="header"><div class="wrap">
-      <a class="logo" href="index.html">${S.logo ? `<img src="${S.logo}" alt="">` : '<i></i>'}${S.logo && S.hide_brand_text ? '' : `<span>${S.brand || 'RUNESTUDIO'}</span>`}</a>
+      <a class="logo" href="index.html">${S.logo ? `<img src="${S.logo}" alt="">` : '<i></i>'}${S.logo && S.hide_brand_text ? '' : `<span class="logo-text"><b>${S.brand || 'Rune Studio'}</b>${SLOGAN ? `<i>${SLOGAN}</i>` : ''}</span>`}</a>
       <button class="nav-toggle" aria-label="Mở menu" aria-expanded="false">Menu</button>
       <nav class="nav">${links}</nav>
     </div></header>`;
@@ -35,7 +36,7 @@ window.SITE_READY = (async () => {
     <footer class="footer"><div class="wrap">
       <div class="grid">
         <div>
-          <div class="logo">${S.logo_footer || S.logo ? `<img src="${S.logo_footer || S.logo}" alt="">` : '<i></i>'}${(S.logo_footer || S.logo) && S.hide_brand_text ? '' : `<span>${S.brand || ''}</span>`}</div>
+          <div class="logo">${S.logo_footer || S.logo ? `<img src="${S.logo_footer || S.logo}" alt="">` : '<i></i>'}${(S.logo_footer || S.logo) && S.hide_brand_text ? '' : `<span class="logo-text"><b>${S.brand || ''}</b>${SLOGAN ? `<i>${SLOGAN}</i>` : ''}</span>`}</div>
           <p>${S.tagline || ''}</p>
           <p style="margin-top:12px">${S.address || ''}<br>${S.phone || ''}<br>${S.email || ''}</p>
         </div>

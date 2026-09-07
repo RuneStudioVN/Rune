@@ -20,7 +20,8 @@ collections:
           - { label: "Favicon (icon tab trình duyệt, vuông 512x512)", name: "favicon", widget: "image", required: false }
           - { label: "Tên thương hiệu (hiện cạnh logo)", name: "brand", widget: "string" }
           - { label: "Ẩn chữ, chỉ hiện logo", name: "hide_brand_text", widget: "boolean", default: false, required: false }
-          - { label: "Slogan (footer)", name: "tagline", widget: "string" }
+          - { label: "Slogan dưới tên (header + footer)", name: "slogan", widget: "string", required: false, hint: "Để trống hẳn thì ẩn dòng này" }
+          - { label: "Câu mô tả ở footer", name: "tagline", widget: "string" }
           - { label: "Số điện thoại", name: "phone", widget: "string" }
           - { label: "Email", name: "email", widget: "string" }
           - { label: "Địa chỉ", name: "address", widget: "string" }
