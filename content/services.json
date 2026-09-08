@@ -1,8 +1,49 @@
-{"services": [
-  {"title": "Content & Social", "slug": "content-social", "summary": "Lên kế hoạch, viết, quay, đăng và đo — cho Facebook, TikTok, Instagram.", "items": ["Lịch đăng 12–20 nội dung/tháng", "Kịch bản theo trục kích comment", "Báo cáo tuần: view, giữ chân, tin nhắn"], "image": ""},
-  {"title": "TikTok", "slug": "tiktok", "summary": "Xây kênh từ số 0, vận hành hàng tuần, tối ưu FYP và chuyển đổi.", "items": ["Định vị kênh & 30 video khởi động", "Vận hành 5–10 video/tuần", "Tối ưu FYP theo dữ liệu retention", "Creator / KOC / UGC & hệ tài khoản vệ tinh"], "image": ""},
-  {"title": "KOC / UGC", "slug": "koc-ugc", "summary": "Tuyển và điều phối creator, video review thật, seeding có kiểm soát.", "items": ["Mạng lưới creator theo ngành & khu vực", "Brief chuẩn – không lộ mùi quảng cáo", "Seeding comment có kịch bản"], "image": ""},
-  {"title": "Personal Branding", "slug": "personal-branding", "summary": "Đưa chủ doanh nghiệp lên hình: giọng nói, góc nhìn, series dài hơi.", "items": ["Guide giọng nói cá nhân", "Series theo mùa: 20–40 tập", "Huấn luyện đứng trước máy"], "image": ""},
-  {"title": "Creative Production", "slug": "production", "summary": "Quay dựng video ngắn, TVC nhỏ, ảnh sản phẩm — gọn và đúng nền tảng.", "items": ["Ekip 2–4 người, quay tại chỗ", "Dựng theo quy trình tự động, giao nhanh", "Caption, overlay nhấn mạnh, SFX"], "image": ""},
-  {"title": "Design & Branding", "slug": "design", "summary": "Logo, nhận diện, key visual, social design, ấn phẩm chiến dịch.", "items": ["Brand guideline gọn, dùng được ngay", "Key visual cho sản phẩm & mùa", "Template social đồng bộ với kênh"], "image": ""}
-]}
+{
+  "services": [
+    {
+      "title": "Gói Truyền thông & Xây kênh Trọn gói (Full-stack)",
+      "slug": "goi-truyen-thong-va-xay-kenh-tron-goi",
+      "summary": "Hạng mục chi tiết:\n- Lên chiến lược, định hình concept cốt lõi.\n- Viết kịch bản & sáng tạo nội dung đều đặn.\n- Quay dựng video thực chiến tận nơi.\n- Vận hành, chăm sóc và tối ưu hiển thị trên đa nền tảng.\n- Thiết kế ấn phẩm đồ họa nhận diện đi kèm.\n\nMức giá: Chỉ từ 5.000.00 vnđ",
+      "items": [
+        "Lịch đăng 12–20 nội dung/tháng",
+        "Kịch bản theo trục kích comment",
+        "Báo cáo tuần: view, giữ chân, tin nhắn"
+      ],
+      "image": ""
+    },
+    {
+      "title": "Dịch vụ Lẻ Theo Yêu Cầu",
+      "slug": "dich-vu-le-theo-yeu-cau",
+      "summary": "Hạng mục chi tiết:\n- Quay dựng video: Quay thực địa và dựng phim chuyên sâu (tối ưu pacing và âm thanh).\n- Sáng tạo Kịch bản: Lên sườn nội dung, viết kịch bản storytelling giữ chân người xem.\n- Thiết kế (Design): Thiết kế ấn phẩm truyền thông, bộ nhận diện thương hiệu.\n- Thumbnail / Banner: Làm thumbnail, banner bắt mắt để tối ưu tỷ lệ click.",
+      "items": [
+        "Định vị kênh & 30 video khởi động",
+        "Vận hành 5–10 video/tuần",
+        "Tối ưu FYP theo dữ liệu retention",
+        "Creator / KOC / UGC & hệ tài khoản vệ tinh"
+      ],
+      "image": ""
+    },
+    {
+      "title": "Mentor 1:1 & Cố vấn kênh",
+      "slug": "mentor-1-1-va-co-van-kenh",
+      "summary": "Hạng mục chi tiết:\n- Cầm tay chỉ việc trực tiếp cho chủ doanh nghiệp hoặc cá nhân tự xây kênh.\n- Gỡ rối chiến lược, nắn chỉnh tư duy làm nội dung và cách kể chuyện.\n- Đồng hành giải quyết các bài toán thực tế của kênh.",
+      "items": [
+        "Mạng lưới creator theo ngành & khu vực",
+        "Brief chuẩn – không lộ mùi quảng cáo",
+        "Seeding comment có kịch bản"
+      ],
+      "image": ""
+    },
+    {
+      "title": "Cung cấp Tài khoản TikTok",
+      "slug": "cung-cap-tai-khoan-tiktok",
+      "summary": "Hạng mục chi tiết:\n- Cung cấp các dòng tài khoản TikTok có sẵn tương tác, tài khoản sạch hoặc kênh có độ tín nhiệm cao.\n- Phù hợp để triển khai bán hàng hoặc làm thương hiệu ngay lập tức mà không phải gây dựng từ con số 0.\n- Hỗ trợ bàn giao, đổi thông tin và tư vấn bảo mật an toàn.",
+      "items": [
+        "Guide giọng nói cá nhân",
+        "Series theo mùa: 20–40 tập",
+        "Huấn luyện đứng trước máy"
+      ],
+      "image": ""
+    }
+  ]
+}
