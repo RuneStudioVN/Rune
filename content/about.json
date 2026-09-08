@@ -1,34 +1,84 @@
 {
-  "hero_title": "Đội content đứng cạnh chủ shop",
-  "hero_lead": "Rune Studio bắt đầu từ việc tự làm kênh cho mấy quán ở Biên Hòa. Giờ tụi mình làm điều đó cho thương hiệu ở nhiều ngành, vẫn theo cách cũ: xuống tận nơi, quay thứ có thật.",
-  "about_title": "Về Rune Studio",
-  "about_body": "Tụi mình tin một kênh tốt phải nuôi được cửa hàng, không chỉ đẹp trên màn hình.\n\nNên mọi thứ Rune Studio làm đều đo bằng hai trục: người xem có ở lại không, và người xem có thành khách không.",
-  "about_image": "",
-  "vision_title": "Tầm nhìn",
-  "vision_body": "Trở thành đơn vị content video ngắn được chủ doanh nghiệp nhỏ và vừa ở miền Nam tin giao kênh trong 5 năm tới.",
-  "mission_title": "Sứ mệnh",
-  "mission_body": "Giúp thương hiệu Việt nói bằng giọng của chính họ trên mạng xã hội — thật, dễ hiểu, và ra khách.",
-  "cap_title": "Năng lực",
-  "capabilities": [
-    { "title": "Chiến lược & kịch bản", "desc": "Nghiên cứu đối thủ, đọc comment, thiết kế cấu trúc kịch bản theo trục kích tương tác." },
-    { "title": "Sản xuất", "desc": "Quay bằng điện thoại và máy nhỏ, dựng theo quy trình tự động — tốc độ 5–10 video/tuần/kênh." },
-    { "title": "Vận hành & seeding", "desc": "Đăng đúng giờ, seeding có kịch bản, đo retention và điều chỉnh hàng tuần." },
-    { "title": "Design", "desc": "Nhận diện, key visual, social template để kênh nhìn là biết của ai." }
-  ],
-  "team_title": "Đội ngũ",
-  "team": [
-    { "name": "Tên thành viên", "role": "Founder / Content Lead", "image": "" },
-    { "name": "Tên thành viên", "role": "Video Editor", "image": "" },
-    { "name": "Tên thành viên", "role": "Designer", "image": "" },
-    { "name": "Tên thành viên", "role": "Account / Vận hành", "image": "" }
-  ],
+  "hero_lead": "Từ những dự án nhỏ lẻ ban đầu, Rune Studio nay đã trở thành đối tác nội dung cho hàng loạt thương hiệu đa ngành. Bí quyết của chúng tôi rất đơn giản: nói không với sự tô vẽ viển vông, chỉ tập trung vào việc ghi lại những giá trị cốt lõi và biến sự chân thật đó thành điểm chạm truyền thông.",
   "clients_title": "Khách hàng",
+  "vision_title": "Tầm nhìn",
+  "mission_title": "Sứ mệnh",
+  "about_title": "Về Rune Studio",
   "clients": [
-    { "name": "Logo", "logo": "" },
-    { "name": "Logo", "logo": "" },
-    { "name": "Logo", "logo": "" },
-    { "name": "Logo", "logo": "" },
-    { "name": "Logo", "logo": "" },
-    { "name": "Logo", "logo": "" }
+    {
+      "name": "Logo",
+      "logo": ""
+    },
+    {
+      "name": "Logo",
+      "logo": ""
+    },
+    {
+      "name": "Logo",
+      "logo": ""
+    },
+    {
+      "name": "Logo",
+      "logo": ""
+    },
+    {
+      "name": "Logo",
+      "logo": ""
+    },
+    {
+      "name": "Logo",
+      "logo": ""
+    }
+  ],
+  "about_image": "",
+  "cap_title": "Năng lực",
+  "hero_title": "Đội ngũ content thực chiến cùng doanh nghiệp",
+  "about_body": "Một kênh truyền thông thành công là kênh tạo ra giá trị chuyển đổi. Tại Rune, chúng tôi không chạy theo những chỉ số ảo. Mọi chiến lược và thước phim đều phải trả lời được hai câu hỏi cốt lõi: Khán giả có bị thu hút không, và họ có sẵn sàng chi tiền không?",
+  "mission_body": "Rút ngắn khoảng cách giữa thương hiệu và người tiêu dùng thông qua những thước phim nguyên bản. Rune Studio ở đây để giải quyết bài toán hóc búa nhất: biến sự chú ý thoáng qua thành niềm tin để khách hàng chịu mở hầu bao.",
+  "team_title": "Đội ngũ",
+  "capabilities": [
+    {
+      "title": "Cố vấn & Định hình Chiến lược (Strategy & Mentoring)",
+      "desc": "- Thiết kế Concept cốt lõi: Bóc tách DNA của thương hiệu để tạo ra \"mỏ neo\" nội dung, giúp kênh phát triển bền vững và không bị hòa lẫn.\n\n- Mentor 1:1 chuyên sâu: Trực tiếp nắn chỉnh tư duy làm nội dung, kỹ năng kể chuyện (storytelling) và chiến thuật tối ưu phễu chuyển đổi cho chủ kênh/doanh nghiệp."
+    },
+    {
+      "title": "Kiến tạo Kịch bản & Content (Content Architecture)",
+      "desc": "- Quy hoạch tuyến nội dung: Không viết những kịch bản vô hồn. Chúng tôi thiết kế các \"điểm chạm tâm lý\", dẫn dắt người xem từ sự tò mò đến quyết định mua hàng.\n\n- Nghệ thuật Storytelling: Chuyển hóa những thông tin khô khan, cứng nhắc thành những câu chuyện có sức nặng, có chiều sâu để giữ chân khán giả."
+    },
+    {
+      "title": "Sản xuất & Tối ưu Nhịp điệu (Production & Editing)",
+      "desc": "- Quay phim thực chiến: Bám sát hiện trường, bắt trọn cái hồn và nhịp sống chân thực của thương hiệu.\n\n- Kỹ thuật hậu kỳ sắc bén: Làm chủ pacing (nhịp độ), cắt dựng tinh gọn và xử lý âm thanh chuyên nghiệp để tối ưu hóa trải nghiệm nghe - nhìn, đẩy luồng cảm xúc của người xem lên mức cao nhất."
+    },
+    {
+      "title": "Vận hành & Tăng trưởng (Operation & Growth)",
+      "desc": "- Nuôi dưỡng kênh: Quản trị luồng nội dung, duy trì tần suất và chăm sóc cộng đồng trên đa nền tảng (Fanpage, TikTok).\n\n- Kích hoạt chuyển đổi: Đọc vị thuật toán, điều hướng dòng chảy traffic hợp lý để từng bước biến lượt xem (views) thành tệp khách hàng thực tế (leads)."
+    },
+    {
+      "title": "Thiết kế chuyên nghiệp (Design)",
+      "desc": "- Visual thương hiệu: Thiết kế ấn phẩm truyền thông, bộ nhận diện nhất quán, mang tính thẩm mỹ cao.\n\n- Thumbnail / Banner: Làm thumbnail và banner bắt mắt, tối ưu tỷ lệ click để giữ chân người xem ngay từ cái nhìn đầu tiên."
+    }
+  ],
+  "vision_body": "Trở thành bệ phóng truyền thông đáng tin cậy cho các thương hiệu đa ngành, đi từ thực tế kinh doanh để neo đậu vào tâm trí khách hàng.",
+  "team": [
+    {
+      "name": "Mr. Kuro",
+      "role": "Founder",
+      "image": ""
+    },
+    {
+      "name": "Ms. Shiro",
+      "role": "Co - Founder",
+      "image": ""
+    },
+    {
+      "name": "Ms. Chang",
+      "role": "Designer",
+      "image": ""
+    },
+    {
+      "name": "Ms. Hiền",
+      "role": "Account / Vận hành",
+      "image": ""
+    }
   ]
 }
