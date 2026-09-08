@@ -331,6 +331,7 @@ async function renderAbout() {
 /* ---------- Trang chủ (đọc từ content/home.json) ---------- */
 async function renderHome() {
   let H; try { H = await loadJSON('content/home.json'); } catch (e) { return; }
+  window.HOME = H;
   const $ = id => document.getElementById(id);
   const txt = (id, v) => { const el = $(id); if (el) el.textContent = v || ''; };
   const btn = (id, label, link) => { const el = $(id); if (!el) return; if (label) { el.textContent = label; if (link) el.href = link; } else el.style.display = 'none'; };

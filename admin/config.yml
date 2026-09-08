@@ -107,6 +107,7 @@ collections:
 
           - { label: "▸ Dự án tiêu biểu — tiêu đề", name: "projects_title", widget: "string" }
           - { label: "Dự án tiêu biểu — chữ nút", name: "projects_btn", widget: "string" }
+          - { label: "Dự án tiêu biểu — hiện tối đa mấy dự án", name: "projects_limit", widget: "number", default: 8, value_type: "int", min: 1, max: 24, hint: "Chỉ tính các dự án đã bật Hiện ở Trang chủ" }
 
           - { label: "▸ Ngành đã làm — tiêu đề", name: "industries_title", widget: "string" }
           - { label: "Ngành đã làm — mô tả", name: "industries_lead", widget: "text" }

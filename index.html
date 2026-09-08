@@ -114,6 +114,6 @@
 <div id="footer"></div>
 <script src="js/layout.js"></script>
 <script src="js/main.js"></script>
-<script>SITE_READY.then(async()=>{renderHero();await renderHome();renderServiceCards("#home-services");renderProjects("#featured",{featured:true,limit:4});renderPosts("#home-posts",3);});</script>
+<script>SITE_READY.then(async()=>{renderHero();await renderHome();renderServiceCards("#home-services");renderProjects("#featured",{featured:true,limit:(window.HOME&&Number(window.HOME.projects_limit))||8});renderPosts("#home-posts",3);});</script>
 </body>
 </html>
