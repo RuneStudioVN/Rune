@@ -49,6 +49,28 @@
         "Giá chỉ từ 2xx.xxx vnđ"
       ],
       "image": ""
+    },
+    {
+      "title": "Setup & Cài đặt Kênh Kỹ thuật",
+      "slug": "setup-kenh-ky-thuat",
+      "summary": "Mục đích: Chuẩn hóa từ gốc các thiết lập kỹ thuật để kênh có bệ phóng sạch sẽ, chuẩn SEO và không bị bóp tương tác.\n\nPhù hợp với: Người mới lập kênh hoặc kênh cũ bị flop, cần tối ưu lại toàn bộ thông tin cơ bản.",
+      "items": [
+        "Tối ưu chuẩn SEO hồ sơ (Bio, tên, link liên kết, ngành hàng...)",
+        "Cài đặt bảo mật 2 lớp, liên kết tài khoản quảng cáo/Shop",
+        "Hướng dẫn thiết lập các thông số kỹ thuật chuẩn khi đăng video",
+        "Giá chỉ từ 200.000 vnđ"
+      ]
+    },
+    {
+      "title": "Audit & Khám Kênh Chuyên Sâu",
+      "slug": "audit-va-kham-kenh-chuyen-sau",
+      "summary": "Mục đích: Bắt bệnh toàn diện cho kênh hiện tại, tìm ra điểm nghẽn khiến video không lên view hoặc không ra đơn.\n\nPhù hợp với: Chủ kênh đang làm nhưng bị chững view, mất phương hướng hoặc không biết tối ưu phễu từ đâu.",
+      "items": [
+        "Phân tích chỉ số 10 video gần nhất (tỷ lệ giữ chân, drop rate, tương tác)",
+        "Đánh giá điểm mạnh/yếu của concept và cách kể chuyện hiện tại",
+        "Lên biên bản báo cáo lỗi cụ thể và định hướng giải pháp gỡ gạc kênh",
+        "Giá chỉ từ 300.000 vnđ"
+      ]
     }
   ]
 }
