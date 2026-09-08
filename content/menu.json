@@ -1,0 +1,15 @@
+{
+  "items": [
+    { "label": "Trang chủ", "link": "index.html", "children": [] },
+    { "label": "Giới thiệu", "link": "gioi-thieu.html", "children": [] },
+    { "label": "Dịch vụ", "link": "dich-vu.html", "children": [
+      { "label": "Content & Social", "link": "dich-vu.html?id=content-social" },
+      { "label": "TikTok", "link": "dich-vu.html?id=tiktok" },
+      { "label": "KOC / UGC", "link": "dich-vu.html?id=koc-ugc" }
+    ] },
+    { "label": "Dự án", "link": "du-an.html", "children": [] },
+    { "label": "Tin tức", "link": "tin-tuc.html", "children": [] },
+    { "label": "Tuyển dụng", "link": "tuyen-dung.html", "children": [] },
+    { "label": "Liên hệ", "link": "lien-he.html", "children": [] }
+  ]
+}

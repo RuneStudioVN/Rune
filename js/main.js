@@ -9,7 +9,39 @@ const CATEGORIES = [
 ];
 const catName = k => (CATEGORIES.find(c => c[0] === k) || [k, k])[1];
 const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const md = s => (window.marked ? marked.parse(s || '') : `<p>${esc(s)}</p>`);
+/* Chuyển markdown sang HTML — tự viết, không phụ thuộc thư viện ngoài */
+function md(src) {
+  if (!src) return '';
+  const inline = s => esc(s)
+    .replace(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g, '<img src="$2" alt="$1" loading="lazy">')
+    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/(^|[^*])\*([^*]+)\*/g, '$1<em>$2</em>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>');
+
+  const lines = String(src).replace(/\r\n?/g, '\n').split('\n');
+  const out = [];
+  let list = null, para = [], quote = [];
+  const flushPara = () => { if (para.length) { out.push('<p>' + inline(para.join(' ')) + '</p>'); para = []; } };
+  const flushList = () => { if (list) { out.push(`<${list.tag}>` + list.items.map(i => '<li>' + inline(i) + '</li>').join('') + `</${list.tag}>`); list = null; } };
+  const flushQuote = () => { if (quote.length) { out.push('<blockquote><p>' + inline(quote.join(' ')) + '</p></blockquote>'); quote = []; } };
+  const flushAll = () => { flushPara(); flushList(); flushQuote(); };
+
+  for (const raw of lines) {
+    const line = raw.trimEnd();
+    if (!line.trim()) { flushAll(); continue; }
+    if (/^\s*<(p|div|h[1-6]|ul|ol|li|figure|img|blockquote|hr|table|iframe|span|section)\b/i.test(line)) { flushAll(); out.push(line); continue; }
+    let mm;
+    if (/^\s*(---|\*\*\*|___)\s*$/.test(line)) { flushAll(); out.push('<hr>'); continue; }
+    if ((mm = line.match(/^(#{1,4})\s+(.*)$/))) { flushAll(); const lv = mm[1].length + 1; out.push(`<h${lv}>${inline(mm[2])}</h${lv}>`); continue; }
+    if ((mm = line.match(/^\s*>\s?(.*)$/))) { flushPara(); flushList(); quote.push(mm[1]); continue; }
+    if ((mm = line.match(/^\s*[-*+]\s+(.*)$/))) { flushPara(); flushQuote(); if (!list || list.tag !== 'ul') { flushList(); list = { tag: 'ul', items: [] }; } list.items.push(mm[1]); continue; }
+    if ((mm = line.match(/^\s*\d+[.)]\s+(.*)$/))) { flushPara(); flushQuote(); if (!list || list.tag !== 'ol') { flushList(); list = { tag: 'ol', items: [] }; } list.items.push(mm[1]); continue; }
+    flushList(); flushQuote(); para.push(line.trim());
+  }
+  flushAll();
+  return out.join('\n');
+}
 const fmtDate = d => { if (!d) return ''; const [y, m, dd] = String(d).slice(0, 10).split('-'); return `${dd}/${m}/${y}`; };
 
 function phBlock(p, cls) {
@@ -122,7 +154,7 @@ async function renderServiceBlocks(sel, subnavSel) {
   el.innerHTML = list.map((s, i) => `<section class="block two ${i % 2 ? 'flip' : ''}" id="${esc(s.slug)}">
     <div><h2>${esc(s.title)}</h2><p class="lead" style="margin-top:16px">${esc(s.summary)}</p>
       <ul class="check">${(s.items || []).map(i => `<li>${esc(i)}</li>`).join('')}</ul>
-      <a class="btn btn--signal" href="lien-he.html" style="margin-top:20px">Gửi brief</a></div>
+      <div class="btn-row" style="margin-top:20px"><a class="btn btn--signal" href="dich-vu.html?id=${esc(s.slug)}">Chi tiết</a><a class="btn btn--ghost" href="lien-he.html">Gửi brief</a></div></div>
     ${phBlock(s)}
   </section>`).join('');
   if (location.hash) setTimeout(() => document.querySelector(location.hash)?.scrollIntoView(), 100);
@@ -195,4 +227,72 @@ function initBriefForm() {
       btn.disabled = false; btn.textContent = old;
     }
   });
+}
+
+/* ---------- Tuyển dụng ---------- */
+let _jobs;
+const getJobs = async () => _jobs || (_jobs = (await loadJSON('content/jobs.json')).jobs || []);
+
+async function renderJobs(sel) {
+  const el = document.querySelector(sel); if (!el) return;
+  const list = await getJobs();
+  if (!list.length) { el.innerHTML = '<div class="empty">Hiện chưa có vị trí nào đang tuyển.</div>'; return; }
+  el.innerHTML = list.map(j => `<a class="job ${j.open === false ? 'is-closed' : ''}" href="tuyen-dung.html?id=${encodeURIComponent(j.slug)}">
+    <div>
+      <h3>${esc(j.title)}</h3>
+      ${j.excerpt ? `<p>${esc(j.excerpt)}</p>` : ''}
+      <div class="job-meta">
+        ${j.place ? `<span class="tag">${esc(j.place)}</span>` : ''}
+        ${j.type ? `<span class="tag">${esc(j.type)}</span>` : ''}
+        ${j.salary ? `<span class="tag tag--pulse">${esc(j.salary)}</span>` : ''}
+        ${j.open === false ? '<span class="tag">Đã đóng</span>' : ''}
+      </div>
+    </div>
+    <span class="job-arrow">→</span>
+  </a>`).join('');
+}
+
+async function renderJobDetail(listSel, detailSel) {
+  const id = new URLSearchParams(location.search).get('id'); if (!id) return false;
+  const j = (await getJobs()).find(x => x.slug === id); if (!j) return false;
+  document.querySelector(listSel).style.display = 'none';
+  const d = document.querySelector(detailSel); d.style.display = '';
+  document.title = `${j.title} — ${window.SITE?.brand || ''}`;
+  d.innerHTML = `
+    <section class="page-hero"><div class="wrap">
+      <h1>${esc(j.title)}</h1>
+      <div class="job-meta" style="margin-top:16px">
+        ${j.place ? `<span class="tag">${esc(j.place)}</span>` : ''}
+        ${j.type ? `<span class="tag">${esc(j.type)}</span>` : ''}
+        ${j.salary ? `<span class="tag tag--pulse">${esc(j.salary)}</span>` : ''}
+        ${j.deadline ? `<span class="tag">Hạn: ${fmtDate(j.deadline)}</span>` : ''}
+      </div>
+    </div></section>
+    <section class="section"><div class="wrap detail">
+      ${j.image ? `<div class="ph ph--wide"><img src="${esc(j.image)}" alt="${esc(j.title)}"></div>` : ''}
+      <div class="prose">${md(j.body)}</div>
+      <div class="btn-row" style="margin-top:32px"><a class="btn btn--signal" href="lien-he.html">Ứng tuyển</a><a class="btn btn--ghost" href="tuyen-dung.html">← Tất cả vị trí</a></div>
+    </div></section>`;
+  return true;
+}
+
+/* Trang chi tiết 1 dịch vụ (dich-vu.html?id=slug) */
+async function renderServiceDetail(listSel, detailSel) {
+  const id = new URLSearchParams(location.search).get('id'); if (!id) return false;
+  const s = (await getServices()).find(x => x.slug === id); if (!s) return false;
+  document.querySelector(listSel).style.display = 'none';
+  const d = document.querySelector(detailSel); d.style.display = '';
+  document.title = `${s.title} — ${window.SITE?.brand || ''}`;
+  d.innerHTML = `
+    <section class="page-hero"><div class="wrap">
+      <h1>${esc(s.title)}</h1>
+      <p class="lead">${esc(s.summary)}</p>
+    </div></section>
+    <section class="section"><div class="wrap detail">
+      ${s.image ? `<div class="ph ph--wide"><img src="${esc(s.image)}" alt="${esc(s.title)}"></div>` : ''}
+      ${(s.items || []).length ? `<ul class="check">${s.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : ''}
+      <div class="prose" style="margin-top:24px">${md(s.body)}</div>
+      <div class="btn-row" style="margin-top:32px"><a class="btn btn--signal" href="lien-he.html">Gửi brief</a><a class="btn btn--ghost" href="dich-vu.html">← Tất cả dịch vụ</a></div>
+    </div></section>`;
+  return true;
 }

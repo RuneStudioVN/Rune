@@ -15,23 +15,44 @@ collections:
         label: "Liên hệ & mạng xã hội"
         file: "content/site.json"
         fields:
-          - { label: "Logo (ảnh ngang, nền trong suốt .png/.svg, cao ~80px)", name: "logo", widget: "image", required: false, hint: "Để trống = hiện chữ thương hiệu" }
+          - { label: "Logo (ảnh nền trong suốt .png/.svg)", name: "logo", widget: "image", required: false, hint: "Để trống = hiện chữ thương hiệu" }
           - { label: "Logo cho footer (nền tối) — để trống thì dùng logo trên", name: "logo_footer", widget: "image", required: false }
           - { label: "Favicon (icon tab trình duyệt, vuông 512x512)", name: "favicon", widget: "image", required: false }
           - { label: "Tên thương hiệu (hiện cạnh logo)", name: "brand", widget: "string" }
+          - { label: "Slogan nhỏ dưới tên (header + footer)", name: "slogan", widget: "string", required: false, hint: "VD: Sáng tạo để tạo dấu ấn — xoá trắng thì ẩn" }
           - { label: "Ẩn chữ, chỉ hiện logo", name: "hide_brand_text", widget: "boolean", default: false, required: false }
-          - { label: "Slogan dưới tên (header + footer)", name: "slogan", widget: "string", required: false, hint: "Để trống hẳn thì ẩn dòng này" }
-          - { label: "Câu mô tả ở footer", name: "tagline", widget: "string" }
+          - { label: "Mô tả ngắn ở footer", name: "tagline", widget: "string" }
           - { label: "Số điện thoại", name: "phone", widget: "string" }
           - { label: "Email", name: "email", widget: "string" }
           - { label: "Địa chỉ", name: "address", widget: "string" }
           - { label: "Giờ làm việc", name: "hours", widget: "string" }
-          - { label: "Link Zalo (https://zalo.me/SỐĐT)", name: "zalo", widget: "string" }
-          - { label: "Link Messenger (https://m.me/TÊNPAGE)", name: "messenger", widget: "string" }
+          - { label: "Link Zalo", name: "zalo", widget: "string", hint: "https://zalo.me/SỐĐIỆNTHOẠI" }
+          - { label: "Link Messenger", name: "messenger", widget: "string", hint: "https://m.me/TÊNPAGE" }
           - { label: "Link TikTok", name: "tiktok", widget: "string" }
           - { label: "Link Facebook", name: "facebook", widget: "string" }
-          - { label: "Link YouTube", name: "youtube", widget: "string", required: false, hint: "Để trống thì cột nút bên phải không hiện YouTube" }
+          - { label: "Link YouTube", name: "youtube", widget: "string", required: false }
+          - { label: "Chữ trong bong bóng góc phải", name: "chat_bubble", widget: "string", required: false }
           - { label: "Mã nhận form (Web3Forms Access Key)", name: "form_key", widget: "string", required: false, hint: "Lấy miễn phí ở web3forms.com — brief khách gửi sẽ về Gmail" }
+
+      - name: "menu"
+        label: "Menu (thanh điều hướng)"
+        file: "content/menu.json"
+        fields:
+          - label: "Các mục menu"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.label}}"
+            fields:
+              - { label: "Tên hiển thị", name: "label", widget: "string" }
+              - { label: "Link", name: "link", widget: "string", hint: "VD: du-an.html — hoặc link ngoài đầy đủ https://..." }
+              - label: "Mục con (bỏ trống nếu không có)"
+                name: "children"
+                widget: "list"
+                required: false
+                summary: "{{fields.label}}"
+                fields:
+                  - { label: "Tên hiển thị", name: "label", widget: "string" }
+                  - { label: "Link", name: "link", widget: "string" }
 
       - name: "hero"
         label: "Đầu trang chủ (Hero)"
@@ -40,7 +61,7 @@ collections:
           - { label: "Tiêu đề lớn", name: "hero_title", widget: "string" }
           - { label: "Mô tả ngắn", name: "hero_subtitle", widget: "text" }
           - { label: "Nút 1 (chữ)", name: "hero_btn1", widget: "string" }
-          - { label: "Nút 1 (link)", name: "hero_btn1_link", widget: "string", hint: "VD: dich-vu.html" }
+          - { label: "Nút 1 (link)", name: "hero_btn1_link", widget: "string" }
           - { label: "Nút 2 (chữ)", name: "hero_btn2", widget: "string" }
           - { label: "Nút 2 (link)", name: "hero_btn2_link", widget: "string", required: false, hint: "Để trống = tự dùng link Messenger" }
           - { label: "Poster bên phải (ảnh vuông ~1000x1000)", name: "hero_poster", widget: "image", required: false }
@@ -71,8 +92,9 @@ collections:
               - { label: "Tên dịch vụ", name: "title", widget: "string" }
               - { label: "Mã (không dấu, dùng cho link)", name: "slug", widget: "string" }
               - { label: "Mô tả ngắn", name: "summary", widget: "text" }
-              - { label: "Điểm chính", name: "items", widget: "list", field: { label: "Ý", name: "item", widget: "string" } }
-              - { label: "Ảnh", name: "image", widget: "image", required: false }
+              - { label: "Điểm chính", name: "items", widget: "list", required: false, field: { label: "Ý", name: "item", widget: "string" } }
+              - { label: "Ảnh đại diện", name: "image", widget: "image", required: false }
+              - { label: "Nội dung chi tiết (chèn ảnh tuỳ ý)", name: "body", widget: "markdown", required: false, hint: "Bấm biểu tượng ảnh trên thanh công cụ để chèn hình vào giữa bài" }
 
   - name: "projects"
     label: "Dự án"
@@ -102,12 +124,12 @@ collections:
                   - { label: "Personal Brand", value: "personal" }
                   - { label: "Design", value: "design" }
               - { label: "Khách hàng", name: "client", widget: "string", required: false }
-              - { label: "Dịch vụ đã làm", name: "services", widget: "list", field: { label: "Dịch vụ", name: "s", widget: "string" } }
+              - { label: "Dịch vụ đã làm", name: "services", widget: "list", required: false, field: { label: "Dịch vụ", name: "s", widget: "string" } }
               - { label: "Kết quả (1 dòng)", name: "result", widget: "string", required: false }
               - { label: "Ảnh đại diện", name: "image", widget: "image", required: false }
-              - { label: "Link video TikTok/YouTube", name: "video", widget: "string", required: false, hint: "Dán link video, web tự hiện player" }
+              - { label: "Link video TikTok/YouTube", name: "video", widget: "string", required: false }
               - { label: "Hiện ở Trang chủ", name: "featured", widget: "boolean", default: false }
-              - { label: "Nội dung chi tiết", name: "body", widget: "markdown" }
+              - { label: "Nội dung chi tiết (chèn ảnh tuỳ ý)", name: "body", widget: "markdown", hint: "Bấm biểu tượng ảnh trên thanh công cụ để chèn hình vào giữa bài" }
 
   - name: "posts"
     label: "Tin tức"
@@ -126,6 +148,29 @@ collections:
               - { label: "Ngày", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
               - { label: "Chủ đề", name: "tag", widget: "string" }
               - { label: "Tóm tắt", name: "excerpt", widget: "text" }
-              - { label: "Ảnh", name: "image", widget: "image", required: false }
+              - { label: "Ảnh đại diện", name: "image", widget: "image", required: false }
               - { label: "Link video TikTok/YouTube", name: "video", widget: "string", required: false }
-              - { label: "Nội dung", name: "body", widget: "markdown" }
+              - { label: "Nội dung (chèn ảnh tuỳ ý)", name: "body", widget: "markdown", hint: "Bấm biểu tượng ảnh trên thanh công cụ để chèn hình vào giữa bài" }
+
+  - name: "jobs"
+    label: "Tuyển dụng"
+    files:
+      - name: "jobs"
+        label: "Danh sách vị trí"
+        file: "content/jobs.json"
+        fields:
+          - label: "Vị trí tuyển"
+            name: "jobs"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Tên vị trí", name: "title", widget: "string" }
+              - { label: "Mã (không dấu, dùng cho link)", name: "slug", widget: "string" }
+              - { label: "Nơi làm việc", name: "place", widget: "string", required: false }
+              - { label: "Hình thức", name: "type", widget: "string", required: false, hint: "VD: Toàn thời gian / Bán thời gian / Thực tập" }
+              - { label: "Mức lương", name: "salary", widget: "string", required: false }
+              - { label: "Hạn nộp", name: "deadline", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false, required: false }
+              - { label: "Đang tuyển", name: "open", widget: "boolean", default: true }
+              - { label: "Mô tả ngắn", name: "excerpt", widget: "text", required: false }
+              - { label: "Ảnh", name: "image", widget: "image", required: false }
+              - { label: "Mô tả công việc (chèn ảnh tuỳ ý)", name: "body", widget: "markdown", hint: "Bấm biểu tượng ảnh trên thanh công cụ để chèn hình vào giữa bài" }

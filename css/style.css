@@ -305,3 +305,50 @@ p{max-width:64ch}
 .form-ok h3{font-size:18px;margin-bottom:6px}
 .form-ok p{font-size:15px;color:var(--smoke)}
 .hp{position:absolute;left:-9999px}
+
+/* ---------- Menu có mục con ---------- */
+.has-sub{position:relative}
+.has-sub>a{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border-radius:999px;font-weight:500;font-size:15px}
+.has-sub>a:hover,.has-sub.is-active>a{background:var(--ink);color:var(--white)}
+.caret{font-size:10px;opacity:.7}
+.sub{position:absolute;top:100%;left:0;min-width:220px;background:var(--white);border:1px solid var(--mist);border-radius:12px;padding:8px;box-shadow:0 14px 34px rgba(60,40,20,.14);display:none;z-index:80}
+.has-sub:hover .sub,.has-sub:focus-within .sub{display:block}
+.sub a{display:block;padding:9px 12px;border-radius:8px;font-size:14px;font-weight:500;white-space:normal}
+.sub a:hover{background:var(--paper);color:var(--signal)}
+@media (max-width:900px){
+  .has-sub{width:100%}
+  .has-sub>a{width:100%;padding:12px 14px;font-size:18px;border-radius:0;justify-content:space-between}
+  .sub{position:static;display:block;border:0;box-shadow:none;background:transparent;padding:0 0 6px 14px;min-width:0}
+  .sub a{padding:8px 0;font-size:15px}
+}
+
+/* ---------- Tuyển dụng ---------- */
+.jobs{display:grid;gap:16px}
+.job{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;background:var(--white);border:1px solid var(--mist);border-radius:14px;padding:22px 24px;color:inherit;transition:transform .15s,box-shadow .15s}
+.job:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(60,40,20,.10)}
+.job h3{font-size:20px;margin-bottom:8px}
+.job p{color:var(--smoke);font-size:15px;margin-bottom:10px}
+.job-meta{display:flex;gap:8px;flex-wrap:wrap}
+.job-arrow{font-size:22px;color:var(--signal);flex:none}
+.job.is-closed{opacity:.6}
+@media (max-width:600px){.job{grid-template-columns:1fr}.job-arrow{display:none}}
+.prose blockquote{border-left:3px solid var(--pulse);padding-left:16px;margin:16px 0;color:var(--smoke)}
+.prose code{background:var(--mist);padding:2px 6px;border-radius:5px;font-size:14px}
+.prose hr{border:0;border-top:1px solid var(--mist);margin:28px 0}
+.prose a{text-decoration:underline;color:var(--signal)}
+.prose h2{font-size:26px}
+.prose h3{font-size:21px}
+.prose ul{list-style:disc}
+.prose ol{list-style:decimal}
+.prose li::marker{color:var(--signal)}
+.prose img{max-width:100%;height:auto;display:block}
+
+/* ---------- Nội dung có định dạng do admin chèn ---------- */
+.prose figure{margin:20px 0}
+.prose figure img{width:100%;height:auto;border-radius:var(--r)}
+.prose figcaption{font-size:13px;color:var(--smoke);margin-top:8px;font-style:italic}
+.prose p[data-rs]{max-width:none;margin-bottom:16px}
+.prose p[data-rs-btn]{margin:20px 0}
+.prose p[data-rs-btn] .btn{display:inline-flex}
+.prose .btn{text-decoration:none;color:#fff}
+.prose .btn--ghost{color:var(--ink)}

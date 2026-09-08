@@ -2,13 +2,15 @@
    layout.js — MENU + FOOTER. Thông tin liên hệ lấy từ
    content/site.json (sửa trong /admin). Menu sửa ở đây.
    ============================================================ */
-const MENU = [
-  ['Trang chủ', 'index.html'],
-  ['Giới thiệu', 'gioi-thieu.html'],
-  ['Dịch vụ', 'dich-vu.html'],
-  ['Dự án', 'du-an.html'],
-  ['Tin tức', 'tin-tuc.html'],
-  ['Liên hệ', 'lien-he.html'],
+/* Menu mặc định — dùng khi chưa có content/menu.json */
+const MENU_MACDINH = [
+  { label: 'Trang chủ', link: 'index.html', children: [] },
+  { label: 'Giới thiệu', link: 'gioi-thieu.html', children: [] },
+  { label: 'Dịch vụ', link: 'dich-vu.html', children: [] },
+  { label: 'Dự án', link: 'du-an.html', children: [] },
+  { label: 'Tin tức', link: 'tin-tuc.html', children: [] },
+  { label: 'Tuyển dụng', link: 'tuyen-dung.html', children: [] },
+  { label: 'Liên hệ', link: 'lien-he.html', children: [] },
 ];
 
 async function loadJSON(path) {
@@ -22,8 +24,21 @@ window.SITE_READY = (async () => {
   try { S = await loadJSON('content/site.json'); } catch (e) { console.warn('site.json', e); }
   window.SITE = S;
   const SLOGAN = (S.slogan === undefined || S.slogan === null) ? 'Sáng tạo để tạo dấu ấn' : S.slogan;
+  let MENU = MENU_MACDINH;
+  try { const m = await loadJSON('content/menu.json'); if (m && m.items && m.items.length) MENU = m.items; } catch (e) {}
+  window.MENU = MENU;
+
   const here = location.pathname.split('/').pop() || 'index.html';
-  const links = MENU.map(([t, h]) => `<a href="${h}" ${h === here ? 'class="is-active"' : ''}>${t}</a>`).join('');
+  const isHere = href => String(href || '').split('?')[0].split('#')[0] === here;
+  const links = MENU.map(m => {
+    const kids = (m.children || []).filter(k => k && k.label);
+    const active = isHere(m.link) || kids.some(k => isHere(k.link));
+    if (!kids.length) return `<a href="${m.link || '#'}" ${active ? 'class="is-active"' : ''}>${m.label}</a>`;
+    return `<div class="has-sub ${active ? 'is-active' : ''}">
+      <a href="${m.link || '#'}">${m.label}<span class="caret" aria-hidden="true">▾</span></a>
+      <div class="sub">${kids.map(k => `<a href="${k.link || '#'}">${k.label}</a>`).join('')}</div>
+    </div>`;
+  }).join('');
 
   document.getElementById('header').innerHTML = `
     <header class="header"><div class="wrap">
