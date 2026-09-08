@@ -152,7 +152,7 @@ async function renderServiceBlocks(sel, subnavSel) {
   const list = await getServices();
   if (subnavSel) document.querySelector(subnavSel).innerHTML = list.map(s => `<a href="#${esc(s.slug)}">${esc(s.title)}</a>`).join('');
   el.innerHTML = list.map((s, i) => `<section class="block two ${i % 2 ? 'flip' : ''}" id="${esc(s.slug)}">
-    <div><h2>${esc(s.title)}</h2><p class="lead" style="margin-top:16px">${esc(s.summary)}</p>
+    <div><h2>${esc(s.title)}</h2><div class="prose lead" style="margin-top:16px">${md(s.summary)}</div>
       <ul class="check">${(s.items || []).map(i => `<li>${esc(i)}</li>`).join('')}</ul>
       <div class="btn-row" style="margin-top:20px"><a class="btn btn--signal" href="dich-vu.html?id=${esc(s.slug)}">Chi tiết</a><a class="btn btn--ghost" href="lien-he.html">Gửi brief</a></div></div>
     ${phBlock(s)}
@@ -286,7 +286,7 @@ async function renderServiceDetail(listSel, detailSel) {
   d.innerHTML = `
     <section class="page-hero"><div class="wrap">
       <h1>${esc(s.title)}</h1>
-      <p class="lead">${esc(s.summary)}</p>
+      <div class="prose lead">${md(s.summary)}</div>
     </div></section>
     <section class="section"><div class="wrap detail">
       ${s.image ? `<div class="ph ph--wide"><img src="${esc(s.image)}" alt="${esc(s.title)}"></div>` : ''}
@@ -309,13 +309,13 @@ async function renderAbout() {
 
   const vm = document.getElementById('ab-vm');
   if (vm) vm.innerHTML = `
-    <div class="card"><h3>${esc(A.vision_title || 'Tầm nhìn')}</h3><p>${esc(A.vision_body)}</p></div>
-    <div class="card"><h3>${esc(A.mission_title || 'Sứ mệnh')}</h3><p>${esc(A.mission_body)}</p></div>`;
+    <div class="card"><h3>${esc(A.vision_title || 'Tầm nhìn')}</h3><div class="prose prose--sm">${md(A.vision_body)}</div></div>
+    <div class="card"><h3>${esc(A.mission_title || 'Sứ mệnh')}</h3><div class="prose prose--sm">${md(A.mission_body)}</div></div>`;
 
   set('ab-cap-title', A.cap_title);
   const cap = document.getElementById('ab-cap');
   if (cap) cap.innerHTML = (A.capabilities || []).map((c, i) =>
-    `<div class="row"><div class="num">${String(i + 1).padStart(2, '0')}</div><h3>${esc(c.title)}</h3><p>${esc(c.desc)}</p></div>`).join('');
+    `<div class="row"><div class="num">${String(i + 1).padStart(2, '0')}</div><h3>${esc(c.title)}</h3><div class="prose prose--sm">${md(c.desc)}</div></div>`).join('');
 
   set('ab-team-title', A.team_title);
   const team = document.getElementById('ab-team');

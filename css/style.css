@@ -358,3 +358,16 @@ p{max-width:64ch}
 .vm{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 @media (max-width:760px){.vm{grid-template-columns:1fr}}
 @media (max-width:600px){.stat span{font-size:9px}.stat b{font-size:24px}}
+
+/* Mô tả nhiều dòng trong Năng lực / Tầm nhìn / Sứ mệnh */
+.prose--sm p{font-size:15px;color:var(--smoke);margin-bottom:10px;max-width:none}
+.prose--sm p:last-child{margin-bottom:0}
+.prose--sm ul,.prose--sm ol{margin:0 0 10px;padding-left:20px}
+.prose--sm li{font-size:15px;color:var(--smoke);margin-bottom:6px}
+.card .prose--sm p,.card .prose--sm li{color:var(--smoke)}
+.row .prose--sm{margin:0}
+.prose.lead p{margin-bottom:12px}
+.prose.lead p:last-child{margin-bottom:0}
+.prose.lead ul{padding-left:20px;list-style:disc}
+/* Giữ xuống dòng cho các đoạn mô tả ngắn ở thẻ */
+.job p,.project .meta,.post p{white-space:pre-line}
