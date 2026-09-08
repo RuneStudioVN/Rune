@@ -17,47 +17,34 @@
 <body>
 <div id="header"></div>
 <section class="page-hero"><div class="wrap">
-  <h1>Đội content đứng cạnh chủ shop</h1>
-  <p class="lead">Rune Studio bắt đầu từ việc tự làm kênh cho mấy quán ở Biên Hòa. Giờ chúng tôi làm điều đó cho thương hiệu ở nhiều ngành, vẫn theo cách cũ: xuống tận nơi, quay thứ có thật.</p>
-  <div class="subnav"><a href="#about">About Rune Studio</a><a href="#vision">Vision / Mission</a><a href="#capabilities">Capabilities</a><a href="#team">Team</a><a href="#clients">Clients</a></div>
+  <h1 id="ab-title">Giới thiệu</h1>
+  <p class="lead" id="ab-lead"></p>
+  <div class="subnav"><a href="#about">Về tụi mình</a><a href="#vision">Tầm nhìn / Sứ mệnh</a><a href="#capabilities">Năng lực</a><a href="#team">Đội ngũ</a><a href="#clients">Khách hàng</a></div>
 </div></section>
 
 <div class="wrap">
-<section class="block two" id="about">
-  <div><h2>About Rune Studio</h2><p class="lead" style="margin-top:20px">Chúng tôi tin một kênh tốt phải nuôi được cửa hàng, không chỉ đẹp trên màn hình. Nên mọi thứ Rune Studio làm đều đo bằng hai trục: người xem có ở lại không, và người xem có thành khách không.</p></div>
-  <div class="ph ph--wide">Ảnh văn phòng / team</div>
+<section class="block two about-body" id="about">
+  <div><h2 id="ab-h2">Về Rune Studio</h2><div class="prose lead" id="ab-body" style="margin-top:20px"></div></div>
+  <div class="ph ph--wide" id="ab-img">Ảnh</div>
 </section>
 
 <section class="block" id="vision">
-  <div class="grid grid-2">
-    <div class="card"><h3>Tầm nhìn</h3><p>Trở thành đơn vị content video ngắn được chủ doanh nghiệp nhỏ và vừa ở miền Nam tin giao kênh trong 5 năm tới.</p></div>
-    <div class="card"><h3>Sứ mệnh</h3><p>Giúp thương hiệu Việt nói bằng giọng của chính họ trên mạng xã hội — thật, dễ hiểu, và ra khách.</p></div>
-  </div>
+  <div class="vm" id="ab-vm"></div>
 </section>
 
 <section class="block" id="capabilities">
-  <div class="head"><h2>Năng lực</h2></div>
-  <div class="rows">
-    <div class="row"><div class="num">01</div><h3>Chiến lược & kịch bản</h3><p>Nghiên cứu đối thủ, đọc comment, thiết kế cấu trúc kịch bản theo trục kích tương tác.</p></div>
-    <div class="row"><div class="num">02</div><h3>Sản xuất</h3><p>Quay bằng điện thoại và máy nhỏ, dựng theo quy trình tự động — tốc độ 5–10 video/tuần/kênh.</p></div>
-    <div class="row"><div class="num">03</div><h3>Vận hành & seeding</h3><p>Đăng đúng giờ, seeding có kịch bản, đo retention và điều chỉnh hàng tuần.</p></div>
-    <div class="row"><div class="num">04</div><h3>Design</h3><p>Nhận diện, key visual, social template để kênh nhìn là biết của ai.</p></div>
-  </div>
+  <div class="head"><h2 id="ab-cap-title">Năng lực</h2></div>
+  <div class="rows" id="ab-cap"></div>
 </section>
 
 <section class="block" id="team">
-  <div class="head"><h2>Đội ngũ</h2></div>
-  <div class="grid grid-4">
-    <div class="member"><div class="ph">Ảnh</div><h4>Tên thành viên</h4><span>Founder / Content Lead</span></div>
-    <div class="member"><div class="ph">Ảnh</div><h4>Tên thành viên</h4><span>Video Editor</span></div>
-    <div class="member"><div class="ph">Ảnh</div><h4>Tên thành viên</h4><span>Designer</span></div>
-    <div class="member"><div class="ph">Ảnh</div><h4>Tên thành viên</h4><span>Account / Vận hành</span></div>
-  </div>
+  <div class="head"><h2 id="ab-team-title">Đội ngũ</h2></div>
+  <div class="grid grid-4" id="ab-team"></div>
 </section>
 
 <section class="block" id="clients">
-  <div class="head"><h2>Khách hàng</h2></div>
-  <div class="clients"><div>Logo</div><div>Logo</div><div>Logo</div><div>Logo</div><div>Logo</div><div>Logo</div></div>
+  <div class="head"><h2 id="ab-clients-title">Khách hàng</h2></div>
+  <div class="clients" id="ab-clients"></div>
 </section>
 </div>
 
@@ -65,6 +52,7 @@
 <div id="footer"></div>
 <script src="js/layout.js"></script>
 <script src="js/main.js"></script>
+<script>SITE_READY.then(renderAbout);</script>
 
 </body>
 </html>

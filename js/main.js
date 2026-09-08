@@ -296,3 +296,34 @@ async function renderServiceDetail(listSel, detailSel) {
     </div></section>`;
   return true;
 }
+
+/* ---------- Trang Giới thiệu (đọc từ content/about.json) ---------- */
+async function renderAbout() {
+  let A; try { A = await loadJSON('content/about.json'); } catch (e) { return; }
+  const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.textContent = val; };
+  set('ab-title', A.hero_title); set('ab-lead', A.hero_lead);
+  set('ab-h2', A.about_title);
+  const body = document.getElementById('ab-body'); if (body) body.innerHTML = md(A.about_body);
+  const img = document.getElementById('ab-img');
+  if (img) img.innerHTML = A.about_image ? `<img src="${esc(A.about_image)}" alt="">` : 'Ảnh';
+
+  const vm = document.getElementById('ab-vm');
+  if (vm) vm.innerHTML = `
+    <div class="card"><h3>${esc(A.vision_title || 'Tầm nhìn')}</h3><p>${esc(A.vision_body)}</p></div>
+    <div class="card"><h3>${esc(A.mission_title || 'Sứ mệnh')}</h3><p>${esc(A.mission_body)}</p></div>`;
+
+  set('ab-cap-title', A.cap_title);
+  const cap = document.getElementById('ab-cap');
+  if (cap) cap.innerHTML = (A.capabilities || []).map((c, i) =>
+    `<div class="row"><div class="num">${String(i + 1).padStart(2, '0')}</div><h3>${esc(c.title)}</h3><p>${esc(c.desc)}</p></div>`).join('');
+
+  set('ab-team-title', A.team_title);
+  const team = document.getElementById('ab-team');
+  if (team) team.innerHTML = (A.team || []).map(m =>
+    `<div class="member"><div class="ph">${m.image ? `<img src="${esc(m.image)}" alt="${esc(m.name)}">` : 'Ảnh'}</div><h4>${esc(m.name)}</h4><span>${esc(m.role)}</span></div>`).join('');
+
+  set('ab-clients-title', A.clients_title);
+  const cl = document.getElementById('ab-clients');
+  if (cl) cl.innerHTML = (A.clients || []).map(c =>
+    `<div>${c.logo ? `<img src="${esc(c.logo)}" alt="${esc(c.name)}" style="max-height:44px;width:auto">` : esc(c.name || 'Logo')}</div>`).join('');
+}

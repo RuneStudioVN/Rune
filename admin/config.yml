@@ -80,6 +80,46 @@ collections:
           - { label: "Thẻ nổi bật — nút (link)", name: "highlight_link", widget: "string" }
           - { label: "Thẻ nổi bật — ảnh (ngang 16:9)", name: "highlight_image", widget: "image", required: false }
 
+
+      - name: "about"
+        label: "Trang Giới thiệu"
+        file: "content/about.json"
+        fields:
+          - { label: "Tiêu đề lớn đầu trang", name: "hero_title", widget: "string" }
+          - { label: "Mô tả dưới tiêu đề", name: "hero_lead", widget: "text" }
+          - { label: "Khối giới thiệu — tiêu đề", name: "about_title", widget: "string" }
+          - { label: "Khối giới thiệu — nội dung (chèn ảnh tuỳ ý)", name: "about_body", widget: "markdown" }
+          - { label: "Khối giới thiệu — ảnh bên phải", name: "about_image", widget: "image", required: false }
+          - { label: "Tầm nhìn — tiêu đề", name: "vision_title", widget: "string" }
+          - { label: "Tầm nhìn — nội dung", name: "vision_body", widget: "text" }
+          - { label: "Sứ mệnh — tiêu đề", name: "mission_title", widget: "string" }
+          - { label: "Sứ mệnh — nội dung", name: "mission_body", widget: "text" }
+          - { label: "Năng lực — tiêu đề mục", name: "cap_title", widget: "string" }
+          - label: "Năng lực (thêm/xoá tuỳ ý)"
+            name: "capabilities"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Tên năng lực", name: "title", widget: "string" }
+              - { label: "Mô tả", name: "desc", widget: "text" }
+          - { label: "Đội ngũ — tiêu đề mục", name: "team_title", widget: "string" }
+          - label: "Thành viên (thêm/xoá tuỳ ý)"
+            name: "team"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "Tên", name: "name", widget: "string" }
+              - { label: "Vai trò", name: "role", widget: "string" }
+              - { label: "Ảnh (dọc 3:4)", name: "image", widget: "image", required: false }
+          - { label: "Khách hàng — tiêu đề mục", name: "clients_title", widget: "string" }
+          - label: "Logo khách hàng (thêm/xoá tuỳ ý)"
+            name: "clients"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "Tên khách hàng", name: "name", widget: "string" }
+              - { label: "Logo", name: "logo", widget: "image", required: false }
+
       - name: "services"
         label: "Dịch vụ"
         file: "content/services.json"
