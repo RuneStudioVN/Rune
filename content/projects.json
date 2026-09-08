@@ -1,8 +1,94 @@
-{"projects": [
-  {"title": "Gánh Kèo Nè — Kênh TikTok quán nhậu Biên Hòa", "slug": "ganh-keo-ne", "category": "fnb", "client": "Gánh Kèo Nè", "services": ["TikTok", "Content"], "result": "1.2M view/tháng", "image": "", "video": "", "featured": true, "body": "**Vấn đề:** quán đẹp, không ai biết.\n\n**Cách làm:** 3 tuần đầu chỉ quay món và phản ứng khách thật, tuần 4 mới lộ chủ.\n\n**Kết quả:** 1.2M view/tháng, đặt bàn qua TikTok chiếm 40%."},
-  {"title": "Elika by Mr. Đế — Hành trình mở quán", "slug": "elika", "category": "fnb", "client": "Elika", "services": ["Content", "Vận hành kênh"], "result": "38K follower trong 4 tháng", "image": "", "video": "", "featured": true, "body": "Mô tả dự án (sửa trong admin)."},
-  {"title": "TTP Plastic — Video vật liệu xây dựng", "slug": "ttp-plastic", "category": "retail", "client": "TTP Plastic", "services": ["TikTok", "Production"], "result": "Tăng 3x tin nhắn báo giá", "image": "", "video": "", "featured": true, "body": "Mô tả dự án (sửa trong admin)."},
-  {"title": "Mr Đế Mobile — Series rep comment iPhone", "slug": "mr-de-mobile", "category": "technology", "client": "Mr Đế Mobile", "services": ["Content", "Personal Branding"], "result": "Series 40+ tập", "image": "", "video": "", "featured": true, "body": "Mô tả dự án (sửa trong admin)."},
-  {"title": "Tran Anh The Home — Homestay cặp đôi", "slug": "tran-anh-the-home", "category": "wedding", "client": "Tran Anh The Home", "services": ["TikTok", "Design"], "result": "Kín phòng cuối tuần", "image": "", "video": "", "featured": false, "body": "Mô tả dự án (sửa trong admin)."},
-  {"title": "Thương hiệu mỹ phẩm — KOC seeding", "slug": "my-pham-koc", "category": "beauty", "client": "Đang cập nhật", "services": ["KOC / UGC"], "result": "120 video UGC", "image": "", "video": "", "featured": false, "body": "Mô tả dự án (sửa trong admin)."}
-]}
+{
+  "projects": [
+    {
+      "body": "**Vấn đề:** quán đẹp, không ai biết.\n\n**Cách làm:** 3 tuần đầu chỉ quay món và phản ứng khách thật, tuần 4 mới lộ chủ.\n\n**Kết quả:** 1.2M view/tháng, đặt bàn qua TikTok chiếm 40%.",
+      "slug": "ganh-keo-ne",
+      "client": "Gánh Kèo Nè",
+      "featured": true,
+      "title": "Gánh Kèo Nè — Kênh TikTok quán nhậu Biên Hòa",
+      "video": "",
+      "image": "",
+      "result": "1.2M view/tháng",
+      "services": [
+        "TikTok",
+        "Fanpage",
+        "Marketing (Full-stack)"
+      ],
+      "category": "fnb"
+    },
+    {
+      "body": "Mô tả dự án (sửa trong admin).",
+      "slug": "elika",
+      "client": "Elika",
+      "featured": true,
+      "title": "Elika by Mr. Đế — Hành trình mở quán",
+      "video": "",
+      "image": "",
+      "result": "38K follower trong 4 tháng",
+      "services": [
+        "Content",
+        "Vận hành kênh"
+      ],
+      "category": "fnb"
+    },
+    {
+      "body": "Mô tả dự án (sửa trong admin).",
+      "slug": "ttp-plastic",
+      "client": "TTP Plastic",
+      "featured": true,
+      "title": "TTP Plastic — Video vật liệu xây dựng",
+      "video": "",
+      "image": "",
+      "result": "Tăng 3x tin nhắn báo giá",
+      "services": [
+        "TikTok",
+        "Production"
+      ],
+      "category": "retail"
+    },
+    {
+      "body": "Mô tả dự án (sửa trong admin).",
+      "slug": "mr-de-mobile",
+      "client": "Mr Đế Mobile",
+      "featured": true,
+      "title": "Mr Đế Mobile — Series rep comment iPhone",
+      "video": "",
+      "image": "",
+      "result": "Series 40+ tập",
+      "services": [
+        "Content",
+        "Personal Branding"
+      ],
+      "category": "technology"
+    },
+    {
+      "body": "Mô tả dự án (sửa trong admin).",
+      "slug": "tran-anh-the-home",
+      "client": "Tran Anh The Home",
+      "featured": false,
+      "title": "Tran Anh The Home — Homestay cặp đôi",
+      "video": "",
+      "image": "",
+      "result": "Kín phòng cuối tuần",
+      "services": [
+        "TikTok",
+        "Design"
+      ],
+      "category": "wedding"
+    },
+    {
+      "body": "Mô tả dự án (sửa trong admin).",
+      "slug": "my-pham-koc",
+      "client": "Đang cập nhật",
+      "featured": false,
+      "title": "Thương hiệu mỹ phẩm — KOC seeding",
+      "video": "",
+      "image": "",
+      "result": "120 video UGC",
+      "services": [
+        "KOC / UGC"
+      ],
+      "category": "beauty"
+    }
+  ]
+}
