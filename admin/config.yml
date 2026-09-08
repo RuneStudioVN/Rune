@@ -81,6 +81,110 @@ collections:
           - { label: "Thẻ nổi bật — ảnh (ngang 16:9)", name: "highlight_image", widget: "image", required: false }
 
 
+
+      - name: "home"
+        label: "Trang chủ (các khối bên dưới)"
+        file: "content/home.json"
+        fields:
+          - { label: "▸ Khối giới thiệu — tiêu đề", name: "about_title", widget: "string" }
+          - { label: "Khối giới thiệu — nội dung", name: "about_body", widget: "text" }
+          - { label: "Khối giới thiệu — chữ nút", name: "about_btn", widget: "string", required: false }
+          - { label: "Khối giới thiệu — link nút", name: "about_btn_link", widget: "string", required: false }
+          - { label: "Khối giới thiệu — ảnh", name: "about_image", widget: "image", required: false }
+
+          - { label: "▸ Dịch vụ — tiêu đề", name: "services_title", widget: "string" }
+          - { label: "Dịch vụ — mô tả", name: "services_lead", widget: "text" }
+
+          - { label: "▸ Giải pháp — tiêu đề", name: "solutions_title", widget: "string" }
+          - label: "Giải pháp theo giai đoạn (thêm/xoá tuỳ ý)"
+            name: "solutions"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Tiêu đề", name: "title", widget: "string" }
+              - { label: "Mô tả", name: "desc", widget: "text" }
+              - { label: "Link khi bấm vào tiêu đề", name: "link", widget: "string", required: false, hint: "Bỏ trống = không bấm được" }
+
+          - { label: "▸ Dự án tiêu biểu — tiêu đề", name: "projects_title", widget: "string" }
+          - { label: "Dự án tiêu biểu — chữ nút", name: "projects_btn", widget: "string" }
+
+          - { label: "▸ Ngành đã làm — tiêu đề", name: "industries_title", widget: "string" }
+          - { label: "Ngành đã làm — mô tả", name: "industries_lead", widget: "text" }
+          - label: "Danh sách ngành (thêm/xoá tuỳ ý)"
+            name: "industries"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "Tên ngành", name: "name", widget: "string" }
+              - { label: "Mô tả ngắn", name: "desc", widget: "string" }
+              - { label: "Link", name: "link", widget: "string", hint: "VD: du-an.html?cat=fnb" }
+
+          - { label: "▸ Hệ sinh thái TikTok — tiêu đề", name: "tiktok_title", widget: "string" }
+          - { label: "TikTok — mô tả", name: "tiktok_lead", widget: "text" }
+          - label: "TikTok — các gạch đầu dòng"
+            name: "tiktok_items"
+            widget: "list"
+            summary: "{{fields.text}}"
+            fields:
+              - { label: "Nội dung", name: "text", widget: "string" }
+          - { label: "TikTok — chữ nút", name: "tiktok_btn", widget: "string", required: false }
+          - { label: "TikTok — link nút", name: "tiktok_btn_link", widget: "string", required: false }
+          - label: "TikTok — 3 ảnh dọc"
+            name: "tiktok_images"
+            widget: "list"
+            fields:
+              - { label: "Ảnh (dọc 9:16)", name: "image", widget: "image", required: false }
+
+          - { label: "▸ Gallery — tiêu đề", name: "gallery_title", widget: "string" }
+          - { label: "Gallery — chữ nút", name: "gallery_btn", widget: "string", required: false }
+          - { label: "Gallery — link nút", name: "gallery_btn_link", widget: "string", required: false }
+          - label: "Ảnh gallery (thêm/xoá tuỳ ý)"
+            name: "gallery"
+            widget: "list"
+            summary: "{{fields.caption}}"
+            fields:
+              - { label: "Chú thích", name: "caption", widget: "string", required: false }
+              - { label: "Ảnh", name: "image", widget: "image", required: false }
+              - { label: "Link khi bấm vào ảnh", name: "link", widget: "string", required: false, hint: "Bỏ trống = không bấm được" }
+
+          - { label: "▸ Case study — tiêu đề", name: "cases_title", widget: "string" }
+          - label: "Case study (thêm/xoá tuỳ ý)"
+            name: "cases"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Nhãn ngành", name: "tag", widget: "string", required: false }
+              - { label: "Tiêu đề", name: "title", widget: "string" }
+              - { label: "Nội dung", name: "desc", widget: "text" }
+              - { label: "Chữ nút", name: "btn", widget: "string", required: false }
+              - { label: "Link nút", name: "link", widget: "string", required: false }
+
+          - label: "▸ Con số (thêm/xoá tuỳ ý)"
+            name: "numbers"
+            widget: "list"
+            summary: "{{fields.value}} — {{fields.label}}"
+            fields:
+              - { label: "Số", name: "value", widget: "string" }
+              - { label: "Chú thích", name: "label", widget: "string" }
+
+          - { label: "▸ Khách hàng — tiêu đề", name: "clients_title", widget: "string" }
+          - label: "Logo khách hàng (thêm/xoá tuỳ ý)"
+            name: "clients"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "Tên", name: "name", widget: "string" }
+              - { label: "Logo", name: "logo", widget: "image", required: false }
+              - { label: "Link website khách hàng", name: "link", widget: "string", required: false }
+
+          - { label: "▸ Tin tức — tiêu đề", name: "posts_title", widget: "string" }
+          - { label: "Tin tức — chữ nút", name: "posts_btn", widget: "string" }
+
+          - { label: "▸ Khối kêu gọi cuối trang — tiêu đề", name: "cta_title", widget: "string" }
+          - { label: "Khối kêu gọi — mô tả", name: "cta_lead", widget: "text", required: false }
+          - { label: "Khối kêu gọi — chữ nút", name: "cta_btn", widget: "string" }
+          - { label: "Khối kêu gọi — link nút", name: "cta_btn_link", widget: "string" }
+
       - name: "about"
         label: "Trang Giới thiệu"
         file: "content/about.json"

@@ -145,7 +145,7 @@ async function renderPostDetail(listSel, detailSel) {
 /* Dịch vụ: thẻ ngắn (trang chủ) và khối chi tiết (trang Dịch vụ) */
 async function renderServiceCards(sel) {
   const el = document.querySelector(sel); if (!el) return;
-  el.innerHTML = (await getServices()).map(s => `<div class="card"><h3>${esc(s.title)}</h3><p>${esc(s.summary)}</p><a class="btn btn--ghost" href="dich-vu.html#${esc(s.slug)}">Chi tiết</a></div>`).join('');
+  el.innerHTML = (await getServices()).map(s => `<div class="card"><h3>${esc(s.title)}</h3><p>${esc(s.summary)}</p><a class="btn btn--ghost" href="dich-vu.html?id=${esc(s.slug)}">Chi tiết</a></div>`).join('');
 }
 async function renderServiceBlocks(sel, subnavSel) {
   const el = document.querySelector(sel); if (!el) return;
@@ -326,4 +326,65 @@ async function renderAbout() {
   const cl = document.getElementById('ab-clients');
   if (cl) cl.innerHTML = (A.clients || []).map(c =>
     `<div>${c.logo ? `<img src="${esc(c.logo)}" alt="${esc(c.name)}" style="max-height:44px;width:auto">` : esc(c.name || 'Logo')}</div>`).join('');
+}
+
+/* ---------- Trang chủ (đọc từ content/home.json) ---------- */
+async function renderHome() {
+  let H; try { H = await loadJSON('content/home.json'); } catch (e) { return; }
+  const $ = id => document.getElementById(id);
+  const txt = (id, v) => { const el = $(id); if (el) el.textContent = v || ''; };
+  const btn = (id, label, link) => { const el = $(id); if (!el) return; if (label) { el.textContent = label; if (link) el.href = link; } else el.style.display = 'none'; };
+  const phOrImg = (src, cls, alt) => `<div class="ph ${cls || ''}">${src ? `<img src="${esc(src)}" alt="${esc(alt || '')}">` : esc(alt || 'Ảnh')}</div>`;
+
+  txt('h-about-title', H.about_title);
+  if ($('h-about-body')) $('h-about-body').innerHTML = md(H.about_body);
+  btn('h-about-btn', H.about_btn, H.about_btn_link);
+  if ($('h-about-img')) $('h-about-img').outerHTML = phOrImg(H.about_image, 'ph ph--wide', 'Ảnh').replace('<div class="ph ph ph--wide"', '<div id="h-about-img" class="ph ph--wide"');
+
+  txt('h-svc-title', H.services_title); txt('h-svc-lead', H.services_lead);
+
+  txt('h-sol-title', H.solutions_title);
+  if ($('h-solutions')) $('h-solutions').innerHTML = (H.solutions || []).map((s, i) =>
+    `<div class="row"><div class="num">${String(i + 1).padStart(2, '0')}</div><h3>${s.link ? `<a href="${esc(s.link)}">${esc(s.title)}</a>` : esc(s.title)}</h3><div class="prose prose--sm">${md(s.desc)}</div></div>`).join('');
+
+  txt('h-prj-title', H.projects_title); btn('h-prj-btn', H.projects_btn, 'du-an.html');
+
+  txt('h-ind-title', H.industries_title); txt('h-ind-lead', H.industries_lead);
+  if ($('h-industries')) $('h-industries').innerHTML = (H.industries || []).map(x =>
+    `<a class="card" href="${esc(x.link || '#')}"><h3>${esc(x.name)}</h3><p>${esc(x.desc)}</p></a>`).join('');
+
+  txt('h-tt-title', H.tiktok_title);
+  if ($('h-tt-lead')) $('h-tt-lead').innerHTML = md(H.tiktok_lead);
+  if ($('h-tt-items')) $('h-tt-items').innerHTML = (H.tiktok_items || []).map(i => `<li>${esc(i.text)}</li>`).join('');
+  btn('h-tt-btn', H.tiktok_btn, H.tiktok_btn_link);
+  if ($('h-tt-imgs')) $('h-tt-imgs').innerHTML = (H.tiktok_images || []).map(i => phOrImg(i.image, 'ph--9x16 ph--dark', 'Video')).join('');
+
+  txt('h-gal-title', H.gallery_title); btn('h-gal-btn', H.gallery_btn, H.gallery_btn_link);
+  if ($('h-gallery')) $('h-gallery').innerHTML = (H.gallery || []).map(g => {
+    const box = phOrImg(g.image, 'ph--square', g.caption);
+    return g.link ? `<a href="${esc(g.link)}" class="gal-link">${box}</a>` : box;
+  }).join('');
+
+  txt('h-case-title', H.cases_title);
+  if ($('h-cases')) $('h-cases').innerHTML = (H.cases || []).map(c =>
+    `<div class="card card--link" ${c.link ? `data-href="${esc(c.link)}"` : ''}>${c.tag ? `<span class="tag tag--signal">${esc(c.tag)}</span>` : ''}
+      <h3>${esc(c.title)}</h3><div class="prose prose--sm">${md(c.desc)}</div>
+      ${c.btn ? `<a class="btn btn--ghost" href="${esc(c.link || '#')}">${esc(c.btn)}</a>` : ''}</div>`).join('');
+  document.querySelectorAll('.card--link[data-href]').forEach(el => {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', e => { if (!e.target.closest('a')) location.href = el.dataset.href; });
+  });
+
+  if ($('h-numbers')) $('h-numbers').innerHTML = (H.numbers || []).map(n =>
+    `<div><b>${esc(n.value)}</b><span>${esc(n.label)}</span></div>`).join('');
+
+  txt('h-cli-title', H.clients_title);
+  if ($('h-clients')) $('h-clients').innerHTML = (H.clients || []).map(c => {
+    const inner = c.logo ? `<img src="${esc(c.logo)}" alt="${esc(c.name)}" style="max-height:44px;width:auto">` : esc(c.name || 'Logo');
+    return c.link ? `<a href="${esc(c.link)}" target="_blank" rel="noopener"><div>${inner}</div></a>` : `<div>${inner}</div>`;
+  }).join('');
+
+  txt('h-post-title', H.posts_title); btn('h-post-btn', H.posts_btn, 'tin-tuc.html');
+
+  txt('h-cta-title', H.cta_title); txt('h-cta-lead', H.cta_lead); btn('h-cta-btn', H.cta_btn, H.cta_btn_link);
 }

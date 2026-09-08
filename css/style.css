@@ -371,3 +371,11 @@ p{max-width:64ch}
 .prose.lead ul{padding-left:20px;list-style:disc}
 /* Giữ xuống dòng cho các đoạn mô tả ngắn ở thẻ */
 .job p,.project .meta,.post p{white-space:pre-line}
+
+.gal-link{display:block}
+.gal-link .ph{transition:transform .15s}
+.gal-link:hover .ph{transform:scale(1.02)}
+.clients a{display:block}
+.row h3 a{text-decoration:none}
+.row h3 a:hover{color:var(--signal)}
+.card--link[data-href]:hover{box-shadow:0 12px 30px rgba(60,40,20,.10)}

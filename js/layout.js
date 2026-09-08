@@ -116,7 +116,7 @@ window.SITE_READY = (async () => {
   try {
     const { services } = await loadJSON('content/services.json');
     const ul = document.getElementById('footer-services');
-    if (ul) ul.innerHTML = services.map(s => `<li><a href="dich-vu.html#${s.slug}">${s.title}</a></li>`).join('');
+    if (ul) ul.innerHTML = services.map(s => `<li><a href="dich-vu.html?id=${s.slug}">${s.title}</a></li>`).join('');
   } catch (e) {}
   return S;
 })();
