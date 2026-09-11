@@ -59,7 +59,7 @@ function md(src) {
     if (/^\s*<(p|div|h[1-6]|ul|ol|li|figure|img|blockquote|hr|table|iframe|span|section)\b/i.test(line)) { flushAll(); out.push(line); continue; }
     let mm;
     if (/^\s*(---|\*\*\*|___)\s*$/.test(line)) { flushAll(); out.push('<hr>'); continue; }
-    if ((mm = line.match(/^(#{1,4})\s+(.*)$/))) { flushAll(); const lv = mm[1].length + 1; out.push(`<h${lv}>${inline(mm[2])}</h${lv}>`); continue; }
+    if ((mm = line.match(/^(#{1,6})\s+(.*)$/))) { flushAll(); const lv = Math.min(mm[1].length + 1, 4); out.push(`<h${lv}>${inline(mm[2])}</h${lv}>`); continue; }
     if ((mm = line.match(/^\s*>\s?(.*)$/))) { flushPara(); flushList(); quote.push(mm[1]); continue; }
     if ((mm = line.match(/^\s*[-*+]\s+(.*)$/))) { flushPara(); flushQuote(); if (!list || list.tag !== 'ul') { flushList(); list = { tag: 'ul', items: [] }; } list.items.push(mm[1]); continue; }
     if ((mm = line.match(/^\s*\d+[.)]\s+(.*)$/))) { flushPara(); flushQuote(); if (!list || list.tag !== 'ol') { flushList(); list = { tag: 'ol', items: [] }; } list.items.push(mm[1]); continue; }
@@ -140,6 +140,7 @@ async function renderProjectDetail(listSel, detailSel) {
       <div class="prose">${md(p.body)}</div>
       <div class="btn-row" style="margin-top:32px"><a class="btn btn--ghost" href="du-an.html">← Tất cả dự án</a><a class="btn btn--signal" href="lien-he.html">Gửi brief dự án</a></div>
     </div></section>`;
+  buildTOC('#project-detail');
   return true;
 }
 
@@ -170,6 +171,7 @@ async function renderPostDetail(listSel, detailSel) {
       <div class="prose">${md(p.body)}</div>
       <div class="btn-row" style="margin-top:32px"><a class="btn btn--ghost" href="tin-tuc.html">← Tất cả bài viết</a></div>
     </div></section>`;
+  buildTOC('#post-detail');
   return true;
 }
 
@@ -314,6 +316,7 @@ async function renderJobDetail(listSel, detailSel) {
       <div class="prose">${md(j.body)}</div>
       <div class="btn-row" style="margin-top:32px"><a class="btn btn--signal" href="lien-he.html">Ứng tuyển</a><a class="btn btn--ghost" href="tuyen-dung.html">← Tất cả vị trí</a></div>
     </div></section>`;
+  buildTOC('#job-detail');
   return true;
 }
 
@@ -335,6 +338,7 @@ async function renderServiceDetail(listSel, detailSel) {
       <div class="prose" style="margin-top:24px">${md(s.body)}</div>
       <div class="btn-row" style="margin-top:32px"><a class="btn btn--signal" href="lien-he.html">Gửi brief</a><a class="btn btn--ghost" href="dich-vu.html">← Tất cả dịch vụ</a></div>
     </div></section>`;
+  buildTOC('#svc-detail');
   return true;
 }
 
@@ -566,3 +570,69 @@ async function renderBriefFields(sel) {
   window.addEventListener('load', sweep);
   setTimeout(sweep, 1500);
 })();
+
+/* ---------- Mục lục bên trái cho trang bài dài ---------- */
+function buildTOC(rootSel) {
+  const wrap = document.querySelector(rootSel + ' .detail');
+  if (!wrap || wrap.classList.contains('with-toc')) return;
+  const prose = wrap.querySelector('.prose');
+  if (!prose) return;
+  const heads = [...prose.querySelectorAll('h2, h3, h4')];
+  if (heads.length < 2) return;
+  const minLv = Math.min(...heads.map(h => +h.tagName[1]));
+
+  const slugify = s => norm(s).slice(0, 60) || 'muc';
+  const used = {};
+  heads.forEach(h => {
+    let id = slugify(h.textContent);
+    if (used[id]) { used[id]++; id += '-' + used[id]; } else used[id] = 1;
+    h.id = id;
+    h.classList.add('toc-target');
+  });
+
+  // gom nội dung hiện có vào một cột
+  const main = document.createElement('div');
+  main.className = 'detail-main';
+  while (wrap.firstChild) main.appendChild(wrap.firstChild);
+
+  const aside = document.createElement('aside');
+  aside.className = 'toc';
+  aside.innerHTML = '<div class="toc-title">Trong bài này</div><nav>' +
+    heads.map(h => `<a href="#${h.id}" class="${+h.tagName[1] > minLv ? 'toc-sub' : ''}">${esc(h.textContent)}</a>`).join('') +
+    '</nav>';
+
+  wrap.classList.add('with-toc');
+  wrap.appendChild(aside);
+  wrap.appendChild(main);
+
+  const links = [...aside.querySelectorAll('a')];
+  links.forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.getElementById(a.getAttribute('href').slice(1));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }));
+
+  // đánh dấu mục đang đọc
+  if ('IntersectionObserver' in window) {
+    const mark = id => links.forEach(a => a.classList.toggle('is-now', a.getAttribute('href') === '#' + id));
+    const seen = new Set();
+    const ids = heads.map(h => h.id);
+    const update = () => {
+      // chạm đáy trang -> sáng mục cuối
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) { mark(ids[ids.length - 1]); return; }
+      const first = ids.find(id => seen.has(id));
+      if (first) { mark(first); return; }
+      // không mục nào trong tầm nhìn -> lấy mục gần nhất phía trên
+      let cur = ids[0];
+      heads.forEach(h => { if (h.getBoundingClientRect().top <= 120) cur = h.id; });
+      mark(cur);
+    };
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => en.isIntersecting ? seen.add(en.target.id) : seen.delete(en.target.id));
+      update();
+    }, { rootMargin: '-90px 0px -60% 0px', threshold: 0 });
+    heads.forEach(h => io.observe(h));
+    window.addEventListener('scroll', update, { passive: true });
+    mark(ids[0]);
+  }
+}
