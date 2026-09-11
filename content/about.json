@@ -6,32 +6,35 @@
   "about_title": "Về Rune Studio",
   "clients": [
     {
-      "name": "Logo",
-      "logo": ""
+      "name": "DA Design",
+      "logo": "assets/uploads/464238907_390312577485204_7810207233776144933_n.jpg"
     },
     {
-      "name": "Logo",
-      "logo": ""
+      "name": "Charles Wembley",
+      "logo": "assets/uploads/126493224_2326971044094063_3802776731306908617_n.jpg"
     },
     {
-      "name": "Logo",
-      "logo": ""
+      "name": "TTP Plastic",
+      "logo": "assets/uploads/649135203_122132506077080036_4902807905796910754_n.jpg"
     },
     {
-      "name": "Logo",
-      "logo": ""
+      "name": "POM Again",
+      "logo": "assets/uploads/ảnh-màn-hình-2026-09-11-lúc-15.53.12.png"
     },
     {
-      "name": "Logo",
-      "logo": ""
+      "name": "Aura Academy",
+      "logo": "assets/uploads/546630420_122237187608160910_8940967728716341313_n.jpg"
     },
     {
-      "name": "Logo",
-      "logo": ""
+      "name": "Gánh Kèo Nè",
+      "logo": "assets/uploads/ảnh-màn-hình-2026-09-11-lúc-15.37.56.png"
     }
   ],
+  "cta_link": "lien-he.html",
   "about_image": "",
+  "cta_title": "Bắt đầu từ một tin nhắn",
   "cap_title": "Năng lực",
+  "cta_btn": "Nhắn Runestudio để cùng gặp nhau nhé ^^",
   "hero_title": "Đội ngũ content thực chiến cùng doanh nghiệp",
   "about_body": "Một kênh truyền thông thành công là kênh tạo ra giá trị chuyển đổi. Tại Rune, chúng tôi không chạy theo những chỉ số ảo. Mọi chiến lược và thước phim đều phải trả lời được hai câu hỏi cốt lõi: Khán giả có bị thu hút không, và họ có sẵn sàng chi tiền không?",
   "mission_body": "Rút ngắn khoảng cách giữa thương hiệu và người tiêu dùng thông qua những thước phim nguyên bản. Rune Studio ở đây để giải quyết bài toán hóc búa nhất: biến sự chú ý thoáng qua thành niềm tin để khách hàng chịu mở hầu bao.",
@@ -59,6 +62,7 @@
     }
   ],
   "vision_body": "Trở thành bệ phóng truyền thông đáng tin cậy cho các thương hiệu đa ngành, đi từ thực tế kinh doanh để neo đậu vào tâm trí khách hàng.",
+  "vm_nav": "Tầm nhìn / Sứ mệnh",
   "team": [
     {
       "name": "Mr. Kuro",
