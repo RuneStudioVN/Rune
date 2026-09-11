@@ -23,6 +23,18 @@
     {
       "code": "design",
       "name": "Design"
+    },
+    {
+      "name": "Technology",
+      "code": "Technology"
+    },
+    {
+      "name": "Personal Brand",
+      "code": "Personal Brand"
+    },
+    {
+      "name": "B2B",
+      "code": "B2B"
     }
   ]
 }
