@@ -1,109 +1,91 @@
 {
-  "about_title": "Chúng tôi là đội làm content đứng cạnh chủ shop",
-  "about_body": "Không phải agency ngồi xa. Rune Studio xuống quán, ra công trình, vào kho — quay bằng thứ có thật của bạn, viết bằng giọng bạn hay nói.",
-  "about_btn": "Về Rune Studio",
-  "about_btn_link": "gioi-thieu.html",
-  "about_image": "",
-  "services_title": "Dịch vụ",
-  "services_lead": "Chọn một mảng, hoặc để Rune Studio ghép trọn gói theo mục tiêu kinh doanh.",
-  "solutions_title": "Giải pháp theo giai đoạn",
-  "solutions": [
+  "clients_title": "Khách hàng",
+  "tiktok_lead": "Rune không đi bán thứ mình chưa từng tự làm. Kênh này Rune tự dựng, tự viết, tự quay — bằng đúng cách đang làm cho khách.",
+  "tiktok_btn_link": "https://www.tiktok.com/@rune.story",
+  "cases": [],
+  "about_title": "Đội ngũ content thực chiến cùng doanh nghiệp",
+  "clients": [
     {
-      "title": "Chưa có kênh",
-      "desc": "Chọn nền tảng, dựng nhận diện, làm 30 video đầu tiên để kênh có nhịp và có dữ liệu."
+      "name": "Logo",
+      "logo": ""
     },
     {
-      "title": "Có kênh, không ra khách",
-      "desc": "Đọc lại retention và comment, tách trục view và trục chuyển đổi, sửa cấu trúc kịch bản."
+      "name": "Logo",
+      "logo": ""
     },
     {
-      "title": "Muốn mở rộng",
-      "desc": "Nhân bản sang KOC/UGC, kênh cá nhân của chủ, chiến dịch design đồng bộ đa nền tảng."
+      "name": "Logo",
+      "logo": ""
+    },
+    {
+      "name": "Logo",
+      "logo": ""
+    },
+    {
+      "name": "Logo",
+      "logo": ""
+    },
+    {
+      "name": "Logo",
+      "logo": ""
     }
   ],
-  "projects_title": "Dự án tiêu biểu",
-  "projects_btn": "Tất cả dự án",
-  "industries_title": "Ngành đã làm",
-  "industries_lead": "Mỗi ngành có một kiểu khách, một kiểu hook. Rune Studio không dùng chung một khuôn.",
-  "industries": [
+  "about_image": "https://www.facebook.com/Runestudio.art",
+  "cta_title": "Liên hệ Runestudio để gỡ rối, Runestudio phản hồi trong 24 giờ.",
+  "numbers": [
     {
-      "name": "F&B",
-      "desc": "Quán ăn, quán nhậu, trà sữa, cà phê.",
-      "link": "du-an.html?cat=fnb"
+      "value": "60+",
+      "label": "dự án đã triển khai"
     },
     {
-      "name": "Beauty",
-      "desc": "Mỹ phẩm, spa, clinic.",
-      "link": "du-an.html?cat=beauty"
+      "value": "25M+",
+      "label": "lượt xem tạo ra cho khách"
     },
     {
-      "name": "Technology",
-      "desc": "Điện thoại, thiết bị, dịch vụ số.",
-      "link": "du-an.html?cat=technology"
+      "value": "9",
+      "label": "ngành hàng"
     },
     {
-      "name": "Wedding",
-      "desc": "Studio, homestay cặp đôi, tiệc cưới.",
-      "link": "du-an.html?cat=wedding"
-    },
-    {
-      "name": "Fashion",
-      "desc": "Local brand, shop thời trang.",
-      "link": "du-an.html?cat=fashion"
-    },
-    {
-      "name": "Education",
-      "desc": "Trung tâm, giáo viên, khoá học.",
-      "link": "du-an.html?cat=education"
-    },
-    {
-      "name": "Retail",
-      "desc": "Bán lẻ, vật liệu, showroom.",
-      "link": "du-an.html?cat=retail"
-    },
-    {
-      "name": "Personal Brand",
-      "desc": "Chủ doanh nghiệp, chuyên gia.",
-      "link": "du-an.html?cat=personal"
-    },
-    {
-      "name": "Design",
-      "desc": "Branding, key visual, campaign.",
-      "link": "du-an.html?cat=design"
+      "value": "3 năm",
+      "label": "tập trung vào video ngắn"
     }
   ],
-  "tiktok_title": "Hệ sinh thái TikTok",
-  "tiktok_lead": "Không chỉ đăng video. Kênh, creator, tài khoản, seeding và shop — Rune Studio nối tất cả thành một vòng.",
-  "tiktok_items": [
-    {
-      "text": "Xây dựng & vận hành kênh"
-    },
-    {
-      "text": "TikTok Content theo tuần"
-    },
-    {
-      "text": "Creator / KOC / UGC"
-    },
-    {
-      "text": "TikTok Account & tài nguyên"
-    }
-  ],
-  "tiktok_btn": "Xem mảng TikTok",
-  "tiktok_btn_link": "dich-vu.html",
-  "tiktok_images": [
-    {
-      "image": ""
-    },
-    {
-      "image": ""
-    },
-    {
-      "image": ""
-    }
-  ],
-  "gallery_title": "Creative Gallery",
-  "gallery_btn": "Xem gallery",
   "gallery_btn_link": "du-an.html?cat=design",
+  "about_btn": "Về Rune Studio",
+  "ticker": [
+    {
+      "highlight": true,
+      "text": "Mentor 1:1 & Cố vấn kênh"
+    },
+    {
+      "highlight": true,
+      "text": "· Gói Truyền thông & Xây kênh Trọn gói "
+    },
+    {
+      "highlight": false,
+      "text": "· Dịch vụ Lẻ Theo Yêu Cầu"
+    },
+    {
+      "highlight": false,
+      "text": "· Cung cấp Tài khoản TikTok "
+    },
+    {
+      "highlight": false,
+      "text": "· Setup & Cài đặt Kênh Kỹ thuật "
+    },
+    {
+      "highlight": false,
+      "text": "· Audit & Khám Kênh Chuyên Sâu"
+    }
+  ],
+  "cta_lead": "Chưa rõ cần gì cũng được — kể tình hình hiện tại là đủ.",
+  "gallery_title": "Creative Gallery",
+  "cta_btn_link": "lien-he.html",
+  "posts_title": "Tin tức",
+  "cta_btn": "Gửi Runestudio thông tin của bạn ở đây nhé ^^",
+  "about_btn_link": "gioi-thieu.html",
+  "gallery_btn": "Xem gallery",
+  "posts_btn": "Tất cả bài viết",
   "gallery": [
     {
       "caption": "Key visual",
@@ -138,72 +120,105 @@
       "image": ""
     }
   ],
-  "cases_title": "Case study",
-  "cases": [
+  "projects_title": "Dự án tiêu biểu",
+  "tiktok_title": "Kênh của Runestudio.art cũng là sản phẩm",
+  "solutions_title": "Giải pháp theo giai đoạn",
+  "about_body": "Từ những bước đi nhỏ, Rune Studio nay là đối tác nội dung của nhiều thương hiệu đa ngành. Bí quyết rất đơn giản: nói không với tô vẽ, chỉ tập trung khai thác và biến sự chân thật thành điểm chạm thương hiệu.",
+  "industries_title": "Ngành Runestudio.art \"đã cook\"",
+  "projects_limit": 3,
+  "projects_btn": "Tất cả dự án",
+  "tiktok_btn": "Xem kênh TikTok",
+  "services_title": "Dịch vụ",
+  "solutions": [
     {
-      "tag": "F&B",
-      "title": "Từ quán mới mở tới kín bàn tối thứ 6",
-      "desc": "Vấn đề: quán đẹp, không ai biết.\n\nCách làm: 3 tuần đầu chỉ quay món và phản ứng khách thật, tuần 4 mới lộ chủ.\n\nKết quả: 1.2M view/tháng, đặt bàn qua TikTok chiếm 40%.",
-      "btn": "Xem dự án F&B",
+      "title": "Chưa có kênh, chưa biết bắt đầu từ đâu",
+      "desc": "Chưa có kênh, hoặc có mà bỏ trống mấy tháng nay.\n\nRune dựng từ đầu: chọn nền tảng, định vị kênh nói với ai, làm nhận diện, rồi 30 video đầu tiên để kênh có nhịp và có số liệu mà đọc.",
+      "link": "dich-vu.html?id=goi-truyen-thong-va-xay-kenh-tron-goi"
+    },
+    {
+      "title": "Muốn tự làm nhưng chưa có nghề",
+      "desc": "Đã quay vài chục video, có cái lên có cái tụt, không hiểu vì sao.\n\nRune cầm tay chỉ việc 1:1. Bạn tự chạy kênh của mình, Rune đứng sau nắn tư duy, sửa kịch bản, đọc số liệu cùng bạn.",
+      "link": "dich-vu.html?id=mentor-1-1-va-co-van-kenh"
+    },
+    {
+      "title": "Có kênh nhưng chưa ra khách",
+      "desc": "View có, follow có, nhưng tin nhắn thì không. Hoặc ngược lại: nội dung tử tế mà chẳng ai xem.\n\nRune khám kênh, tách trục view và trục chuyển đổi, chỉ đúng chỗ đang kẹt rồi chỉnh lại cấu trúc kịch bản.",
+      "link": "dich-vu.html?id=audit-va-kham-kenh-chuyen-sau"
+    },
+    {
+      "title": "Có đội in-house, chỉ hụt một khâu",
+      "desc": "Marketing nhà đã có, nhưng thiếu người viết kịch bản, hoặc quay dựng không xuể, hoặc cần thiết kế cho gấp.\n\nRune nhận đúng phần đang hụt, ghép vào quy trình sẵn có của bạn, không xáo trộn gì.",
+      "link": "dich-vu.html?id=dich-vu-le-theo-yeu-cau"
+    },
+    {
+      "title": "Ra mắt sản phẩm, khai trương, mùa cao điểm",
+      "desc": "Có deadline, có áp lực doanh số, cần bùng lên trong vài tuần chứ không phải xây kênh dài hơi.\n\nRune chạy trọn chiến dịch: lên timeline, viết content, điều phối KOC/UGC, kiểm soát từ giai đoạn coming soon tới remarketing.",
+      "link": "dich-vu.html?id=goi-truyen-thong-va-xay-kenh-tron-goi"
+    },
+    {
+      "title": "Kênh đã ra khách, giờ muốn mở rộng",
+      "desc": "Một kênh đang chạy tốt, nhưng trần đã tới. Muốn thêm tuyến, thêm mặt, thêm nền tảng.\n\nRune nhân bản sang KOC/UGC, dựng kênh cá nhân cho chủ, làm chiến dịch design đồng bộ và mở thêm tài khoản vệ tinh.",
+      "link": "dich-vu.html?id=goi-truyen-thong-va-xay-kenh-tron-goi "
+    }
+  ],
+  "tiktok_items": [
+    {
+      "text": "Kịch bản và cách dựng đều là bản thật đang chạy"
+    },
+    {
+      "text": "Hậu trường quay dựng, không giấu quy trình"
+    },
+    {
+      "text": "Cái nào lên, cái nào flop — nói thẳng"
+    },
+    {
+      "text": "Cập nhật thông tin mới mỗi tuần"
+    }
+  ],
+  "cases_title": "Case study",
+  "industries": [
+    {
+      "name": "F&B",
+      "desc": "Quán ăn, quán nhậu, trà sữa, cà phê...",
       "link": "du-an.html?cat=fnb"
     },
     {
-      "tag": "Retail",
-      "title": "Vật liệu xây dựng lên TikTok mà không lố",
-      "desc": "Vấn đề: sản phẩm khô, khó quay.\n\nCách làm: lấy ảnh công trình thật của thợ, dựng video giải thích 30 giây theo từng nỗi lo khách hàng.\n\nKết quả: tin nhắn báo giá tăng 3 lần.",
-      "btn": "Xem dự án Retail",
+      "name": "Beauty",
+      "desc": "Mỹ phẩm, spa, clinic.",
+      "link": "du-an.html?cat=beauty"
+    },
+    {
+      "name": "Technology",
+      "desc": "Điện thoại, thiết bị, dịch vụ số.",
+      "link": "du-an.html?cat=technology"
+    },
+    {
+      "name": "Wedding",
+      "desc": "Studio, homestay cặp đôi, tiệc cưới.",
+      "link": "du-an.html?cat=wedding"
+    },
+    {
+      "name": "Education",
+      "desc": "Trung tâm, giáo viên, khoá học.",
+      "link": "du-an.html?cat=education"
+    },
+    {
+      "name": "Retail",
+      "desc": "Bán lẻ, vật liệu, showroom.",
       "link": "du-an.html?cat=retail"
+    },
+    {
+      "name": "Personal Brand",
+      "desc": "Chủ doanh nghiệp, chuyên gia.",
+      "link": "du-an.html?cat=personal"
+    },
+    {
+      "name": "Design",
+      "desc": "Branding, key visual, campaign.",
+      "link": "du-an.html?cat=design"
     }
   ],
-  "numbers": [
-    {
-      "value": "60+",
-      "label": "dự án đã triển khai"
-    },
-    {
-      "value": "25M+",
-      "label": "lượt xem tạo ra cho khách"
-    },
-    {
-      "value": "9",
-      "label": "ngành hàng"
-    },
-    {
-      "value": "3 năm",
-      "label": "tập trung vào video ngắn"
-    }
-  ],
-  "clients_title": "Khách hàng",
-  "clients": [
-    {
-      "name": "Logo",
-      "logo": ""
-    },
-    {
-      "name": "Logo",
-      "logo": ""
-    },
-    {
-      "name": "Logo",
-      "logo": ""
-    },
-    {
-      "name": "Logo",
-      "logo": ""
-    },
-    {
-      "name": "Logo",
-      "logo": ""
-    },
-    {
-      "name": "Logo",
-      "logo": ""
-    }
-  ],
-  "posts_title": "Tin tức",
-  "posts_btn": "Tất cả bài viết",
-  "cta_title": "Có ý tưởng? Gửi brief, Rune Studio phản hồi trong 24 giờ.",
-  "cta_lead": "Chưa rõ cần gì cũng được — kể tình hình hiện tại là đủ.",
-  "cta_btn": "Gửi brief dự án",
-  "cta_btn_link": "lien-he.html"
+  "tiktok_images": [],
+  "services_lead": "Chọn một mảng để bắt đầu, hoặc để Rune Studio gánh trọn gói từ A-Z theo mục tiêu kinh doanh.",
+  "industries_lead": "Mỗi ngành có một kiểu khách, một nỗi lo, một cách chạm khác nhau. Rune không bê khuôn cũ sang thị trường mới, cái gì cũng phải \"check var\" rồi mới bắt đầu tiến hành"
 }
