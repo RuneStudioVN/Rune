@@ -24,6 +24,7 @@ function loadJSON(path) {
 }
 /* Bỏ lớp che khi trang đã dựng xong */
 function rsReady() {
+  try { buildPageNav(); } catch (e) {}
   document.documentElement.classList.remove('rs-boot');
 }
 window.rsReady = rsReady;
@@ -148,3 +149,65 @@ window.SITE_READY = (async () => {
   } catch (e) {}
   return S;
 })();
+
+/* ---- Thanh mục lục cố định bên trái (gọi sau khi trang dựng xong) ---- */
+function buildPageNav() {
+  if (document.querySelector('.pagenav')) return;
+
+    const secs = [...document.querySelectorAll('main > section[id], body > section[id], #project-list > section[id], #post-list > section[id], #job-list > section[id], #svc-list > section[id]')]
+      .filter(s => s.offsetParent !== null || true);
+    const items = [];
+    document.querySelectorAll('section[id]').forEach(s => {
+      if (s.closest('.toc')) return;
+      if (s.offsetParent === null) return;              // khối đang ẩn thì bỏ qua
+      const h = s.querySelector('h1, h2');
+      let label = h ? h.textContent.trim() : '';
+      if (!label) return;
+      if (label.length > 46) label = label.slice(0, 44).trim() + '…';
+      items.push({ id: s.id, label });
+    });
+    // Trang ít mục -> dùng menu web cho thanh trái không bị trống
+    let mode = 'sec';
+    if (items.length < 3) {
+      mode = 'menu';
+      const here = location.pathname.split('/').pop() || 'index.html';
+      items.length = 0;
+      (window.MENU || []).forEach(mn => {
+        items.push({ href: mn.link || '#', label: mn.label, cur: String(mn.link || '').split('?')[0] === here });
+        (mn.children || []).forEach(k => items.push({ href: k.link || '#', label: k.label, sub: true }));
+      });
+      if (items.length < 2) return;
+    }
+
+    const rail = document.createElement('aside');
+    rail.className = 'pagenav';
+    rail.innerHTML = `<div class="pagenav-title">${mode === 'sec' ? 'Trên trang này' : 'Khám phá'}</div><nav>` +
+      items.map(i => mode === 'sec'
+        ? `<a href="#${i.id}">${i.label}</a>`
+        : `<a href="${i.href}" class="${i.sub ? 'pn-sub' : ''}${i.cur ? ' is-now' : ''}">${i.label}</a>`).join('') + '</nav>';
+    document.body.appendChild(rail);
+    document.documentElement.classList.add('has-pagenav');
+
+    const links = [...rail.querySelectorAll('a')];
+    if (mode !== 'sec') return;   // kiểu menu thì để link chạy bình thường
+    links.forEach(a => a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.getElementById(a.getAttribute('href').slice(1));
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }));
+
+    const mark = id => links.forEach(a => a.classList.toggle('is-now', a.getAttribute('href') === '#' + id));
+    const update = () => {
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) { mark(items[items.length - 1].id); return; }
+      let cur = items[0].id;
+      items.forEach(i => {
+        const el = document.getElementById(i.id);
+        if (el && el.offsetParent !== null && el.getBoundingClientRect().top <= 140) cur = i.id;
+      });
+      mark(cur);
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  
+}
+window.buildPageNav = buildPageNav;

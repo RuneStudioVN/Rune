@@ -1,34 +1,35 @@
-RUNE STUDIO — BẢN GỘP TẤT CẢ (v3)
+RUNE STUDIO — BẢN GỘP TẤT CẢ (v4)
 =================================
 KHÔNG có thư mục content -> mọi thứ ngài sửa trong /admin giữ nguyên 100%.
 
 UP: GitHub repo Rune -> Add file -> Upload files
 -> kéo 3 thư mục (css, js, admin) + 7 file .html -> Commit.
 
-===== MỚI TRONG BẢN NÀY =====
-MỤC LỤC BÊN TRÁI (kiểu Google Tài liệu)
-  Tự hiện ở trang chi tiết Dự án / Tin tức / Tuyển dụng / Dịch vụ
-  khi bài có từ 2 tiêu đề trở lên.
-  - Dính bên trái khi cuộn, mục đang đọc tô nâu có gạch dọc
-  - Bấm vào là trượt êm tới đúng phần
-  - Tiêu đề phụ tự thụt vào
-  - Bài ít hơn 2 tiêu đề -> không hiện, không chiếm chỗ
-  - Màn hình nhỏ -> gom thành một khung gọn phía trên bài
+===== MỚI: THANH BÊN TRÁI (kiểu Google Tài liệu) =====
+Có ở MỌI TRANG, cố định khi cuộn, mục đang xem tô nâu có gạch dọc.
 
-  CÁCH TẠO TIÊU ĐỀ TRONG BÀI:
-  Gõ ## rồi cách 1 khoảng trắng cho mục chính
-  Gõ ### cho mục phụ
-  VD:   ## Vấn đề của khách
-        ### Bối cảnh thị trường
+  - Trang nhiều phần (Trang chủ, Giới thiệu, Dịch vụ):
+    hiện "TRÊN TRANG NÀY" + danh sách các phần.
+    Bấm là trượt êm tới đúng phần.
+
+  - Trang ít phần (Dự án, Tin tức, Tuyển dụng, Liên hệ):
+    hiện "KHÁM PHÁ" + menu web, đánh dấu trang đang xem.
+
+  - Tự bỏ qua khối đang ẩn (VD gallery chưa có ảnh).
+  - Nhãn dài tự cắt gọn 2 dòng.
+  - Màn hình dưới 1280px: tự ẩn, nội dung trở về bình thường.
+
+Ngoài ra bài chi tiết dài (từ 2 tiêu đề ## trở lên) còn có mục lục
+riêng theo tiêu đề trong bài.
 
 ===== ĐÃ CÓ TỪ CÁC BẢN TRƯỚC =====
-- Ô xám giữ chỗ: bỏ sạch toàn web (chưa điền ảnh / ô trắng / ảnh hỏng)
-- Hết nhấp nháy khi vào web (0,1-0,25 giây)
-- Thanh menu dính khi cuộn
+- Ô xám giữ chỗ: bỏ sạch (chưa điền ảnh / ô trắng / ảnh hỏng)
+- Hết nhấp nháy khi vào web
+- Thanh menu trên dính khi cuộn
 - Nút lên đầu trang góc phải dưới
 - Khối TikTok trang chủ: chỉ dán link video
 - Bỏ khối Case study
 - Bài Tin tức bỏ ảnh đại diện
-- Đội ngũ: bỏ Vai trò, ảnh 170px chữ nhật dọc 3:4
+- Đội ngũ: bỏ Vai trò, ảnh 170px chữ nhật dọc
 
-ĐÃ KIỂM TRA: 36/36 lượt trên 3 kích thước màn hình, 0 lỗi.
+ĐÃ KIỂM TRA: 48/48 lượt trên 4 kích thước màn hình, 0 lỗi.

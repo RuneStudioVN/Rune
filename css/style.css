@@ -438,3 +438,27 @@ p{max-width:64ch}
   .toc a.toc-sub{padding-left:14px}
   .toc a.is-now{border-left:0}
 }
+
+/* ---------- Thanh mục lục cố định bên trái (mọi trang) ---------- */
+.pagenav{display:none}
+@media (min-width:1280px){
+  html.has-pagenav body{padding-left:250px}
+  .pagenav{display:block;position:fixed;left:0;top:0;bottom:0;width:250px;z-index:65;
+    background:var(--white);border-right:1px solid var(--mist);
+    padding:104px 20px 28px;overflow-y:auto}
+  .pagenav-title{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--smoke);margin-bottom:14px}
+  .pagenav nav{display:flex;flex-direction:column;border-left:2px solid var(--mist)}
+  .pagenav a{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+    padding:9px 0 9px 14px;font-size:13.5px;line-height:1.35;color:var(--smoke);
+    border-left:2px solid transparent;margin-left:-2px;text-decoration:none}
+  .pagenav a:hover{color:var(--ink)}
+  .pagenav a.is-now{color:var(--signal);font-weight:700;border-left-color:var(--signal)}
+  .pagenav a.pn-sub{padding-left:26px;font-size:12.5px}
+  html.has-pagenav #header{padding-left:0}
+  html.has-pagenav .dock{right:16px}
+}
+@media (min-width:1280px) and (max-width:1500px){
+  html.has-pagenav body{padding-left:220px}
+  .pagenav{width:220px;padding:104px 16px 24px}
+  .pagenav a{font-size:13px}
+}
