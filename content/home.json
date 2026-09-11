@@ -6,28 +6,28 @@
   "about_title": "Đội ngũ content thực chiến cùng doanh nghiệp",
   "clients": [
     {
-      "name": "Logo",
-      "logo": ""
+      "name": "Gánh Kèo Nè",
+      "logo": "assets/uploads/ảnh-màn-hình-2026-09-11-lúc-15.37.56.png"
     },
     {
-      "name": "Logo",
-      "logo": ""
+      "name": "TTP Plastic",
+      "logo": "assets/uploads/649135203_122132506077080036_4902807905796910754_n.jpg"
     },
     {
-      "name": "Logo",
-      "logo": ""
+      "name": "Aura Academy",
+      "logo": "assets/uploads/546630420_122237187608160910_8940967728716341313_n.jpg"
     },
     {
-      "name": "Logo",
-      "logo": ""
+      "name": "DA Design",
+      "logo": "assets/uploads/464238907_390312577485204_7810207233776144933_n.jpg"
     },
     {
-      "name": "Logo",
-      "logo": ""
+      "name": "Pom Again",
+      "logo": "assets/uploads/ảnh-màn-hình-2026-09-11-lúc-15.53.12.png"
     },
     {
-      "name": "Logo",
-      "logo": ""
+      "name": "Charles Wembley",
+      "logo": "assets/uploads/126493224_2326971044094063_3802776731306908617_n.jpg"
     }
   ],
   "about_image": "https://www.facebook.com/Runestudio.art",
@@ -38,15 +38,15 @@
       "label": "dự án đã triển khai"
     },
     {
-      "value": "25M+",
+      "value": "100M+",
       "label": "lượt xem tạo ra cho khách"
     },
     {
-      "value": "9",
+      "value": "9+",
       "label": "ngành hàng"
     },
     {
-      "value": "3 năm",
+      "value": "4 năm",
       "label": "tập trung vào video ngắn"
     }
   ],
