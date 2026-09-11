@@ -1,13 +1,28 @@
 {
   "categories": [
-    { "code": "fnb", "name": "F&B" },
-    { "code": "beauty", "name": "Beauty" },
-    { "code": "technology", "name": "Technology" },
-    { "code": "wedding", "name": "Wedding" },
-    { "code": "fashion", "name": "Fashion" },
-    { "code": "education", "name": "Education" },
-    { "code": "retail", "name": "Retail" },
-    { "code": "personal", "name": "Personal Brand" },
-    { "code": "design", "name": "Design" }
+    {
+      "code": "fnb",
+      "name": "F&B"
+    },
+    {
+      "code": "beauty",
+      "name": "Beauty"
+    },
+    {
+      "code": "technology",
+      "name": "Technology"
+    },
+    {
+      "code": "wedding",
+      "name": "Wedding"
+    },
+    {
+      "code": "education",
+      "name": "Education"
+    },
+    {
+      "code": "design",
+      "name": "Design"
+    }
   ]
 }
