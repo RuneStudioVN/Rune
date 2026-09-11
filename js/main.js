@@ -71,7 +71,8 @@ function md(src) {
 const fmtDate = d => { if (!d) return ''; const [y, m, dd] = String(d).slice(0, 10).split('-'); return `${dd}/${m}/${y}`; };
 
 function phBlock(p, cls) {
-  return `<div class="ph ${cls || ''}">${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy">` : 'Ảnh'}</div>`;
+  if (!p || !p.image) return '';
+  return `<div class="ph ${cls || ''}"><img src="${esc(p.image)}" alt="${esc(p.title || '')}" loading="lazy"></div>`;
 }
 
 /* Nhúng video từ link TikTok / YouTube */
@@ -90,7 +91,7 @@ const getPosts = async () => _posts || (_posts = ((await loadJSON('content/posts
 const getServices = async () => _services || (_services = (await loadJSON('content/services.json')).services || []);
 
 function projectCard(p) {
-  return `<a class="project" href="du-an.html?id=${encodeURIComponent(p.slug)}">
+  return `<a class="project ${p.image ? '' : 'no-img'}" href="du-an.html?id=${encodeURIComponent(p.slug)}">
     ${phBlock(p)}
     <h3>${esc(p.title)}</h3>
     <div class="meta">${(p.services || []).map(s => `<span class="tag">${esc(s)}</span>`).join('')}${p.result ? `<span>· ${esc(p.result)}</span>` : ''}</div>
@@ -179,7 +180,7 @@ async function renderServiceBlocks(sel, subnavSel) {
   const el = document.querySelector(sel); if (!el) return;
   const list = await getServices();
   if (subnavSel) document.querySelector(subnavSel).innerHTML = list.map(s => `<a href="#${esc(s.slug)}">${esc(s.title)}</a>`).join('');
-  el.innerHTML = list.map((s, i) => `<section class="block two ${i % 2 ? 'flip' : ''}" id="${esc(s.slug)}">
+  el.innerHTML = list.map((s, i) => `<section class="block two ${i % 2 ? 'flip' : ''} ${s.image ? '' : 'two--solo'}" id="${esc(s.slug)}">
     <div><h2>${esc(s.title)}</h2><div class="prose lead" style="margin-top:16px">${md(s.summary)}</div>
       <ul class="check">${(s.items || []).map(i => `<li>${esc(i)}</li>`).join('')}</ul>
       <div class="btn-row" style="margin-top:20px"><a class="btn btn--signal" href="dich-vu.html?id=${esc(s.slug)}">Chi tiết</a><a class="btn btn--ghost" href="lien-he.html">Gửi brief</a></div></div>
@@ -197,7 +198,12 @@ async function renderHero() {
   if (H.hero_btn1) { $('hero-btn1').innerHTML = esc(H.hero_btn1) + ' <span>→</span>'; $('hero-btn1').href = H.hero_btn1_link || '#'; }
   if (H.hero_btn2) { $('hero-btn2').textContent = H.hero_btn2; if (H.hero_btn2_link) { $('hero-btn2').href = H.hero_btn2_link; $('hero-btn2').removeAttribute('data-contact'); } }
   $('hero-stats').innerHTML = (H.stats || []).slice(0, 4).map(s => `<div class="stat"><span>${esc(s.label)}</span><b>${esc(s.value)}</b></div>`).join('');
-  if (H.hero_poster) $('hero-poster').innerHTML = `<img src="${esc(H.hero_poster)}" alt="">`;
+  const po = $('hero-poster');
+  if (po) {
+    if (H.hero_poster) po.innerHTML = `<img src="${esc(H.hero_poster)}" alt="">`;
+    else { const r = po.closest('.hero2-right'); if (r) r.style.display = 'none';
+           const g = document.querySelector('.hero2-grid'); if (g) g.classList.add('hero2--solo'); }
+  }
   const hl = $('hero-highlight');
   if (H.highlight_title) {
     hl.href = H.highlight_link || '#';
@@ -206,7 +212,11 @@ async function renderHero() {
     $('hl-meta1').textContent = H.highlight_meta1 || '';
     $('hl-meta2').textContent = H.highlight_meta2 || '';
     $('hl-btn').textContent = H.highlight_btn || 'Xem';
-    if (H.highlight_image) $('hl-img').innerHTML = `<img src="${esc(H.highlight_image)}" alt="">`;
+    const hi = $('hl-img');
+    if (hi) {
+      if (H.highlight_image) hi.innerHTML = `<img src="${esc(H.highlight_image)}" alt="">`;
+      else { hi.remove(); hl.classList.add('no-img'); }
+    }
   } else hl.style.display = 'none';
 }
 
@@ -334,7 +344,10 @@ async function renderAbout() {
   set('ab-h2', A.about_title);
   const body = document.getElementById('ab-body'); if (body) body.innerHTML = md(A.about_body);
   const img = document.getElementById('ab-img');
-  if (img) img.innerHTML = A.about_image ? `<img src="${esc(A.about_image)}" alt="">` : 'Ảnh';
+  if (img) {
+    if (A.about_image) img.innerHTML = `<img src="${esc(A.about_image)}" alt="">`;
+    else { img.remove(); const box = document.querySelector('#about.two'); if (box) box.classList.add('two--solo'); }
+  }
 
   const vm = document.getElementById('ab-vm');
   if (vm) vm.innerHTML = `
@@ -348,8 +361,9 @@ async function renderAbout() {
 
   set('ab-team-title', A.team_title);
   const team = document.getElementById('ab-team');
+  if (team && !(A.team || []).length) { const s = team.closest('section'); if (s) s.style.display = 'none'; }
   if (team) team.innerHTML = (A.team || []).map(m =>
-    `<div class="member"><div class="ph">${m.image ? `<img src="${esc(m.image)}" alt="${esc(m.name)}">` : 'Ảnh'}</div><h4>${esc(m.name)}</h4></div>`).join('');
+    `<div class="member ${m.image ? '' : 'no-img'}">${m.image ? `<div class="ph"><img src="${esc(m.image)}" alt="${esc(m.name)}"></div>` : ''}<h4>${esc(m.name)}</h4></div>`).join('');
 
   set('ab-clients-title', A.clients_title);
 
@@ -367,8 +381,11 @@ async function renderAbout() {
   const abBtn = document.getElementById('ab-cta-btn');
   if (abBtn) { if (A.cta_btn) { abBtn.textContent = A.cta_btn; abBtn.href = A.cta_link || 'lien-he.html'; } else abBtn.style.display = 'none'; }
   const cl = document.getElementById('ab-clients');
-  if (cl) cl.innerHTML = (A.clients || []).map(c =>
-    `<div>${c.logo ? `<img src="${esc(c.logo)}" alt="${esc(c.name)}" style="max-height:44px;width:auto">` : esc(c.name || 'Logo')}</div>`).join('');
+  if (cl) {
+    const cs = (A.clients || []).filter(c => c && (c.logo || (c.name && c.name.trim() && c.name.trim() !== 'Logo')));
+    cl.innerHTML = cs.map(c => `<div>${c.logo ? `<img src="${esc(c.logo)}" alt="${esc(c.name || '')}">` : esc(c.name)}</div>`).join('');
+    if (!cs.length) { const s = cl.closest('section'); if (s) s.style.display = 'none'; }
+  }
 }
 
 /* ---------- Trang chủ (đọc từ content/home.json) ---------- */
@@ -378,7 +395,7 @@ async function renderHome() {
   const $ = id => document.getElementById(id);
   const txt = (id, v) => { const el = $(id); if (el) el.textContent = v || ''; };
   const btn = (id, label, link) => { const el = $(id); if (!el) return; if (label) { el.textContent = label; if (link) el.href = link; } else el.style.display = 'none'; };
-  const phOrImg = (src, cls, alt) => `<div class="ph ${cls || ''}">${src ? `<img src="${esc(src)}" alt="${esc(alt || '')}">` : esc(alt || 'Ảnh')}</div>`;
+  const phOrImg = (src, cls, alt) => src ? `<div class="ph ${cls || ''}"><img src="${esc(src)}" alt="${esc(alt || '')}"></div>` : '';
 
   const tk = $('h-ticker');
   if (tk) {
@@ -392,7 +409,16 @@ async function renderHome() {
   txt('h-about-title', H.about_title);
   if ($('h-about-body')) $('h-about-body').innerHTML = md(H.about_body);
   btn('h-about-btn', H.about_btn, H.about_btn_link);
-  if ($('h-about-img')) $('h-about-img').outerHTML = phOrImg(H.about_image, 'ph ph--wide', 'Ảnh').replace('<div class="ph ph ph--wide"', '<div id="h-about-img" class="ph ph--wide"');
+  const aImg = $('h-about-img');
+  if (aImg) {
+    if (H.about_image) {
+      aImg.innerHTML = `<img src="${esc(H.about_image)}" alt="">`;
+    } else {
+      aImg.remove();
+      const box = document.querySelector('#about .two');
+      if (box) box.classList.add('two--solo');
+    }
+  }
 
   txt('h-svc-title', H.services_title); txt('h-svc-lead', H.services_lead);
 
@@ -425,19 +451,27 @@ async function renderHome() {
   }
 
   txt('h-gal-title', H.gallery_title); btn('h-gal-btn', H.gallery_btn, H.gallery_btn_link);
-  if ($('h-gallery')) $('h-gallery').innerHTML = (H.gallery || []).map(g => {
-    const box = phOrImg(g.image, 'ph--square', g.caption);
-    return g.link ? `<a href="${esc(g.link)}" class="gal-link">${box}</a>` : box;
-  }).join('');
+  if ($('h-gallery')) {
+    const gs = (H.gallery || []).filter(g => g && g.image);
+    $('h-gallery').innerHTML = gs.map(g => {
+      const box = phOrImg(g.image, 'ph--square', g.caption);
+      return g.link ? `<a href="${esc(g.link)}" class="gal-link">${box}</a>` : box;
+    }).join('');
+    if (!gs.length) { const s = $('h-gallery').closest('section'); if (s) s.style.display = 'none'; }
+  }
 
   if ($('h-numbers')) $('h-numbers').innerHTML = (H.numbers || []).map(n =>
     `<div><b>${esc(n.value)}</b><span>${esc(n.label)}</span></div>`).join('');
 
   txt('h-cli-title', H.clients_title);
-  if ($('h-clients')) $('h-clients').innerHTML = (H.clients || []).map(c => {
-    const inner = c.logo ? `<img src="${esc(c.logo)}" alt="${esc(c.name)}" style="max-height:44px;width:auto">` : esc(c.name || 'Logo');
-    return c.link ? `<a href="${esc(c.link)}" target="_blank" rel="noopener"><div>${inner}</div></a>` : `<div>${inner}</div>`;
-  }).join('');
+  if ($('h-clients')) {
+    const cs = (H.clients || []).filter(c => c && (c.logo || (c.name && c.name.trim() && c.name.trim() !== 'Logo')));
+    $('h-clients').innerHTML = cs.map(c => {
+      const inner = c.logo ? `<img src="${esc(c.logo)}" alt="${esc(c.name || '')}">` : esc(c.name);
+      return c.link ? `<a href="${esc(c.link)}" target="_blank" rel="noopener"><div>${inner}</div></a>` : `<div>${inner}</div>`;
+    }).join('');
+    if (!cs.length) { const s = $('h-clients').closest('section'); if (s) s.style.display = 'none'; }
+  }
 
   txt('h-post-title', H.posts_title); btn('h-post-btn', H.posts_btn, 'tin-tuc.html');
 

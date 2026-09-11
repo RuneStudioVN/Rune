@@ -18,6 +18,8 @@
   --r:6px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+html.rs-boot body{opacity:0}
+body{opacity:1;transition:opacity .18s ease}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 body{font-family:var(--font);color:var(--ink);background:var(--paper);line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased}
@@ -402,3 +404,16 @@ p{max-width:64ch}
 .member h4{margin-top:12px;font-size:16px;font-weight:700}
 @media (max-width:900px){#ab-team{gap:24px 20px}.member{width:150px}}
 @media (max-width:600px){#ab-team{gap:20px 16px}.member{width:calc(50% - 8px);max-width:150px}}
+
+/* Khối 2 cột khi không có ảnh -> 1 cột */
+.two--solo{grid-template-columns:1fr!important}
+.two--solo .prose,.two--solo .lead{max-width:64ch}
+
+/* ---------- Không có ảnh thì không chừa chỗ ---------- */
+.project.no-img .ph{display:none}
+.member.no-img{width:auto;min-width:120px}
+.member.no-img h4{margin-top:0;padding:14px 18px;background:var(--white);border:1px solid var(--mist);border-radius:12px}
+.highlight.no-img{grid-template-columns:1fr}
+.hero2--solo{grid-template-columns:1fr}
+.hero2--solo h1{max-width:18ch}
+.clients img{max-height:44px;width:auto}

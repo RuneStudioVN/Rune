@@ -13,19 +13,33 @@ const MENU_MACDINH = [
   { label: 'Liên hệ', link: 'lien-he.html', children: [] },
 ];
 
-async function loadJSON(path) {
-  const r = await fetch(path + '?v=' + Date.now());
-  if (!r.ok) throw new Error(path);
-  return r.json();
+const _jsonCache = {};
+function loadJSON(path) {
+  if (!_jsonCache[path]) {
+    _jsonCache[path] = fetch(path + '?v=' + Date.now())
+      .then(r => { if (!r.ok) throw new Error(path); return r.json(); })
+      .catch(e => { delete _jsonCache[path]; throw e; });
+  }
+  return _jsonCache[path];
 }
+/* Bỏ lớp che khi trang đã dựng xong */
+function rsReady() {
+  document.documentElement.classList.remove('rs-boot');
+}
+window.rsReady = rsReady;
 
 window.SITE_READY = (async () => {
-  let S = {};
-  try { S = await loadJSON('content/site.json'); } catch (e) { console.warn('site.json', e); }
+  const [S0, M0] = await Promise.all([
+    loadJSON('content/site.json').catch(() => ({})),
+    loadJSON('content/menu.json').catch(() => null),
+  ]);
+  const S = S0 || {};
   window.SITE = S;
+  window._MENUDATA = M0;
   const SLOGAN = (S.slogan === undefined || S.slogan === null) ? 'Sáng tạo để tạo dấu ấn' : S.slogan;
   let MENU = MENU_MACDINH;
-  try { const m = await loadJSON('content/menu.json'); if (m && m.items && m.items.length) MENU = m.items; } catch (e) {}
+  const m = window._MENUDATA;
+  if (m && m.items && m.items.length) MENU = m.items;
   window.MENU = MENU;
 
   const here = location.pathname.split('/').pop() || 'index.html';

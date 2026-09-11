@@ -12,6 +12,7 @@
 <meta property="og:image" content="https://runestudio.art/assets/uploads/share.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://runestudio.art/lien-he.html">
+<script>document.documentElement.classList.add('rs-boot');setTimeout(function(){document.documentElement.classList.remove('rs-boot')},2500);</script>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -50,7 +51,7 @@
 <div id="footer"></div>
 <script src="js/layout.js"></script>
 <script src="js/main.js"></script>
-<script>SITE_READY.then(async()=>{ await renderPageText(); await renderBriefFields("#brief-fields"); initBriefForm(); });</script>
+<script>SITE_READY.then(async()=>{ await renderPageText(); await renderBriefFields("#brief-fields"); initBriefForm(); }).finally(()=>rsReady());</script>
 
 </body>
 </html>
