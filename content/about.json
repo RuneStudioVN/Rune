@@ -31,7 +31,7 @@
     }
   ],
   "cta_link": "lien-he.html",
-  "about_image": "",
+  "about_image": "assets/uploads/ảnh-màn-hình-2026-09-11-lúc-17.01.11.png",
   "cta_title": "Bắt đầu từ một tin nhắn",
   "cap_title": "Năng lực",
   "cta_btn": "Nhắn Runestudio để cùng gặp nhau nhé ^^",
@@ -66,23 +66,23 @@
   "team": [
     {
       "name": "Mr. Kuro",
-      "role": "Founder",
-      "image": ""
+      "role": "Fourder",
+      "image": "assets/uploads/gemini_generated_image_agudsqagudsqagud.png"
     },
     {
       "name": "Ms. Shiro",
-      "role": "Co - Founder",
+      "role": "Fourder",
+      "image": "assets/uploads/gemini_generated_image_27o6uf27o6uf27o6.png"
+    },
+    {
+      "name": "Nguyễn Trang",
+      "role": "Fourder",
       "image": ""
     },
     {
-      "name": "Ms. Chang",
-      "role": "Designer",
-      "image": ""
-    },
-    {
-      "name": "Ms. Hiền",
-      "role": "Account / Vận hành",
-      "image": ""
+      "name": "Nguyễn Hiền",
+      "role": "Fourder",
+      "image": "assets/uploads/gemini_generated_image_f7s7sdf7s7sdf7s7.png"
     }
   ]
 }
