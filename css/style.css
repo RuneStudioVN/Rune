@@ -146,9 +146,6 @@ p{max-width:64ch}
 @media (max-width:760px){.gallery{grid-template-columns:repeat(2,1fr)}}
 
 /* ---------- Team ---------- */
-.member .ph{aspect-ratio:3/4}
-.member h4{margin-top:12px}
-.member span{color:var(--smoke);font-size:14px}
 
 /* ---------- Insight ---------- */
 .post{display:grid;grid-template-columns:200px 1fr;gap:24px;padding:28px 0;border-bottom:1px solid var(--mist)}
@@ -394,3 +391,14 @@ p{max-width:64ch}
 
 /* bài tin tức không còn ảnh */
 .post--notext{grid-template-columns:1fr}
+
+
+
+/* ---------- Đội ngũ (trang Giới thiệu) ---------- */
+#ab-team{display:flex!important;flex-wrap:wrap;justify-content:center;gap:28px 24px}
+.member{text-align:center;width:170px;flex:0 0 auto}
+.member .ph{aspect-ratio:3/4!important;width:100%;border-radius:12px;align-items:flex-end}
+.member .ph img{aspect-ratio:3/4;object-fit:cover}
+.member h4{margin-top:12px;font-size:16px;font-weight:700}
+@media (max-width:900px){#ab-team{gap:24px 20px}.member{width:150px}}
+@media (max-width:600px){#ab-team{gap:20px 16px}.member{width:calc(50% - 8px);max-width:150px}}

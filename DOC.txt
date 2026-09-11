@@ -1,20 +1,19 @@
 RUNE STUDIO — BẢN CẬP NHẬT
-==========================
 KHÔNG có thư mục content -> dữ liệu ngài đã sửa giữ nguyên 100%.
 
 UP: GitHub repo Rune -> Add file -> Upload files
--> kéo 3 thư mục (css, js, admin) + file index.html -> Commit.
+-> kéo 3 thư mục (css, js, admin) + index.html -> Commit.
 
-LẦN NÀY SỬA:
-1. Thanh menu DÍNH khi cuộn (trước đây bị lỗi, cuộn là mất).
-2. Nút LÊN ĐẦU TRANG tròn đen góc phải dưới, hiện khi cuộn quá 500px.
-3. Khối TikTok trang chủ: bỏ up ảnh, chỉ cần DÁN LINK VIDEO.
-   Video TikTok/YouTube hiện thật, tự lấy hình từ nền tảng.
-   Admin -> Trang chủ -> "TikTok — video hiện bên cạnh".
-   Dán dạng: https://www.tiktok.com/@rune.story/video/123456789
-   Bỏ trống hết thì khung tự ẩn.
-4. Bỏ hẳn khối CASE STUDY ở trang chủ (cả trên web lẫn trong admin).
-5. Bài TIN TỨC bỏ ảnh đại diện — không cần làm hình nữa.
-   Muốn có hình thì chèn thẳng vào phần Nội dung, hoặc dán link video.
+GÓI NÀY GỒM:
+1. Thanh menu DÍNH khi cuộn (trước bị lỗi, cuộn là mất).
+2. Nút LÊN ĐẦU TRANG góc phải dưới, hiện khi cuộn quá 500px.
+3. Khối TikTok trang chủ: bỏ up ảnh, chỉ DÁN LINK VIDEO.
+   Bỏ trống hết -> khung tự ẩn, không để lại ô xám.
+4. Bỏ hẳn khối CASE STUDY.
+5. Bài TIN TỨC bỏ ảnh đại diện.
+6. ĐỘI NGŨ: bỏ ô Vai trò, chỉ còn Tên + Ảnh.
+   Khung ảnh nhỏ lại (170px, chữ nhật dọc 3:4), dàn đều giữa hàng,
+   bao nhiêu người cũng cân. Ảnh nên để khoảng 600x800.
+   (Đã dọn mấy dòng CSS cũ bị trùng làm khung ảnh méo thành vuông.)
 
-ĐÃ KIỂM TRA: 36/36 lượt trên 3 kích thước màn hình, 0 lỗi.
+ĐÃ KIỂM TRA: 21/21 lượt trên 3 kích thước màn hình, 0 lỗi.

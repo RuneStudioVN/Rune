@@ -349,7 +349,7 @@ async function renderAbout() {
   set('ab-team-title', A.team_title);
   const team = document.getElementById('ab-team');
   if (team) team.innerHTML = (A.team || []).map(m =>
-    `<div class="member"><div class="ph">${m.image ? `<img src="${esc(m.image)}" alt="${esc(m.name)}">` : 'Ảnh'}</div><h4>${esc(m.name)}</h4><span>${esc(m.role)}</span></div>`).join('');
+    `<div class="member"><div class="ph">${m.image ? `<img src="${esc(m.image)}" alt="${esc(m.name)}">` : 'Ảnh'}</div><h4>${esc(m.name)}</h4></div>`).join('');
 
   set('ab-clients-title', A.clients_title);
 

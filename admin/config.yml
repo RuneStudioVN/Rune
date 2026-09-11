@@ -281,8 +281,7 @@ collections:
             summary: "{{fields.name}}"
             fields:
               - { label: "Tên", name: "name", widget: "string" }
-              - { label: "Vai trò", name: "role", widget: "string" }
-              - { label: "Ảnh (dọc 3:4)", name: "image", widget: "image", required: false }
+              - { label: "Ảnh (vuông, sẽ bo tròn)", name: "image", widget: "image", required: false }
           - { label: "Khách hàng — tiêu đề mục", name: "clients_title", widget: "string" }
           - label: "Logo khách hàng (thêm/xoá tuỳ ý)"
             name: "clients"
