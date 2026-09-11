@@ -70,8 +70,10 @@ function md(src) {
 }
 const fmtDate = d => { if (!d) return ''; const [y, m, dd] = String(d).slice(0, 10).split('-'); return `${dd}/${m}/${y}`; };
 
+/* Có ảnh thật hay không — khoảng trắng cũng coi là không có */
+const hasImg = v => !!(v && String(v).trim());
 function phBlock(p, cls) {
-  if (!p || !p.image) return '';
+  if (!p || !hasImg(p.image)) return '';
   return `<div class="ph ${cls || ''}"><img src="${esc(p.image)}" alt="${esc(p.title || '')}" loading="lazy"></div>`;
 }
 
@@ -91,7 +93,7 @@ const getPosts = async () => _posts || (_posts = ((await loadJSON('content/posts
 const getServices = async () => _services || (_services = (await loadJSON('content/services.json')).services || []);
 
 function projectCard(p) {
-  return `<a class="project ${p.image ? '' : 'no-img'}" href="du-an.html?id=${encodeURIComponent(p.slug)}">
+  return `<a class="project ${hasImg(p.image) ? '' : 'no-img'}" href="du-an.html?id=${encodeURIComponent(p.slug)}">
     ${phBlock(p)}
     <h3>${esc(p.title)}</h3>
     <div class="meta">${(p.services || []).map(s => `<span class="tag">${esc(s)}</span>`).join('')}${p.result ? `<span>· ${esc(p.result)}</span>` : ''}</div>
@@ -180,7 +182,7 @@ async function renderServiceBlocks(sel, subnavSel) {
   const el = document.querySelector(sel); if (!el) return;
   const list = await getServices();
   if (subnavSel) document.querySelector(subnavSel).innerHTML = list.map(s => `<a href="#${esc(s.slug)}">${esc(s.title)}</a>`).join('');
-  el.innerHTML = list.map((s, i) => `<section class="block two ${i % 2 ? 'flip' : ''} ${s.image ? '' : 'two--solo'}" id="${esc(s.slug)}">
+  el.innerHTML = list.map((s, i) => `<section class="block two ${i % 2 ? 'flip' : ''} ${hasImg(s.image) ? '' : 'two--solo'}" id="${esc(s.slug)}">
     <div><h2>${esc(s.title)}</h2><div class="prose lead" style="margin-top:16px">${md(s.summary)}</div>
       <ul class="check">${(s.items || []).map(i => `<li>${esc(i)}</li>`).join('')}</ul>
       <div class="btn-row" style="margin-top:20px"><a class="btn btn--signal" href="dich-vu.html?id=${esc(s.slug)}">Chi tiết</a><a class="btn btn--ghost" href="lien-he.html">Gửi brief</a></div></div>
@@ -200,7 +202,7 @@ async function renderHero() {
   $('hero-stats').innerHTML = (H.stats || []).slice(0, 4).map(s => `<div class="stat"><span>${esc(s.label)}</span><b>${esc(s.value)}</b></div>`).join('');
   const po = $('hero-poster');
   if (po) {
-    if (H.hero_poster) po.innerHTML = `<img src="${esc(H.hero_poster)}" alt="">`;
+    if (hasImg(H.hero_poster)) po.innerHTML = `<img src="${esc(H.hero_poster)}" alt="">`;
     else { const r = po.closest('.hero2-right'); if (r) r.style.display = 'none';
            const g = document.querySelector('.hero2-grid'); if (g) g.classList.add('hero2--solo'); }
   }
@@ -214,7 +216,7 @@ async function renderHero() {
     $('hl-btn').textContent = H.highlight_btn || 'Xem';
     const hi = $('hl-img');
     if (hi) {
-      if (H.highlight_image) hi.innerHTML = `<img src="${esc(H.highlight_image)}" alt="">`;
+      if (hasImg(H.highlight_image)) hi.innerHTML = `<img src="${esc(H.highlight_image)}" alt="">`;
       else { hi.remove(); hl.classList.add('no-img'); }
     }
   } else hl.style.display = 'none';
@@ -308,7 +310,7 @@ async function renderJobDetail(listSel, detailSel) {
       </div>
     </div></section>
     <section class="section"><div class="wrap detail">
-      ${j.image ? `<div class="ph ph--wide"><img src="${esc(j.image)}" alt="${esc(j.title)}"></div>` : ''}
+      ${hasImg(j.image) ? `<div class="ph ph--wide"><img src="${esc(j.image)}" alt="${esc(j.title)}"></div>` : ''}
       <div class="prose">${md(j.body)}</div>
       <div class="btn-row" style="margin-top:32px"><a class="btn btn--signal" href="lien-he.html">Ứng tuyển</a><a class="btn btn--ghost" href="tuyen-dung.html">← Tất cả vị trí</a></div>
     </div></section>`;
@@ -328,7 +330,7 @@ async function renderServiceDetail(listSel, detailSel) {
       <div class="prose lead">${md(s.summary)}</div>
     </div></section>
     <section class="section"><div class="wrap detail">
-      ${s.image ? `<div class="ph ph--wide"><img src="${esc(s.image)}" alt="${esc(s.title)}"></div>` : ''}
+      ${hasImg(s.image) ? `<div class="ph ph--wide"><img src="${esc(s.image)}" alt="${esc(s.title)}"></div>` : ''}
       ${(s.items || []).length ? `<ul class="check">${s.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : ''}
       <div class="prose" style="margin-top:24px">${md(s.body)}</div>
       <div class="btn-row" style="margin-top:32px"><a class="btn btn--signal" href="lien-he.html">Gửi brief</a><a class="btn btn--ghost" href="dich-vu.html">← Tất cả dịch vụ</a></div>
@@ -345,7 +347,7 @@ async function renderAbout() {
   const body = document.getElementById('ab-body'); if (body) body.innerHTML = md(A.about_body);
   const img = document.getElementById('ab-img');
   if (img) {
-    if (A.about_image) img.innerHTML = `<img src="${esc(A.about_image)}" alt="">`;
+    if (hasImg(A.about_image)) img.innerHTML = `<img src="${esc(A.about_image)}" alt="">`;
     else { img.remove(); const box = document.querySelector('#about.two'); if (box) box.classList.add('two--solo'); }
   }
 
@@ -363,7 +365,7 @@ async function renderAbout() {
   const team = document.getElementById('ab-team');
   if (team && !(A.team || []).length) { const s = team.closest('section'); if (s) s.style.display = 'none'; }
   if (team) team.innerHTML = (A.team || []).map(m =>
-    `<div class="member ${m.image ? '' : 'no-img'}">${m.image ? `<div class="ph"><img src="${esc(m.image)}" alt="${esc(m.name)}"></div>` : ''}<h4>${esc(m.name)}</h4></div>`).join('');
+    `<div class="member ${hasImg(m.image) ? '' : 'no-img'}">${hasImg(m.image) ? `<div class="ph"><img src="${esc(m.image)}" alt="${esc(m.name)}"></div>` : ''}<h4>${esc(m.name)}</h4></div>`).join('');
 
   set('ab-clients-title', A.clients_title);
 
@@ -382,7 +384,7 @@ async function renderAbout() {
   if (abBtn) { if (A.cta_btn) { abBtn.textContent = A.cta_btn; abBtn.href = A.cta_link || 'lien-he.html'; } else abBtn.style.display = 'none'; }
   const cl = document.getElementById('ab-clients');
   if (cl) {
-    const cs = (A.clients || []).filter(c => c && (c.logo || (c.name && c.name.trim() && c.name.trim() !== 'Logo')));
+    const cs = (A.clients || []).filter(c => c && (hasImg(c.logo) || (c.name && c.name.trim() && c.name.trim() !== 'Logo')));
     cl.innerHTML = cs.map(c => `<div>${c.logo ? `<img src="${esc(c.logo)}" alt="${esc(c.name || '')}">` : esc(c.name)}</div>`).join('');
     if (!cs.length) { const s = cl.closest('section'); if (s) s.style.display = 'none'; }
   }
@@ -395,7 +397,7 @@ async function renderHome() {
   const $ = id => document.getElementById(id);
   const txt = (id, v) => { const el = $(id); if (el) el.textContent = v || ''; };
   const btn = (id, label, link) => { const el = $(id); if (!el) return; if (label) { el.textContent = label; if (link) el.href = link; } else el.style.display = 'none'; };
-  const phOrImg = (src, cls, alt) => src ? `<div class="ph ${cls || ''}"><img src="${esc(src)}" alt="${esc(alt || '')}"></div>` : '';
+  const phOrImg = (src, cls, alt) => hasImg(src) ? `<div class="ph ${cls || ''}"><img src="${esc(src)}" alt="${esc(alt || '')}"></div>` : '';
 
   const tk = $('h-ticker');
   if (tk) {
@@ -411,7 +413,7 @@ async function renderHome() {
   btn('h-about-btn', H.about_btn, H.about_btn_link);
   const aImg = $('h-about-img');
   if (aImg) {
-    if (H.about_image) {
+    if (hasImg(H.about_image)) {
       aImg.innerHTML = `<img src="${esc(H.about_image)}" alt="">`;
     } else {
       aImg.remove();
@@ -452,7 +454,7 @@ async function renderHome() {
 
   txt('h-gal-title', H.gallery_title); btn('h-gal-btn', H.gallery_btn, H.gallery_btn_link);
   if ($('h-gallery')) {
-    const gs = (H.gallery || []).filter(g => g && g.image);
+    const gs = (H.gallery || []).filter(g => g && hasImg(g.image));
     $('h-gallery').innerHTML = gs.map(g => {
       const box = phOrImg(g.image, 'ph--square', g.caption);
       return g.link ? `<a href="${esc(g.link)}" class="gal-link">${box}</a>` : box;
@@ -465,7 +467,7 @@ async function renderHome() {
 
   txt('h-cli-title', H.clients_title);
   if ($('h-clients')) {
-    const cs = (H.clients || []).filter(c => c && (c.logo || (c.name && c.name.trim() && c.name.trim() !== 'Logo')));
+    const cs = (H.clients || []).filter(c => c && (hasImg(c.logo) || (c.name && c.name.trim() && c.name.trim() !== 'Logo')));
     $('h-clients').innerHTML = cs.map(c => {
       const inner = c.logo ? `<img src="${esc(c.logo)}" alt="${esc(c.name || '')}">` : esc(c.name);
       return c.link ? `<a href="${esc(c.link)}" target="_blank" rel="noopener"><div>${inner}</div></a>` : `<div>${inner}</div>`;
@@ -535,3 +537,32 @@ async function renderBriefFields(sel) {
   }
   el.innerHTML = html.join('');
 }
+
+
+/* Ảnh hỏng hoặc sai đường dẫn -> gỡ luôn ô đó, không để lại khung xám */
+(function autoCleanBrokenImages() {
+  const clean = img => {
+    const box = img.closest('.ph');
+    if (box) {
+      const two = box.closest('.two');
+      const hl = box.closest('.highlight');
+      const right = box.closest('.hero2-right');
+      const mem = box.closest('.member');
+      box.remove();
+      if (two) two.classList.add('two--solo');
+      if (hl) hl.classList.add('no-img');
+      if (mem) mem.classList.add('no-img');
+      if (right) { right.style.display = 'none'; const g = document.querySelector('.hero2-grid'); if (g) g.classList.add('hero2--solo'); }
+    } else img.remove();
+  };
+  document.addEventListener('error', e => {
+    const t = e.target;
+    if (t && t.tagName === 'IMG') clean(t);
+  }, true);
+  // quét lại sau khi trang dựng xong, phòng ảnh hỏng trước khi gắn sự kiện
+  const sweep = () => document.querySelectorAll('img').forEach(i => {
+    if (i.complete && i.naturalWidth === 0) clean(i);
+  });
+  window.addEventListener('load', sweep);
+  setTimeout(sweep, 1500);
+})();
