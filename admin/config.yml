@@ -34,6 +34,75 @@ collections:
           - { label: "Chữ trong bong bóng góc phải", name: "chat_bubble", widget: "string", required: false }
           - { label: "Mã nhận form (Web3Forms Access Key)", name: "form_key", widget: "string", required: false, hint: "Lấy miễn phí ở web3forms.com — brief khách gửi sẽ về Gmail" }
 
+
+      - name: "categories"
+        label: "Ngành (nút lọc ở trang Dự án)"
+        file: "content/categories.json"
+        fields:
+          - label: "Danh sách ngành"
+            name: "categories"
+            widget: "list"
+            summary: "{{fields.name}} ({{fields.code}})"
+            fields:
+              - { label: "Tên hiển thị", name: "name", widget: "string", hint: "VD: F&B" }
+              - { label: "Mã (không dấu, không khoảng trắng)", name: "code", widget: "string", hint: "VD: fnb — phải trùng với ô Ngành của dự án" }
+
+      - name: "pages"
+        label: "Chữ các trang con + Form liên hệ"
+        file: "content/pages.json"
+        fields:
+          - { label: "▸ Tiêu đề tab trình duyệt — Trang chủ", name: "tab_home", widget: "string" }
+          - { label: "Tiêu đề tab — Giới thiệu", name: "tab_about", widget: "string" }
+          - { label: "Tiêu đề tab — Dịch vụ", name: "tab_svc", widget: "string" }
+          - { label: "Tiêu đề tab — Dự án", name: "tab_prj", widget: "string" }
+          - { label: "Tiêu đề tab — Tin tức", name: "tab_news", widget: "string" }
+          - { label: "Tiêu đề tab — Tuyển dụng", name: "tab_job", widget: "string" }
+          - { label: "Tiêu đề tab — Liên hệ", name: "tab_contact", widget: "string" }
+
+          - { label: "▸ Trang Dịch vụ — tiêu đề", name: "svc_title", widget: "string" }
+          - { label: "Trang Dịch vụ — mô tả", name: "svc_lead", widget: "text" }
+          - { label: "Trang Dịch vụ — khối kêu gọi: tiêu đề", name: "svc_cta_title", widget: "string" }
+          - { label: "Trang Dịch vụ — khối kêu gọi: chữ nút", name: "svc_cta_btn", widget: "string" }
+          - { label: "Trang Dịch vụ — khối kêu gọi: link nút", name: "svc_cta_link", widget: "string" }
+
+          - { label: "▸ Trang Dự án — tiêu đề", name: "prj_title", widget: "string" }
+          - { label: "Trang Dự án — mô tả", name: "prj_lead", widget: "text" }
+          - { label: "Trang Dự án — khối kêu gọi: tiêu đề", name: "prj_cta_title", widget: "string" }
+          - { label: "Trang Dự án — khối kêu gọi: chữ nút", name: "prj_cta_btn", widget: "string" }
+          - { label: "Trang Dự án — khối kêu gọi: link nút", name: "prj_cta_link", widget: "string" }
+
+          - { label: "▸ Trang Tin tức — tiêu đề", name: "news_title", widget: "string" }
+          - { label: "Trang Tin tức — mô tả", name: "news_lead", widget: "text" }
+
+          - { label: "▸ Trang Tuyển dụng — tiêu đề", name: "job_title", widget: "string" }
+          - { label: "Trang Tuyển dụng — mô tả", name: "job_lead", widget: "text" }
+          - { label: "Trang Tuyển dụng — khối kêu gọi: tiêu đề", name: "job_cta_title", widget: "string" }
+          - { label: "Trang Tuyển dụng — khối kêu gọi: mô tả", name: "job_cta_lead", widget: "text", required: false }
+          - { label: "Trang Tuyển dụng — khối kêu gọi: chữ nút", name: "job_cta_btn", widget: "string" }
+          - { label: "Trang Tuyển dụng — khối kêu gọi: link nút", name: "job_cta_link", widget: "string" }
+
+          - { label: "▸ Trang Liên hệ — tiêu đề", name: "ct_title", widget: "string" }
+          - { label: "Trang Liên hệ — mô tả", name: "ct_lead", widget: "text" }
+          - { label: "Trang Liên hệ — chữ dòng Zalo", name: "ct_zalo_label", widget: "string" }
+          - { label: "Trang Liên hệ — chữ dòng Messenger", name: "ct_mess_label", widget: "string" }
+
+          - { label: "▸ Form — tiêu đề", name: "form_title", widget: "string" }
+          - { label: "Form — dòng mô tả", name: "form_lead", widget: "text" }
+          - { label: "Form — chữ nút gửi", name: "form_btn", widget: "string" }
+          - { label: "Form — chữ trước link Zalo/Messenger", name: "form_note", widget: "string", required: false }
+          - { label: "Form — lời cảm ơn: tiêu đề", name: "form_ok_title", widget: "string" }
+          - { label: "Form — lời cảm ơn: nội dung", name: "form_ok_body", widget: "text" }
+          - label: "Các ô trong form (thêm/xoá/sắp xếp tuỳ ý)"
+            name: "fields"
+            widget: "list"
+            summary: "{{fields.label}}"
+            fields:
+              - { label: "Nhãn hiện cho khách", name: "label", widget: "string", hint: "VD: Số điện thoại / Zalo" }
+              - { label: "Tên ô (hiện trong mail nhận được)", name: "name", widget: "string", hint: "VD: Điện thoại — mỗi ô một tên khác nhau" }
+              - { label: "Chữ mờ gợi ý", name: "placeholder", widget: "string", required: false }
+              - { label: "Bắt buộc điền", name: "required", widget: "boolean", default: false }
+              - { label: "Ô to nhiều dòng", name: "long", widget: "boolean", default: false }
+
       - name: "menu"
         label: "Menu (thanh điều hướng)"
         file: "content/menu.json"
@@ -86,6 +155,14 @@ collections:
         label: "Trang chủ (các khối bên dưới)"
         file: "content/home.json"
         fields:
+          - label: "▸ Dải chữ chạy dưới tiêu đề lớn (thêm/xoá tuỳ ý)"
+            name: "ticker"
+            widget: "list"
+            summary: "{{fields.text}}"
+            fields:
+              - { label: "Chữ", name: "text", widget: "string" }
+              - { label: "Tô màu nổi bật", name: "highlight", widget: "boolean", default: false }
+
           - { label: "▸ Khối giới thiệu — tiêu đề", name: "about_title", widget: "string" }
           - { label: "Khối giới thiệu — nội dung", name: "about_body", widget: "text" }
           - { label: "Khối giới thiệu — chữ nút", name: "about_btn", widget: "string", required: false }
@@ -195,6 +272,7 @@ collections:
           - { label: "Khối giới thiệu — tiêu đề", name: "about_title", widget: "string" }
           - { label: "Khối giới thiệu — nội dung (chèn ảnh tuỳ ý)", name: "about_body", widget: "markdown" }
           - { label: "Khối giới thiệu — ảnh bên phải", name: "about_image", widget: "image", required: false }
+          - { label: "Nhãn mục Tầm nhìn/Sứ mệnh trên thanh mục nhỏ", name: "vm_nav", widget: "string" }
           - { label: "Tầm nhìn — tiêu đề", name: "vision_title", widget: "string" }
           - { label: "Tầm nhìn — nội dung", name: "vision_body", widget: "text" }
           - { label: "Sứ mệnh — tiêu đề", name: "mission_title", widget: "string" }
@@ -224,6 +302,9 @@ collections:
             fields:
               - { label: "Tên khách hàng", name: "name", widget: "string" }
               - { label: "Logo", name: "logo", widget: "image", required: false }
+          - { label: "▸ Khối kêu gọi cuối trang — tiêu đề", name: "cta_title", widget: "string" }
+          - { label: "Khối kêu gọi — chữ nút", name: "cta_btn", widget: "string" }
+          - { label: "Khối kêu gọi — link nút", name: "cta_link", widget: "string" }
 
       - name: "services"
         label: "Dịch vụ"
@@ -255,19 +336,7 @@ collections:
             fields:
               - { label: "Tên dự án", name: "title", widget: "string" }
               - { label: "Mã (không dấu, dùng cho link)", name: "slug", widget: "string" }
-              - label: "Ngành"
-                name: "category"
-                widget: "select"
-                options:
-                  - { label: "F&B", value: "fnb" }
-                  - { label: "Beauty", value: "beauty" }
-                  - { label: "Technology", value: "technology" }
-                  - { label: "Wedding", value: "wedding" }
-                  - { label: "Fashion", value: "fashion" }
-                  - { label: "Education", value: "education" }
-                  - { label: "Retail", value: "retail" }
-                  - { label: "Personal Brand", value: "personal" }
-                  - { label: "Design", value: "design" }
+              - { label: "Ngành", name: "category", widget: "string", hint: "Gõ đúng tên hoặc mã ngành đã khai ở mục Ngành. VD: fnb hoặc F&B — có dấu hay không đều được." }
               - { label: "Khách hàng", name: "client", widget: "string", required: false }
               - { label: "Dịch vụ đã làm", name: "services", widget: "list", required: false, field: { label: "Dịch vụ", name: "s", widget: "string" } }
               - { label: "Kết quả (1 dòng)", name: "result", widget: "string", required: false }

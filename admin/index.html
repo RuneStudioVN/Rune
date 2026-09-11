@@ -3,10 +3,152 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Admin — RUNESTUDIO</title>
+<title>Admin — Rune Studio</title>
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+<script>
+/* ===== Nút định dạng thêm cho ô soạn thảo ===== */
+(function () {
+  if (!window.CMS) return;
+
+  var MAU = [
+    { label: 'Mặc định (đen mực)', value: '#1C1B19' },
+    { label: 'Nâu đất', value: '#6B4A2F' },
+    { label: 'Vàng đồng', value: '#C9A227' },
+    { label: 'Xám nhạt', value: '#6F6152' },
+    { label: 'Trắng', value: '#FFFFFF' },
+    { label: 'Đỏ', value: '#C0392B' }
+  ];
+  var CO = [
+    { label: 'Nhỏ (14px)', value: '14px' },
+    { label: 'Bình thường (16px)', value: '16px' },
+    { label: 'Hơi lớn (18px)', value: '18px' },
+    { label: 'Lớn (22px)', value: '22px' },
+    { label: 'Rất lớn (28px)', value: '28px' },
+    { label: 'Khổng lồ (40px)', value: '40px' }
+  ];
+  var FONT = [
+    { label: 'Mặc định của web', value: 'inherit' },
+    { label: 'Chữ có chân (Georgia)', value: 'Georgia, serif' },
+    { label: 'Chữ máy đánh (mono)', value: 'ui-monospace, monospace' }
+  ];
+  var CAN = [
+    { label: 'Trái', value: 'left' },
+    { label: 'Giữa', value: 'center' },
+    { label: 'Phải', value: 'right' },
+    { label: 'Đều hai bên', value: 'justify' }
+  ];
+
+  /* 1. Đoạn văn có định dạng */
+  CMS.registerEditorComponent({
+    id: 'dinhdang',
+    label: 'Đoạn văn có định dạng',
+    fields: [
+      { name: 'noidung', label: 'Nội dung', widget: 'text' },
+      { name: 'mau', label: 'Màu chữ', widget: 'select', options: MAU, default: '#1C1B19' },
+      { name: 'co', label: 'Cỡ chữ', widget: 'select', options: CO, default: '16px' },
+      { name: 'font', label: 'Kiểu chữ', widget: 'select', options: FONT, default: 'inherit' },
+      { name: 'can', label: 'Căn lề', widget: 'select', options: CAN, default: 'left' },
+      { name: 'dam', label: 'In đậm', widget: 'boolean', default: false }
+    ],
+    pattern: /^<p data-rs style="([^"]*)">([\s\S]*?)<\/p>$/,
+    fromBlock: function (match) {
+      var s = match[1] || '';
+      var get = function (k, d) { var m = s.match(new RegExp(k + ':\\s*([^;]+)')); return m ? m[1].trim() : d; };
+      return {
+        noidung: (match[2] || '').replace(/<br\s*\/?>/g, '\n'),
+        mau: get('color', '#1C1B19'),
+        co: get('font-size', '16px'),
+        font: get('font-family', 'inherit'),
+        can: get('text-align', 'left'),
+        dam: get('font-weight', '400') === '700'
+      };
+    },
+    toBlock: function (o) {
+      var css = 'color:' + (o.mau || '#1C1B19')
+        + ';font-size:' + (o.co || '16px')
+        + ';font-family:' + (o.font || 'inherit')
+        + ';text-align:' + (o.can || 'left')
+        + ';font-weight:' + (o.dam ? '700' : '400');
+      var txt = String(o.noidung || '').replace(/\n/g, '<br>');
+      return '<p data-rs style="' + css + '">' + txt + '</p>';
+    },
+    toPreview: function (o) {
+      return '<p style="color:' + (o.mau || '#1C1B19') + ';font-size:' + (o.co || '16px')
+        + ';font-family:' + (o.font || 'inherit') + ';text-align:' + (o.can || 'left')
+        + ';font-weight:' + (o.dam ? '700' : '400') + '">' + String(o.noidung || '').replace(/\n/g, '<br>') + '</p>';
+    }
+  });
+
+  /* 2. Ảnh có chú thích + căn lề + độ rộng */
+  CMS.registerEditorComponent({
+    id: 'anh',
+    label: 'Ảnh (căn lề + chú thích)',
+    fields: [
+      { name: 'src', label: 'Ảnh', widget: 'image' },
+      { name: 'chuthich', label: 'Chú thích dưới ảnh', widget: 'string', required: false },
+      { name: 'rong', label: 'Độ rộng', widget: 'select', default: '100%',
+        options: [
+          { label: 'Toàn chiều rộng', value: '100%' },
+          { label: 'Ba phần tư', value: '75%' },
+          { label: 'Một nửa', value: '50%' },
+          { label: 'Một phần ba', value: '33%' }
+        ] },
+      { name: 'can', label: 'Căn lề', widget: 'select', options: CAN, default: 'center' }
+    ],
+    pattern: /^<figure data-rs style="([^"]*)">([\s\S]*?)<\/figure>$/,
+    fromBlock: function (match) {
+      var s = match[1] || '', inner = match[2] || '';
+      var src = (inner.match(/src="([^"]*)"/) || [])[1] || '';
+      var cap = (inner.match(/<figcaption>([\s\S]*?)<\/figcaption>/) || [])[1] || '';
+      var rong = (s.match(/width:\s*([^;]+)/) || [])[1] || '100%';
+      var can = (s.match(/text-align:\s*([^;]+)/) || [])[1] || 'center';
+      return { src: src, chuthich: cap, rong: rong.trim(), can: can.trim() };
+    },
+    toBlock: function (o) {
+      var mg = o.can === 'center' ? 'margin-left:auto;margin-right:auto;'
+        : (o.can === 'right' ? 'margin-left:auto;' : 'margin-right:auto;');
+      return '<figure data-rs style="width:' + (o.rong || '100%') + ';' + mg + 'text-align:' + (o.can || 'center') + '">'
+        + '<img src="' + (o.src || '') + '" alt="' + (o.chuthich || '') + '">'
+        + (o.chuthich ? '<figcaption>' + o.chuthich + '</figcaption>' : '')
+        + '</figure>';
+    },
+    toPreview: function (o) {
+      return '<figure style="width:' + (o.rong || '100%') + ';text-align:' + (o.can || 'center') + '"><img src="' + (o.src || '') + '" style="max-width:100%">'
+        + (o.chuthich ? '<figcaption>' + o.chuthich + '</figcaption>' : '') + '</figure>';
+    }
+  });
+
+  /* 3. Nút bấm */
+  CMS.registerEditorComponent({
+    id: 'nut',
+    label: 'Nút bấm',
+    fields: [
+      { name: 'chu', label: 'Chữ trên nút', widget: 'string' },
+      { name: 'link', label: 'Link', widget: 'string' },
+      { name: 'kieu', label: 'Kiểu', widget: 'select', default: 'signal',
+        options: [ { label: 'Nền nâu đất', value: 'signal' }, { label: 'Viền trống', value: 'ghost' } ] },
+      { name: 'can', label: 'Căn lề', widget: 'select', options: CAN, default: 'left' }
+    ],
+    pattern: /^<p data-rs-btn style="text-align:([^"]*)">([\s\S]*?)<\/p>$/,
+    fromBlock: function (match) {
+      var inner = match[2] || '';
+      return {
+        can: match[1] || 'left',
+        chu: (inner.match(/>([^<]*)<\/a>/) || [])[1] || '',
+        link: (inner.match(/href="([^"]*)"/) || [])[1] || '',
+        kieu: /btn--ghost/.test(inner) ? 'ghost' : 'signal'
+      };
+    },
+    toBlock: function (o) {
+      return '<p data-rs-btn style="text-align:' + (o.can || 'left') + '">'
+        + '<a class="btn btn--' + (o.kieu || 'signal') + '" href="' + (o.link || '#') + '">' + (o.chu || 'Xem thêm') + '</a></p>';
+    },
+    toPreview: function (o) { return '<p style="text-align:' + (o.can || 'left') + '"><a href="' + (o.link || '#') + '">' + (o.chu || 'Xem thêm') + '</a></p>'; }
+  });
+})();
+</script>
 </body>
 </html>

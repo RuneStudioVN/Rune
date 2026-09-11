@@ -17,81 +17,40 @@
 <body>
 <div id="header"></div>
 <section class="page-hero"><div class="wrap">
-  <h1>Liên hệ</h1>
-  <p class="lead">Điền brief bên dưới, hoặc nhắn nhanh qua Zalo / Messenger. Rune Studio phản hồi trong 24 giờ làm việc.</p>
+  <h1 id="p-ct-title">Liên hệ</h1>
+  <p class="lead" id="p-ct-lead"></p>
 </div></section>
 <section class="section"><div class="wrap contact-grid">
   <div>
     <div class="contact-links">
-      <a data-contact="zalo" href="#" target="_blank" rel="noopener"><span>Nhắn Zalo</span><span>→</span></a>
-      <a data-contact="messenger" href="#" target="_blank" rel="noopener"><span>Nhắn Messenger</span><span>→</span></a>
+      <a data-contact="zalo" href="#" target="_blank" rel="noopener"><span id="p-ct-zalo">Nhắn Zalo</span><span>→</span></a>
+      <a data-contact="messenger" href="#" target="_blank" rel="noopener"><span id="p-ct-mess">Nhắn Messenger</span><span>→</span></a>
       <a href="#" data-site="email"><span data-site="email">hello@runestudio.vn</span><span>→</span></a>
       <a href="#" data-site="phone"><span data-site="phone">0900 000 000</span><span>→</span></a>
     </div>
     <p class="small" style="margin-top:20px"><span data-site="address">Biên Hòa, Đồng Nai</span> · <span data-site="hours">Làm việc thứ 2 – thứ 7, 9:00 – 18:00</span></p>
   </div>
   <div class="brief" id="project-brief">
-    <h3>Project Brief</h3>
-    <p class="small" style="margin:8px 0 4px">Điền vài dòng, Rune Studio phản hồi trong 24 giờ làm việc.</p>
+    <h3 id="p-form-title">Project Brief</h3>
+    <p class="small" id="p-form-lead" style="margin:8px 0 4px"></p>
 
     <form class="form" id="brief-form" novalidate>
       <p class="hp"><label>Đừng điền ô này: <input name="botcheck" tabindex="-1" autocomplete="off"></label></p>
 
-      <div class="field-row">
-        <div class="field">
-          <label for="f-name">Tên của bạn *</label>
-          <input id="f-name" name="Tên" type="text" required placeholder="VD: Nguyễn Văn A">
-        </div>
-        <div class="field">
-          <label for="f-phone">Số điện thoại / Zalo *</label>
-          <input id="f-phone" name="Điện thoại" type="tel" required placeholder="VD: 0912 345 678">
-        </div>
-      </div>
+      <div id="brief-fields"></div>
 
-      <div class="field-row">
-        <div class="field">
-          <label for="f-brand">Thương hiệu / cửa hàng</label>
-          <input id="f-brand" name="Thương hiệu" type="text" placeholder="VD: Trà sữa Elika">
-        </div>
-        <div class="field">
-          <label for="f-link">Kênh hiện có</label>
-          <input id="f-link" name="Kênh hiện có" type="text" placeholder="VD: tiktok.com/@elika, 3K follow">
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="f-service">Bạn quan tâm mảng nào</label>
-        <input id="f-service" name="Mảng quan tâm" type="text" placeholder="VD: xây kênh TikTok, quay video món, thiết kế menu">
-      </div>
-
-      <div class="field-row">
-        <div class="field">
-          <label for="f-budget">Ngân sách mỗi tháng</label>
-          <input id="f-budget" name="Ngân sách" type="text" placeholder="VD: khoảng 10 triệu">
-        </div>
-        <div class="field">
-          <label for="f-start">Muốn bắt đầu khi nào</label>
-          <input id="f-start" name="Thời điểm bắt đầu" type="text" placeholder="VD: đầu tháng sau">
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="f-msg">Bạn đang bán gì, khách chính là ai, mục tiêu 3 tháng tới?</label>
-        <textarea id="f-msg" name="Nội dung" placeholder="VD: Mình bán trà sữa ở Biên Hòa, khách chủ yếu là học sinh cấp 3 quanh khu vực. Quán mở 4 tháng rồi, tối cuối tuần đông nhưng ngày thường vắng. Mục tiêu 3 tháng tới là mỗi tuần có khoảng 20 tin nhắn đặt bàn đến từ TikTok."></textarea>
-      </div>
-
-      <button class="btn btn--signal" type="submit" id="brief-submit">Gửi brief</button>
-      <p class="form-note" id="brief-msg">Hoặc nhắn nhanh qua <a data-contact="zalo" href="#" target="_blank" rel="noopener" style="text-decoration:underline">Zalo</a> · <a data-contact="messenger" href="#" target="_blank" rel="noopener" style="text-decoration:underline">Messenger</a></p>
+      <button class="btn btn--signal" type="submit" id="brief-submit"><span id="p-form-btn">Gửi brief</span></button>
+      <p class="form-note" id="brief-msg"><span id="p-form-note">Hoặc nhắn nhanh qua</span> <a data-contact="zalo" href="#" target="_blank" rel="noopener" style="text-decoration:underline">Zalo</a> · <a data-contact="messenger" href="#" target="_blank" rel="noopener" style="text-decoration:underline">Messenger</a></p>
     </form>
     <div class="form-ok" id="brief-ok">
-      <h3>Đã nhận brief của bạn</h3>
-      <p>Cảm ơn bạn. Rune Studio sẽ phản hồi trong 24 giờ làm việc qua số điện thoại hoặc Zalo bạn để lại.</p>
+      <h3 id="p-form-ok-title">Đã nhận brief của bạn</h3>
+      <p id="p-form-ok-body"></p>
     </div>
   </div></section>
 <div id="footer"></div>
 <script src="js/layout.js"></script>
 <script src="js/main.js"></script>
-<script>SITE_READY.then(initBriefForm);</script>
+<script>SITE_READY.then(async()=>{ await renderPageText(); await renderBriefFields("#brief-fields"); initBriefForm(); });</script>
 
 </body>
 </html>

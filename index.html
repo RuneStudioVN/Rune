@@ -42,10 +42,7 @@
     <div class="poster" id="hero-poster"><div class="ph ph--square ph--dark">Poster / key visual</div></div>
   </div>
 </div>
-<div class="ticker"><div class="ticker-track">
-  <span>F&amp;B</span><span>Beauty</span><span>Technology</span><span>Wedding</span><span>Fashion</span><span>Education</span><span>Retail</span><span>Personal Brand</span><span><b>TikTok</b></span><span><b>KOC / UGC</b></span><span><b>Design</b></span><span>Content &amp; Social</span>
-  <span>F&amp;B</span><span>Beauty</span><span>Technology</span><span>Wedding</span><span>Fashion</span><span>Education</span><span>Retail</span><span>Personal Brand</span><span><b>TikTok</b></span><span><b>KOC / UGC</b></span><span><b>Design</b></span><span>Content &amp; Social</span>
-</div></div>
+<div class="ticker"><div class="ticker-track" id="h-ticker"></div></div>
 </section>
 
 <!-- Các khối dưới đây lấy nội dung từ /admin → Trang chủ -->
@@ -114,6 +111,6 @@
 <div id="footer"></div>
 <script src="js/layout.js"></script>
 <script src="js/main.js"></script>
-<script>SITE_READY.then(async()=>{renderHero();await renderHome();renderServiceCards("#home-services");renderProjects("#featured",{featured:true,limit:(window.HOME&&Number(window.HOME.projects_limit))||8});renderPosts("#home-posts",3);});</script>
+<script>SITE_READY.then(async()=>{renderPageText();renderHero();await renderHome();renderServiceCards("#home-services");renderProjects("#featured",{featured:true,limit:(window.HOME&&Number(window.HOME.projects_limit))||8});renderPosts("#home-posts",3);});</script>
 </body>
 </html>

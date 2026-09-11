@@ -1,0 +1,95 @@
+{
+  "svc_title": "Dịch vụ",
+  "svc_lead": "Sáu mảng, ghép được với nhau. Mỗi mảng đều có đầu ra rõ: bao nhiêu video, bao nhiêu bài, đo bằng gì.",
+  "svc_cta_title": "Chưa biết cần mảng nào? Kể tình hình, Rune Studio đề xuất.",
+  "svc_cta_btn": "Gửi brief dự án",
+  "svc_cta_link": "lien-he.html",
+  "prj_title": "Dự án",
+  "prj_lead": "Lọc theo ngành để xem Rune Studio làm gì cho từng kiểu khách.",
+  "prj_cta_title": "Dự án tiếp theo là của bạn?",
+  "prj_cta_btn": "Gửi brief dự án",
+  "prj_cta_link": "lien-he.html",
+  "news_title": "Tin tức",
+  "news_lead": "Những gì Rune Studio rút ra sau mỗi kênh. Viết ngắn, có số, dùng được ngay.",
+  "job_title": "Tuyển dụng",
+  "job_lead": "Rune Studio tìm người cùng làm — không cần bằng cấp đẹp, cần chịu làm và chịu học.",
+  "job_cta_title": "Chưa thấy vị trí phù hợp?",
+  "job_cta_lead": "Cứ gửi hồ sơ, khi có chỗ trống Rune Studio sẽ liên hệ.",
+  "job_cta_btn": "Gửi hồ sơ",
+  "job_cta_link": "lien-he.html",
+  "ct_title": "Liên hệ",
+  "ct_lead": "Điền brief bên dưới, hoặc nhắn nhanh qua Zalo / Messenger. Rune Studio phản hồi trong 24 giờ làm việc.",
+  "ct_zalo_label": "Nhắn Zalo",
+  "ct_mess_label": "Nhắn Messenger",
+  "form_title": "Project Brief",
+  "form_lead": "Điền vài dòng, Rune Studio phản hồi trong 24 giờ làm việc.",
+  "form_btn": "Gửi brief",
+  "form_note": "Hoặc nhắn nhanh qua",
+  "form_ok_title": "Đã nhận brief của bạn",
+  "form_ok_body": "Cảm ơn bạn. Rune Studio sẽ phản hồi trong 24 giờ làm việc qua số điện thoại hoặc Zalo bạn để lại.",
+  "fields": [
+    {
+      "name": "Tên",
+      "label": "Tên của bạn",
+      "placeholder": "VD: Nguyễn Văn A",
+      "required": true,
+      "long": false
+    },
+    {
+      "name": "Điện thoại",
+      "label": "Số điện thoại / Zalo",
+      "placeholder": "VD: 0912 345 678",
+      "required": true,
+      "long": false
+    },
+    {
+      "name": "Thương hiệu",
+      "label": "Thương hiệu / cửa hàng",
+      "placeholder": "VD: Trà sữa Elika",
+      "required": false,
+      "long": false
+    },
+    {
+      "name": "Kênh hiện có",
+      "label": "Kênh hiện có",
+      "placeholder": "VD: tiktok.com/@elika, 3K follow",
+      "required": false,
+      "long": false
+    },
+    {
+      "name": "Mảng quan tâm",
+      "label": "Bạn quan tâm mảng nào",
+      "placeholder": "VD: xây kênh TikTok, quay video món",
+      "required": false,
+      "long": false
+    },
+    {
+      "name": "Ngân sách",
+      "label": "Ngân sách mỗi tháng",
+      "placeholder": "VD: khoảng 10 triệu",
+      "required": false,
+      "long": false
+    },
+    {
+      "name": "Thời điểm bắt đầu",
+      "label": "Muốn bắt đầu khi nào",
+      "placeholder": "VD: đầu tháng sau",
+      "required": false,
+      "long": false
+    },
+    {
+      "name": "Nội dung",
+      "label": "Bạn đang bán gì, khách chính là ai, mục tiêu 3 tháng tới?",
+      "placeholder": "VD: Mình bán trà sữa ở Biên Hòa, khách chủ yếu là học sinh cấp 3. Mục tiêu 3 tháng tới là mỗi tuần có khoảng 20 tin nhắn đặt bàn đến từ TikTok.",
+      "required": false,
+      "long": true
+    }
+  ],
+  "tab_home": "Rune Studio — Sáng tạo để tạo dấu ấn",
+  "tab_about": "Giới thiệu — Rune Studio",
+  "tab_svc": "Dịch vụ — Rune Studio",
+  "tab_prj": "Dự án — Rune Studio",
+  "tab_news": "Tin tức — Rune Studio",
+  "tab_job": "Tuyển dụng — Rune Studio",
+  "tab_contact": "Liên hệ — Rune Studio"
+}

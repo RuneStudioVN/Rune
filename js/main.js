@@ -2,12 +2,38 @@
    main.js — dựng dự án / tin tức / dịch vụ từ content/*.json
    Ngài không cần sửa file này.
    ============================================================ */
-const CATEGORIES = [
+let CATEGORIES = [
   ['all', 'Tất cả'], ['fnb', 'F&B'], ['beauty', 'Beauty'], ['technology', 'Technology'],
   ['wedding', 'Wedding'], ['fashion', 'Fashion'], ['education', 'Education'],
   ['retail', 'Retail'], ['personal', 'Personal Brand'], ['design', 'Design'],
 ];
-const catName = k => (CATEGORIES.find(c => c[0] === k) || [k, k])[1];
+async function loadCategories() {
+  try {
+    const d = await loadJSON('content/categories.json');
+    const list = (d.categories || []).filter(c => c && c.code && c.name);
+    if (list.length) CATEGORIES = [['all', 'Tất cả'], ...list.map(c => [c.code, c.name])];
+  } catch (e) {}
+  return CATEGORIES;
+}
+/* Chuẩn hoá chuỗi để so khớp ngành: bỏ dấu, thường hoá, nối gạch */
+function norm(s) {
+  return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+    .toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+/* Dự án có thuộc ngành này không — khớp cả mã lẫn tên, có dấu hay không */
+function sameCat(projectCat, key) {
+  const a = norm(projectCat);
+  if (!a) return false;
+  if (a === norm(key)) return true;
+  const found = CATEGORIES.find(c => norm(c[0]) === norm(key) || norm(c[1]) === norm(key));
+  return !!found && (a === norm(found[0]) || a === norm(found[1]));
+}
+/* Tên hiển thị của ngành */
+const catName = k => {
+  const f = CATEGORIES.find(c => norm(c[0]) === norm(k) || norm(c[1]) === norm(k));
+  return f ? f[1] : (k || '');
+};
 const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 /* Chuyển markdown sang HTML — tự viết, không phụ thuộc thư viện ngoài */
 function md(src) {
@@ -72,14 +98,16 @@ function projectCard(p) {
 }
 async function renderProjects(sel, opt = {}) {
   const el = document.querySelector(sel); if (!el) return;
+  await loadCategories();
   let list = await getProjects();
   if (opt.featured) list = list.filter(p => p.featured);
-  if (opt.category) list = list.filter(p => p.category === opt.category);
+  if (opt.category) list = list.filter(p => sameCat(p.category, opt.category));
   if (opt.limit) list = list.slice(0, opt.limit);
   el.innerHTML = list.length ? list.map(projectCard).join('') : '<div class="empty">Chưa có dự án trong nhóm này.</div>';
 }
 async function renderFilters(sel, gridSel) {
   const el = document.querySelector(sel); if (!el) return;
+  await loadCategories();
   const startCat = new URLSearchParams(location.search).get('cat') || 'all';
   el.innerHTML = CATEGORIES.map(([k, t]) => `<button data-cat="${k}" class="${k === startCat ? 'is-active' : ''}">${t}</button>`).join('');
   const apply = k => {
@@ -92,6 +120,7 @@ async function renderFilters(sel, gridSel) {
 /* Trang chi tiết dự án (du-an.html?id=slug) */
 async function renderProjectDetail(listSel, detailSel) {
   const id = new URLSearchParams(location.search).get('id'); if (!id) return false;
+  await loadCategories();
   const p = (await getProjects()).find(x => x.slug === id); if (!p) return false;
   document.querySelector(listSel).style.display = 'none';
   const d = document.querySelector(detailSel); d.style.display = '';
@@ -193,11 +222,12 @@ function initBriefForm() {
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
-    const name = form.querySelector('[name="Tên"]');
-    const phone = form.querySelector('[name="Điện thoại"]');
-    if (!name.value.trim() || !phone.value.trim()) {
-      msg.innerHTML = '<span style="color:#C0392B">Vui lòng điền tên và số điện thoại.</span>';
-      (!name.value.trim() ? name : phone).focus();
+    const required = [...form.querySelectorAll('[required]')];
+    const missing = required.find(f => !f.value.trim());
+    if (missing) {
+      const lb = form.querySelector(`label[for="${missing.id}"]`);
+      msg.innerHTML = `<span style="color:#C0392B">Vui lòng điền: ${(lb ? lb.textContent : '').replace('*', '').trim()}</span>`;
+      missing.focus();
       return;
     }
     if (!key) {
@@ -323,6 +353,20 @@ async function renderAbout() {
     `<div class="member"><div class="ph">${m.image ? `<img src="${esc(m.image)}" alt="${esc(m.name)}">` : 'Ảnh'}</div><h4>${esc(m.name)}</h4><span>${esc(m.role)}</span></div>`).join('');
 
   set('ab-clients-title', A.clients_title);
+
+  // thanh mục nhỏ tự chạy theo tên khối
+  const nav = document.getElementById('ab-nav');
+  if (nav) {
+    const items = [
+      [A.about_title, '#about'], [A.vm_nav || 'Tầm nhìn / Sứ mệnh', '#vision'],
+      [A.cap_title, '#capabilities'], [A.team_title, '#team'], [A.clients_title, '#clients'],
+    ].filter(x => x[0]);
+    nav.innerHTML = items.map(([t, h]) => `<a href="${h}">${esc(t)}</a>`).join('');
+  }
+  // khối kêu gọi cuối trang Giới thiệu
+  set('ab-cta-title', A.cta_title);
+  const abBtn = document.getElementById('ab-cta-btn');
+  if (abBtn) { if (A.cta_btn) { abBtn.textContent = A.cta_btn; abBtn.href = A.cta_link || 'lien-he.html'; } else abBtn.style.display = 'none'; }
   const cl = document.getElementById('ab-clients');
   if (cl) cl.innerHTML = (A.clients || []).map(c =>
     `<div>${c.logo ? `<img src="${esc(c.logo)}" alt="${esc(c.name)}" style="max-height:44px;width:auto">` : esc(c.name || 'Logo')}</div>`).join('');
@@ -336,6 +380,15 @@ async function renderHome() {
   const txt = (id, v) => { const el = $(id); if (el) el.textContent = v || ''; };
   const btn = (id, label, link) => { const el = $(id); if (!el) return; if (label) { el.textContent = label; if (link) el.href = link; } else el.style.display = 'none'; };
   const phOrImg = (src, cls, alt) => `<div class="ph ${cls || ''}">${src ? `<img src="${esc(src)}" alt="${esc(alt || '')}">` : esc(alt || 'Ảnh')}</div>`;
+
+  const tk = $('h-ticker');
+  if (tk) {
+    const items = (H.ticker || []).filter(t => t && t.text);
+    if (items.length) {
+      const one = items.map(t => `<span>${t.highlight ? `<b>${esc(t.text)}</b>` : esc(t.text)}</span>`).join('');
+      tk.innerHTML = one + one;
+    } else tk.closest('.ticker').style.display = 'none';
+  }
 
   txt('h-about-title', H.about_title);
   if ($('h-about-body')) $('h-about-body').innerHTML = md(H.about_body);
@@ -388,4 +441,62 @@ async function renderHome() {
   txt('h-post-title', H.posts_title); btn('h-post-btn', H.posts_btn, 'tin-tuc.html');
 
   txt('h-cta-title', H.cta_title); txt('h-cta-lead', H.cta_lead); btn('h-cta-btn', H.cta_btn, H.cta_btn_link);
+}
+
+/* ---------- Chữ cố định của các trang con (content/pages.json) ---------- */
+let _pages;
+const getPages = async () => _pages || (_pages = await loadJSON('content/pages.json').catch(() => ({})));
+
+async function renderPageText() {
+  const P = await getPages(); window.PAGES = P;
+  const set = (id, v) => { const el = document.getElementById(id); if (el && v) el.textContent = v; };
+  const cta = (t, l, b, link) => {
+    set(t, P[t.replace('p-', '') + '']);
+  };
+  // tiêu đề + mô tả từng trang
+  const map = {
+    'p-svc-title': P.svc_title, 'p-svc-lead': P.svc_lead,
+    'p-svc-cta-title': P.svc_cta_title, 'p-svc-cta-btn': P.svc_cta_btn,
+    'p-prj-title': P.prj_title, 'p-prj-lead': P.prj_lead,
+    'p-prj-cta-title': P.prj_cta_title, 'p-prj-cta-btn': P.prj_cta_btn,
+    'p-news-title': P.news_title, 'p-news-lead': P.news_lead,
+    'p-job-title': P.job_title, 'p-job-lead': P.job_lead,
+    'p-job-cta-title': P.job_cta_title, 'p-job-cta-lead': P.job_cta_lead, 'p-job-cta-btn': P.job_cta_btn,
+    'p-ct-title': P.ct_title, 'p-ct-lead': P.ct_lead,
+    'p-ct-zalo': P.ct_zalo_label, 'p-ct-mess': P.ct_mess_label,
+    'p-form-title': P.form_title, 'p-form-lead': P.form_lead, 'p-form-btn': P.form_btn,
+    'p-form-ok-title': P.form_ok_title, 'p-form-ok-body': P.form_ok_body,
+  };
+  Object.entries(map).forEach(([id, v]) => set(id, v));
+  set('p-form-note', P.form_note);
+  // tiêu đề tab trình duyệt
+  const here = location.pathname.split('/').pop() || 'index.html';
+  const tabs = { 'index.html': P.tab_home, 'gioi-thieu.html': P.tab_about, 'dich-vu.html': P.tab_svc,
+    'du-an.html': P.tab_prj, 'tin-tuc.html': P.tab_news, 'tuyen-dung.html': P.tab_job, 'lien-he.html': P.tab_contact };
+  if (tabs[here] && !location.search.includes('id=')) document.title = tabs[here];
+  // link nút CTA
+  const lk = (id, v) => { const el = document.getElementById(id); if (el && v) el.href = v; };
+  lk('p-svc-cta-btn', P.svc_cta_link); lk('p-prj-cta-btn', P.prj_cta_link); lk('p-job-cta-btn', P.job_cta_link);
+}
+
+/* Dựng các ô của form Project Brief từ pages.json */
+async function renderBriefFields(sel) {
+  const el = document.querySelector(sel); if (!el) return;
+  const P = await getPages();
+  const list = (P.fields || []).filter(f => f && f.name && f.label);
+  if (!list.length) return;
+  const one = f => `<div class="field">
+      <label for="f-${esc(f.name)}">${esc(f.label)}${f.required ? ' *' : ''}</label>
+      ${f.long
+        ? `<textarea id="f-${esc(f.name)}" name="${esc(f.name)}" placeholder="${esc(f.placeholder || '')}"></textarea>`
+        : `<input id="f-${esc(f.name)}" name="${esc(f.name)}" type="text" ${f.required ? 'required' : ''} placeholder="${esc(f.placeholder || '')}">`}
+    </div>`;
+  // ghép 2 ô ngắn liên tiếp thành 1 hàng
+  const html = []; let i = 0;
+  while (i < list.length) {
+    const a = list[i], bnext = list[i + 1];
+    if (!a.long && bnext && !bnext.long) { html.push(`<div class="field-row">${one(a)}${one(bnext)}</div>`); i += 2; }
+    else { html.push(one(a)); i += 1; }
+  }
+  el.innerHTML = html.join('');
 }

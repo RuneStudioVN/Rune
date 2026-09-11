@@ -1,0 +1,40 @@
+RUNE STUDIO — BẢN SỬA ĐƯỢC HẾT
+==============================
+
+AN TOÀN DỮ LIỆU
+Gói chỉ có 2 file content MỚI TINH: categories.json, pages.json.
+KHÔNG có site / home / about / menu / services / projects / posts / jobs
+-> mọi thứ ngài đã sửa trong admin giữ nguyên 100%.
+
+CÁCH UP (1 lần)
+GitHub repo Rune -> Add file -> Upload files
+-> kéo 4 thư mục (css, js, admin, content) + 7 file .html -> Commit.
+File .txt này không cần up.
+
+TRONG /admin GIỜ SỬA ĐƯỢC MỌI CHỮ TRÊN WEB
+Thông tin chung
+  Liên hệ & mạng xã hội   logo, slogan, SĐT, Zalo, Messenger, mã form
+  Ngành                   nút lọc trang Dự án - thêm/xoá thoải mái
+  Chữ các trang con+Form  tiêu đề tab trình duyệt, tiêu đề/mô tả 5 trang,
+                          khối kêu gọi, và TỪNG Ô trong form liên hệ
+  Menu                    mục chính + mục con
+  Đầu trang chủ           tiêu đề, 4 ô số, poster, dải chữ chạy
+  Trang chủ               mọi khối bên dưới
+  Trang Giới thiệu        gồm cả thanh mục nhỏ + khối kêu gọi cuối trang
+  Dịch vụ
+Dự án / Tin tức / Tuyển dụng   thêm, xoá, kéo sắp xếp
+
+Ô "NGÀNH" CỦA DỰ ÁN GIỜ TỰ GÕ
+Gõ mã hay tên, có dấu hay không, hoa hay thường đều khớp.
+   fnb = F&B = f&b     |     Nội thất = noi that = noi-that
+Muốn thêm ngành mới: vào mục "Ngành" thêm 1 dòng (tên + mã),
+rồi gõ tên đó vào ô Ngành của dự án. Không cần nhờ ai.
+
+VIẾT NHIỀU DÒNG
+Ô mô tả: để 1 dòng trống giữa 2 đoạn.
+Muốn gạch đầu dòng: gõ dấu - rồi cách 1 khoảng trắng.
+
+MẸO ĐỠ TỐN CREDIT NETLIFY
+Trước khi sửa nhiều: Netlify -> Project configuration -> Build & deploy
+-> Stop builds. Sửa và Xuất bản thoải mái (không tốn credit).
+Xong: Resume builds -> Deploys -> Trigger deploy. Chỉ tốn 1 lần.

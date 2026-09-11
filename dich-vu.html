@@ -18,20 +18,20 @@
 <div id="header"></div>
 <div id="svc-list">
 <section class="page-hero"><div class="wrap">
-  <h1>Dịch vụ</h1>
-  <p class="lead">Sáu mảng, ghép được với nhau. Mỗi mảng đều có đầu ra rõ: bao nhiêu video, bao nhiêu bài, đo bằng gì.</p>
+  <h1 id="p-svc-title">Dịch vụ</h1>
+  <p class="lead" id="p-svc-lead"></p>
   <div class="subnav" id="svc-nav"></div>
 </div></section>
 
 <div class="wrap" id="svc-blocks"></div>
 
-<section class="cta"><div class="wrap"><h2>Chưa biết cần mảng nào? Kể tình hình, Rune Studio đề xuất.</h2><a class="btn" href="lien-he.html">Gửi brief dự án</a></div></section>
+<section class="cta"><div class="wrap"><h2 id="p-svc-cta-title"></h2><a class="btn" id="p-svc-cta-btn" href="lien-he.html"></a></div></section>
 </div>
 <div id="svc-detail" style="display:none"></div>
 
 <div id="footer"></div>
 <script src="js/layout.js"></script>
 <script src="js/main.js"></script>
-<script>SITE_READY.then(async()=>{ if(!(await renderServiceDetail("#svc-list","#svc-detail"))) renderServiceBlocks("#svc-blocks","#svc-nav"); });</script>
+<script>SITE_READY.then(async()=>{renderPageText(); if(!(await renderServiceDetail("#svc-list","#svc-detail"))) renderServiceBlocks("#svc-blocks","#svc-nav"); });</script>
 </body>
 </html>
