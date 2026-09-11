@@ -1,0 +1,20 @@
+RUNE STUDIO — BẢN CẬP NHẬT
+==========================
+KHÔNG có thư mục content -> dữ liệu ngài đã sửa giữ nguyên 100%.
+
+UP: GitHub repo Rune -> Add file -> Upload files
+-> kéo 3 thư mục (css, js, admin) + file index.html -> Commit.
+
+LẦN NÀY SỬA:
+1. Thanh menu DÍNH khi cuộn (trước đây bị lỗi, cuộn là mất).
+2. Nút LÊN ĐẦU TRANG tròn đen góc phải dưới, hiện khi cuộn quá 500px.
+3. Khối TikTok trang chủ: bỏ up ảnh, chỉ cần DÁN LINK VIDEO.
+   Video TikTok/YouTube hiện thật, tự lấy hình từ nền tảng.
+   Admin -> Trang chủ -> "TikTok — video hiện bên cạnh".
+   Dán dạng: https://www.tiktok.com/@rune.story/video/123456789
+   Bỏ trống hết thì khung tự ẩn.
+4. Bỏ hẳn khối CASE STUDY ở trang chủ (cả trên web lẫn trong admin).
+5. Bài TIN TỨC bỏ ảnh đại diện — không cần làm hình nữa.
+   Muốn có hình thì chèn thẳng vào phần Nội dung, hoặc dán link video.
+
+ĐÃ KIỂM TRA: 36/36 lượt trên 3 kích thước màn hình, 0 lỗi.

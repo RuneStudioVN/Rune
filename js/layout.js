@@ -80,6 +80,20 @@ window.SITE_READY = (async () => {
   const btn = document.querySelector('.nav-toggle'), nav = document.querySelector('.nav');
   btn.addEventListener('click', () => { const o = nav.classList.toggle('is-open'); btn.setAttribute('aria-expanded', o); });
 
+  /* ---- Nút lên đầu trang ---- */
+  (function backToTop() {
+    const btn = document.createElement('button');
+    btn.className = 'totop';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Lên đầu trang');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+    document.body.appendChild(btn);
+    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    const toggle = () => btn.classList.toggle('is-on', window.scrollY > 500);
+    window.addEventListener('scroll', toggle, { passive: true });
+    toggle();
+  })();
+
   /* ---- Cột nút liên hệ nổi bên phải (cố định) ---- */
   (function buildDock() {
     const ic = {

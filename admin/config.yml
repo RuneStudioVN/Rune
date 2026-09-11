@@ -207,11 +207,12 @@ collections:
               - { label: "Nội dung", name: "text", widget: "string" }
           - { label: "TikTok — chữ nút", name: "tiktok_btn", widget: "string", required: false }
           - { label: "TikTok — link nút", name: "tiktok_btn_link", widget: "string", required: false }
-          - label: "TikTok — 3 ảnh dọc"
-            name: "tiktok_images"
+          - label: "TikTok — video hiện bên cạnh (dán link, tự lấy hình từ TikTok)"
+            name: "tiktok_videos"
             widget: "list"
+            summary: "{{fields.link}}"
             fields:
-              - { label: "Ảnh (dọc 9:16)", name: "image", widget: "image", required: false }
+              - { label: "Link video TikTok hoặc YouTube", name: "link", widget: "string", required: false, hint: "VD: https://www.tiktok.com/@rune.story/video/123456789 — bỏ trống thì ẩn khung đó" }
 
           - { label: "▸ Gallery — tiêu đề", name: "gallery_title", widget: "string" }
           - { label: "Gallery — chữ nút", name: "gallery_btn", widget: "string", required: false }
@@ -224,18 +225,6 @@ collections:
               - { label: "Chú thích", name: "caption", widget: "string", required: false }
               - { label: "Ảnh", name: "image", widget: "image", required: false }
               - { label: "Link khi bấm vào ảnh", name: "link", widget: "string", required: false, hint: "Bỏ trống = không bấm được" }
-
-          - { label: "▸ Case study — tiêu đề", name: "cases_title", widget: "string" }
-          - label: "Case study (thêm/xoá tuỳ ý)"
-            name: "cases"
-            widget: "list"
-            summary: "{{fields.title}}"
-            fields:
-              - { label: "Nhãn ngành", name: "tag", widget: "string", required: false }
-              - { label: "Tiêu đề", name: "title", widget: "string" }
-              - { label: "Nội dung", name: "desc", widget: "text" }
-              - { label: "Chữ nút", name: "btn", widget: "string", required: false }
-              - { label: "Link nút", name: "link", widget: "string", required: false }
 
           - label: "▸ Con số (thêm/xoá tuỳ ý)"
             name: "numbers"
@@ -362,8 +351,7 @@ collections:
               - { label: "Ngày", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
               - { label: "Chủ đề", name: "tag", widget: "string" }
               - { label: "Tóm tắt", name: "excerpt", widget: "text" }
-              - { label: "Ảnh đại diện", name: "image", widget: "image", required: false }
-              - { label: "Link video TikTok/YouTube", name: "video", widget: "string", required: false }
+              - { label: "Link video TikTok/YouTube", name: "video", widget: "string", required: false, hint: "Bỏ trống cũng được" }
               - { label: "Nội dung (chèn ảnh tuỳ ý)", name: "body", widget: "markdown", hint: "Bấm biểu tượng ảnh trên thanh công cụ để chèn hình vào giữa bài" }
 
   - name: "jobs"

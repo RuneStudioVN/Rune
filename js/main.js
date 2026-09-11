@@ -141,8 +141,7 @@ async function renderProjectDetail(listSel, detailSel) {
 }
 
 function postCard(p) {
-  return `<a class="post" href="tin-tuc.html?id=${encodeURIComponent(p.slug)}">
-    ${phBlock(p)}
+  return `<a class="post post--notext" href="tin-tuc.html?id=${encodeURIComponent(p.slug)}">
     <div><span class="tag tag--pulse">${esc(p.tag)}</span> <span class="small">${fmtDate(p.date)}</span>
     <h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p></div></a>`;
 }
@@ -164,7 +163,7 @@ async function renderPostDetail(listSel, detailSel) {
       <p class="lead">${esc(p.excerpt)}</p>
     </div></section>
     <section class="section"><div class="wrap detail">
-      ${p.video ? videoEmbed(p.video) : (p.image ? phBlock(p, 'ph--wide') : '')}
+      ${p.video ? videoEmbed(p.video) : ''}
       <div class="prose">${md(p.body)}</div>
       <div class="btn-row" style="margin-top:32px"><a class="btn btn--ghost" href="tin-tuc.html">← Tất cả bài viết</a></div>
     </div></section>`;
@@ -411,23 +410,25 @@ async function renderHome() {
   if ($('h-tt-lead')) $('h-tt-lead').innerHTML = md(H.tiktok_lead);
   if ($('h-tt-items')) $('h-tt-items').innerHTML = (H.tiktok_items || []).map(i => `<li>${esc(i.text)}</li>`).join('');
   btn('h-tt-btn', H.tiktok_btn, H.tiktok_btn_link);
-  if ($('h-tt-imgs')) $('h-tt-imgs').innerHTML = (H.tiktok_images || []).map(i => phOrImg(i.image, 'ph--9x16 ph--dark', 'Video')).join('');
+  if ($('h-tt-imgs')) {
+    const vids = (H.tiktok_videos || []).map(v => v && v.link).filter(Boolean);
+    $('h-tt-imgs').innerHTML = vids.length
+      ? vids.map(u => {
+          const tt = String(u).match(/tiktok\.com\/.*\/video\/(\d+)/);
+          const yt = String(u).match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/))([\w-]{11})/);
+          if (tt) return `<div class="tt-embed"><iframe src="https://www.tiktok.com/embed/v2/${tt[1]}" title="Video TikTok" allow="encrypted-media;picture-in-picture" allowfullscreen loading="lazy"></iframe></div>`;
+          if (yt) return `<div class="tt-embed"><iframe src="https://www.youtube.com/embed/${yt[1]}" title="Video" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe></div>`;
+          return `<a class="ph ph--9x16 ph--dark" href="${esc(u)}" target="_blank" rel="noopener">Xem video</a>`;
+        }).join('')
+      : '';
+    if (!vids.length) $('h-tt-imgs').style.display = 'none';
+  }
 
   txt('h-gal-title', H.gallery_title); btn('h-gal-btn', H.gallery_btn, H.gallery_btn_link);
   if ($('h-gallery')) $('h-gallery').innerHTML = (H.gallery || []).map(g => {
     const box = phOrImg(g.image, 'ph--square', g.caption);
     return g.link ? `<a href="${esc(g.link)}" class="gal-link">${box}</a>` : box;
   }).join('');
-
-  txt('h-case-title', H.cases_title);
-  if ($('h-cases')) $('h-cases').innerHTML = (H.cases || []).map(c =>
-    `<div class="card card--link" ${c.link ? `data-href="${esc(c.link)}"` : ''}>${c.tag ? `<span class="tag tag--signal">${esc(c.tag)}</span>` : ''}
-      <h3>${esc(c.title)}</h3><div class="prose prose--sm">${md(c.desc)}</div>
-      ${c.btn ? `<a class="btn btn--ghost" href="${esc(c.link || '#')}">${esc(c.btn)}</a>` : ''}</div>`).join('');
-  document.querySelectorAll('.card--link[data-href]').forEach(el => {
-    el.style.cursor = 'pointer';
-    el.addEventListener('click', e => { if (!e.target.closest('a')) location.href = el.dataset.href; });
-  });
 
   if ($('h-numbers')) $('h-numbers').innerHTML = (H.numbers || []).map(n =>
     `<div><b>${esc(n.value)}</b><span>${esc(n.label)}</span></div>`).join('');

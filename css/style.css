@@ -63,7 +63,8 @@ p{max-width:64ch}
 .btn-row{display:flex;gap:12px;flex-wrap:wrap}
 
 /* ---------- Header ---------- */
-.header{position:sticky;top:0;z-index:50;background:rgba(245,246,248,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--mist)}
+#header{position:sticky;top:0;z-index:60}
+.header{background:rgba(247,241,228,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--mist)}
 .header .wrap{display:flex;align-items:center;justify-content:space-between;height:76px;position:relative}
 .logo{font-weight:800;font-size:22px;letter-spacing:-.04em;display:flex;align-items:center;gap:8px}
 .logo > i{width:12px;height:12px;background:var(--signal);border-radius:2px;transform:rotate(45deg);flex:none}
@@ -379,3 +380,17 @@ p{max-width:64ch}
 .row h3 a{text-decoration:none}
 .row h3 a:hover{color:var(--signal)}
 .card--link[data-href]:hover{box-shadow:0 12px 30px rgba(60,40,20,.10)}
+
+/* ---------- Nút lên đầu trang ---------- */
+.totop{position:fixed;right:16px;bottom:20px;z-index:75;width:48px;height:48px;border:2px solid var(--paper);border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.28);opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .2s,transform .2s,visibility .2s;padding:0}
+.totop.is-on{opacity:1;visibility:visible;transform:none}
+.totop svg{width:22px;height:22px}
+.totop:hover{transform:scale(1.08)}
+@media (max-width:900px){.totop{right:10px;bottom:14px;width:42px;height:42px}.totop svg{width:19px;height:19px}}
+
+/* video TikTok nhúng ở trang chủ */
+.tt-embed{position:relative;aspect-ratio:9/16;border-radius:var(--r);overflow:hidden;background:var(--ink)}
+.tt-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* bài tin tức không còn ảnh */
+.post--notext{grid-template-columns:1fr}
