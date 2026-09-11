@@ -34,7 +34,7 @@
   "cta_title": "Liên hệ Runestudio để gỡ rối, Runestudio phản hồi trong 24 giờ.",
   "numbers": [
     {
-      "value": "60+",
+      "value": "30+",
       "label": "dự án đã triển khai"
     },
     {
@@ -104,15 +104,7 @@
       "image": ""
     },
     {
-      "caption": "Thumbnail",
-      "image": ""
-    },
-    {
       "caption": "Menu",
-      "image": ""
-    },
-    {
-      "caption": "Campaign",
       "image": ""
     },
     {
@@ -216,6 +208,11 @@
       "name": "Design",
       "desc": "Branding, key visual, campaign.",
       "link": "du-an.html?cat=design"
+    },
+    {
+      "name": "B2B",
+      "desc": "Máy móc, vật liệu, dịch vụ doanh nghiệp.",
+      "link": "du-an.html?cat=b2b"
     }
   ],
   "tiktok_images": [],
