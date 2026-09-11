@@ -1,26 +1,27 @@
-RUNE STUDIO — BẢN GỘP TẤT CẢ (v4)
+RUNE STUDIO — BẢN GỘP TẤT CẢ (v5)
 =================================
 KHÔNG có thư mục content -> mọi thứ ngài sửa trong /admin giữ nguyên 100%.
 
 UP: GitHub repo Rune -> Add file -> Upload files
 -> kéo 3 thư mục (css, js, admin) + 7 file .html -> Commit.
 
-===== MỚI: THANH BÊN TRÁI (kiểu Google Tài liệu) =====
-Có ở MỌI TRANG, cố định khi cuộn, mục đang xem tô nâu có gạch dọc.
+===== THANH BÊN TRÁI — ĐÓNG/MỞ BẰNG NÚT 3 GẠCH =====
+Mặc định ĐÓNG. Người xem chỉ thấy một nút 3 gạch nhỏ ở góc trái.
+Bấm vào -> thanh trượt ra, nút biến thành dấu X. Bấm lần nữa -> đóng.
+Trình duyệt NHỚ trạng thái: mở rồi thì sang trang khác vẫn mở.
 
   - Trang nhiều phần (Trang chủ, Giới thiệu, Dịch vụ):
-    hiện "TRÊN TRANG NÀY" + danh sách các phần.
-    Bấm là trượt êm tới đúng phần.
-
+    "TRÊN TRANG NÀY" + danh sách các phần, bấm là trượt tới đúng chỗ.
   - Trang ít phần (Dự án, Tin tức, Tuyển dụng, Liên hệ):
-    hiện "KHÁM PHÁ" + menu web, đánh dấu trang đang xem.
-
+    "KHÁM PHÁ" + menu web, đánh dấu trang đang xem.
+  - Mục đang xem tô nâu, có gạch dọc bên trái.
   - Tự bỏ qua khối đang ẩn (VD gallery chưa có ảnh).
   - Nhãn dài tự cắt gọn 2 dòng.
-  - Màn hình dưới 1280px: tự ẩn, nội dung trở về bình thường.
+  - Điện thoại: nút nằm góc dưới trái, bấm ra ngoài hoặc chọn một mục
+    thì tự đóng.
 
-Ngoài ra bài chi tiết dài (từ 2 tiêu đề ## trở lên) còn có mục lục
-riêng theo tiêu đề trong bài.
+Bài chi tiết dài (từ 2 tiêu đề ## trở lên) vẫn có mục lục riêng
+theo tiêu đề trong bài.
 
 ===== ĐÃ CÓ TỪ CÁC BẢN TRƯỚC =====
 - Ô xám giữ chỗ: bỏ sạch (chưa điền ảnh / ô trắng / ảnh hỏng)

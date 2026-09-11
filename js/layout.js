@@ -188,6 +188,39 @@ function buildPageNav() {
     document.body.appendChild(rail);
     document.documentElement.classList.add('has-pagenav');
 
+    // Nút 3 gạch: mặc định đóng, bấm mới mở
+    const toggle = document.createElement('button');
+    toggle.className = 'pagenav-toggle';
+    toggle.type = 'button';
+    toggle.setAttribute('aria-label', 'Mở mục lục');
+    toggle.innerHTML = '<span></span><span></span><span></span>';
+    document.body.appendChild(toggle);
+
+    let open = false;
+    try { open = localStorage.getItem('pagenavOpen') === '1'; } catch (e) {}
+    const apply = () => {
+      document.documentElement.classList.toggle('pagenav-open', open);
+      toggle.classList.toggle('is-x', open);
+      toggle.setAttribute('aria-label', open ? 'Đóng mục lục' : 'Mở mục lục');
+      rail.setAttribute('aria-hidden', open ? 'false' : 'true');
+    };
+    apply();
+    toggle.addEventListener('click', () => {
+      open = !open;
+      try { localStorage.setItem('pagenavOpen', open ? '1' : '0'); } catch (e) {}
+      apply();
+    });
+    // bấm ra ngoài để đóng (màn nhỏ)
+    document.addEventListener('click', ev => {
+      if (!open || window.innerWidth >= 1280) return;
+      if (rail.contains(ev.target) || toggle.contains(ev.target)) return;
+      open = false; apply();
+    });
+    // bấm một mục xong thì đóng lại cho gọn (màn nhỏ)
+    rail.addEventListener('click', ev => {
+      if (ev.target.tagName === 'A' && window.innerWidth < 1280) { open = false; apply(); }
+    });
+
     const links = [...rail.querySelectorAll('a')];
     if (mode !== 'sec') return;   // kiểu menu thì để link chạy bình thường
     links.forEach(a => a.addEventListener('click', e => {
