@@ -55,27 +55,31 @@
   "ticker": [
     {
       "highlight": true,
-      "text": "Mentor 1:1 & Cố vấn kênh"
+      "text": "Mentor trực tiếp 1:1"
     },
     {
       "highlight": true,
-      "text": "· Gói Truyền thông & Xây kênh Trọn gói "
+      "text": "Gói truyền thông & Xây kênh trọn gói"
     },
     {
       "highlight": false,
-      "text": "· Dịch vụ Lẻ Theo Yêu Cầu"
+      "text": "Dịch vụ theo yêu cầu"
     },
     {
       "highlight": false,
-      "text": "· Cung cấp Tài khoản TikTok "
+      "text": "· Cung cấp tài khoản TikTok "
     },
     {
       "highlight": false,
-      "text": "· Setup & Cài đặt Kênh Kỹ thuật "
+      "text": "Setup & Cài đặt kênh"
     },
     {
       "highlight": false,
-      "text": "· Audit & Khám Kênh Chuyên Sâu"
+      "text": "Audit & Khám Kênh Chuyên Sâu"
+    },
+    {
+      "highlight": false,
+      "text": "Thiết kế hình ảnh"
     }
   ],
   "cta_lead": "Chưa rõ cần gì cũng được — kể tình hình hiện tại là đủ.",
@@ -130,7 +134,7 @@
     {
       "title": "Muốn tự làm nhưng chưa có nghề",
       "desc": "Đã quay vài chục video, có cái lên có cái tụt, không hiểu vì sao.\n\nRune cầm tay chỉ việc 1:1. Bạn tự chạy kênh của mình, Rune đứng sau nắn tư duy, sửa kịch bản, đọc số liệu cùng bạn.",
-      "link": "dich-vu.html?id=mentor-1-1-va-co-van-kenh"
+      "link": "dich-vu.html?id=mentor-1-1"
     },
     {
       "title": "Có kênh nhưng chưa ra khách",
@@ -140,12 +144,12 @@
     {
       "title": "Có đội in-house, chỉ hụt một khâu",
       "desc": "Marketing nhà đã có, nhưng thiếu người viết kịch bản, hoặc quay dựng không xuể, hoặc cần thiết kế cho gấp.\n\nRune nhận đúng phần đang hụt, ghép vào quy trình sẵn có của bạn, không xáo trộn gì.",
-      "link": "dich-vu.html?id=dich-vu-le-theo-yeu-cau"
+      "link": "dich-vu.html?id=dich-vu-theo-yeu-cau"
     },
     {
       "title": "Ra mắt sản phẩm, khai trương, mùa cao điểm",
       "desc": "Có deadline, có áp lực doanh số, cần bùng lên trong vài tuần chứ không phải xây kênh dài hơi.\n\nRune chạy trọn chiến dịch: lên timeline, viết content, điều phối KOC/UGC, kiểm soát từ giai đoạn coming soon tới remarketing.",
-      "link": "dich-vu.html?id=goi-truyen-thong-va-xay-kenh-tron-goi"
+      "link": "dich-vu.html?id=dich-vu-theo-yeu-cau"
     },
     {
       "title": "Kênh đã ra khách, giờ muốn mở rộng",
@@ -203,11 +207,6 @@
       "name": "Personal Brand",
       "desc": "Chủ doanh nghiệp, chuyên gia.",
       "link": "du-an.html?cat=personal"
-    },
-    {
-      "name": "Design",
-      "desc": "Branding, key visual, campaign.",
-      "link": "du-an.html?cat=design"
     },
     {
       "name": "B2B",
