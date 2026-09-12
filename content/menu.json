@@ -15,24 +15,24 @@
       "link": "dich-vu.html",
       "children": [
         {
-          "label": "Mentor 1:1 & Cố vấn kênh",
-          "link": "dich-vu.html?id=mentor-1-1-va-co-van-kenh"
+          "label": "Mentor trực tiếp 1:1",
+          "link": "dich-vu.html?id=mentor-1-1"
         },
         {
-          "label": "Gói Truyền thông & Xây kênh Trọn gói",
+          "label": "Gói truyền thông & Xây kênh trọn gói",
           "link": "dich-vu.html?id=goi-truyen-thong-va-xay-kenh-tron-goi"
         },
         {
-          "label": "Dịch vụ Lẻ Theo Yêu Cầu",
-          "link": "dich-vu.html?id=dich-vu-le-theo-yeu-cau"
+          "label": "Dịch vụ theo yêu cầu",
+          "link": "dich-vu.html?id=dich-vu-theo-yeu-cau"
         },
         {
           "label": "Cung cấp Tài khoản TikTok",
           "link": "dich-vu.html?id=cung-cap-tai-khoan-tiktok"
         },
         {
-          "label": "Setup & Cài đặt Kênh Kỹ thuật",
-          "link": "dich-vu.html?id=setup-kenh-ky-thuat"
+          "label": "Setup & Cài đặt kênh",
+          "link": "dich-vu.html?id=setup-kenh"
         },
         {
           "label": "Audit & Khám Kênh Chuyên Sâu",
