@@ -591,7 +591,7 @@ function tagHeadings() {
 function openApplyBox(jobTitle) {
   if (document.querySelector('.modal')) return;
   const S = window.SITE || {}, P = window.PAGES || {};
-  const mail = (P.job_email && P.job_email.trim()) || S.email || 'tuyendung@runestudio.art';
+  const mail = (P.job_email && P.job_email.trim()) || 'tuyendung@runestudio.art';
   const phone = S.phone || '';
   const zalo = S.zalo || (phone ? 'https://zalo.me/' + String(phone).replace(/\s/g, '') : '');
   const subject = encodeURIComponent('Ứng tuyển' + (jobTitle ? ': ' + jobTitle : ''));
