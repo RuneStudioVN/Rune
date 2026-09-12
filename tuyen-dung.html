@@ -30,7 +30,7 @@
 <div id="footer"></div>
 <script src="js/layout.js"></script>
 <script src="js/main.js"></script>
-<script>SITE_READY.then(async()=>{renderPageText(); if(!(await renderJobDetail("#job-list","#job-detail"))) renderJobs("#jobs"); }).finally(()=>rsReady());</script>
+<script>SITE_READY.then(async()=>{await renderPageText(); if(!(await renderJobDetail("#job-list","#job-detail"))) renderJobs("#jobs"); initApplyCTA(); }).finally(()=>rsReady());</script>
 
 </body>
 </html>

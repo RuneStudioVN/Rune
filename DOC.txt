@@ -1,37 +1,39 @@
-RUNE STUDIO — BẢN GỘP TẤT CẢ (v6)
+RUNE STUDIO — BẢN GỘP TẤT CẢ (v7)
 =================================
 KHÔNG có thư mục content -> mọi thứ ngài sửa trong /admin giữ nguyên 100%.
 
 UP: GitHub repo Rune -> Add file -> Upload files
 -> kéo 3 thư mục (css, js, admin) + 7 file .html -> Commit.
 
-===== SỬA LẦN NÀY =====
-1. BỎ THANH ĐIỀU HƯỚNG BỊ DƯ
-   Trang chi tiết trước đây có 2 thanh: thanh trái + mục lục trong bài.
-   Nay gộp làm MỘT. Thanh trái tự đổi nội dung theo trang:
-   - Đang xem bài chi tiết -> "TRONG BÀI NÀY" + tiêu đề trong bài
-   - Trang nhiều phần      -> "TRÊN TRANG NÀY" + các phần
-   - Trang ít phần         -> "KHÁM PHÁ" + menu web
+===== SỬA LẦN NÀY: EMAIL TUYỂN DỤNG RIÊNG =====
+Thêm 3 ô mới trong /admin -> Chữ các trang con + Form:
+  - "Email nhận hồ sơ"            -> điền tuyendung@runestudio.art
+  - "Hộp gửi hồ sơ — tiêu đề"
+  - "Hộp gửi hồ sơ — dòng hướng dẫn"
 
-2. NÚT ỨNG TUYỂN
-   Trước: bấm là nhảy sang trang Liên hệ.
-   Nay: sổ ra hộp nhỏ có Email + Zalo, kèm nút "Sao chép email".
-   Bấm Email là mở sẵn thư với tiêu đề "Ứng tuyển: <tên vị trí>".
-   Email và Zalo lấy tự động từ admin -> Liên hệ & mạng xã hội.
-   Đóng bằng nút X, bấm ra ngoài, hoặc phím Esc.
+Hai nút giờ cùng mở một hộp thông tin:
+  1. Nút "Ứng tuyển" trong chi tiết từng vị trí
+     -> mở sẵn thư với tiêu đề "Ứng tuyển: <tên vị trí>"
+  2. Nút "Gửi hồ sơ" cuối trang danh sách tuyển dụng
+     -> trước đây nhảy sang trang Liên hệ, nay mở hộp
+
+Hộp có Email + Zalo + nút "Sao chép email".
+Đóng bằng X, bấm ra ngoài, hoặc phím Esc.
+Zalo lấy từ admin -> Liên hệ & mạng xã hội (dùng chung).
+
+LƯU Ý: nhớ tạo chuyển tiếp tuyendung@runestudio.art trên WordPress.com
+trước, không thì thư khách gửi sẽ không tới đâu cả.
 
 ===== ĐÃ CÓ TỪ CÁC BẢN TRƯỚC =====
+- Gộp 2 thanh điều hướng làm một (thanh trái tự đổi theo trang)
 - Thanh trái đóng/mở bằng nút 3 gạch, nhớ trạng thái
-- Ô xám giữ chỗ: bỏ sạch (chưa điền ảnh / ô trắng / ảnh hỏng)
+- Ô xám giữ chỗ: bỏ sạch
 - Hết nhấp nháy khi vào web
 - Thanh menu trên dính khi cuộn
-- Nút lên đầu trang góc phải dưới
+- Nút lên đầu trang
 - Khối TikTok trang chủ: chỉ dán link video
 - Bỏ khối Case study
 - Bài Tin tức bỏ ảnh đại diện
 - Đội ngũ: bỏ Vai trò, ảnh 170px chữ nhật dọc
-
-GHI CHÚ: 3 mục con dưới "Dịch vụ" ở menu là do ngài tự thêm.
-Muốn bỏ: /admin -> Menu -> mở mục Dịch vụ -> xoá từng mục con.
 
 ĐÃ KIỂM TRA: 48/48 lượt trên 4 kích thước màn hình, 0 lỗi.

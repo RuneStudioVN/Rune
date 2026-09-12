@@ -588,45 +588,58 @@ function tagHeadings() {
 }
 
 /* ---------- Hộp thông tin ứng tuyển ---------- */
+function openApplyBox(jobTitle) {
+  if (document.querySelector('.modal')) return;
+  const S = window.SITE || {}, P = window.PAGES || {};
+  const mail = (P.job_email && P.job_email.trim()) || S.email || 'tuyendung@runestudio.art';
+  const phone = S.phone || '';
+  const zalo = S.zalo || (phone ? 'https://zalo.me/' + String(phone).replace(/\s/g, '') : '');
+  const subject = encodeURIComponent('Ứng tuyển' + (jobTitle ? ': ' + jobTitle : ''));
+
+  const box = document.createElement('div');
+  box.className = 'modal';
+  box.innerHTML = `
+    <div class="modal-card" role="dialog" aria-label="Thông tin ứng tuyển">
+      <button class="modal-x" type="button" aria-label="Đóng">&times;</button>
+      <h3>${esc(P.job_apply_title || 'Gửi hồ sơ cho Rune Studio')}</h3>
+      <p class="small">${esc(P.job_apply_note || 'Gửi CV kèm portfolio, hoặc vài bài viết tâm đắc nhất.')}</p>
+      <div class="modal-rows">
+        <a class="modal-row" href="mailto:${esc(mail)}?subject=${subject}">
+          <span class="modal-lb">Email</span><span class="modal-v">${esc(mail)}</span>
+        </a>
+        ${zalo ? `<a class="modal-row" href="${esc(zalo)}" target="_blank" rel="noopener">
+          <span class="modal-lb">Zalo</span><span class="modal-v">${esc(phone)}</span>
+        </a>` : ''}
+      </div>
+      <button class="btn btn--ghost modal-copy" type="button">Sao chép email</button>
+    </div>`;
+  document.body.appendChild(box);
+
+  const close = () => box.remove();
+  box.querySelector('.modal-x').addEventListener('click', close);
+  box.addEventListener('click', e => { if (e.target === box) close(); });
+  const onKey = e => { if (e.key === 'Escape') { close(); document.removeEventListener('keydown', onKey); } };
+  document.addEventListener('keydown', onKey);
+  const cp = box.querySelector('.modal-copy');
+  cp.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(mail); cp.textContent = 'Đã sao chép'; }
+    catch (err) { cp.textContent = mail; }
+    setTimeout(() => { cp.textContent = 'Sao chép email'; }, 1800);
+  });
+}
+
+/* Nút ứng tuyển ở trang chi tiết vị trí */
 function initApply(jobTitle) {
   const btn = document.getElementById('apply-btn');
-  if (!btn) return;
-  const S = window.SITE || {};
-  const mail = S.email || 'Runestudio.vn@gmail.com';
-  const phone = S.phone || '0876 697 687';
-  const zalo = S.zalo || ('https://zalo.me/' + String(phone).replace(/\s/g, ''));
-  const subject = encodeURIComponent('Ứng tuyển: ' + (jobTitle || ''));
+  if (btn) btn.addEventListener('click', () => openApplyBox(jobTitle));
+}
 
-  btn.addEventListener('click', () => {
-    if (document.querySelector('.modal')) return;
-    const box = document.createElement('div');
-    box.className = 'modal';
-    box.innerHTML = `
-      <div class="modal-card" role="dialog" aria-label="Thông tin ứng tuyển">
-        <button class="modal-x" type="button" aria-label="Đóng">&times;</button>
-        <h3>Gửi hồ sơ cho Rune Studio</h3>
-        <p class="small">Gửi CV kèm portfolio, hoặc vài bài viết tâm đắc nhất.</p>
-        <div class="modal-rows">
-          <a class="modal-row" href="mailto:${esc(mail)}?subject=${subject}">
-            <span class="modal-lb">Email</span><span class="modal-v">${esc(mail)}</span>
-          </a>
-          <a class="modal-row" href="${esc(zalo)}" target="_blank" rel="noopener">
-            <span class="modal-lb">Zalo</span><span class="modal-v">${esc(phone)}</span>
-          </a>
-        </div>
-        <button class="btn btn--ghost modal-copy" type="button">Sao chép email</button>
-      </div>`;
-    document.body.appendChild(box);
-    const close = () => box.remove();
-    box.querySelector('.modal-x').addEventListener('click', close);
-    box.addEventListener('click', e => { if (e.target === box) close(); });
-    const onKey = e => { if (e.key === 'Escape') { close(); document.removeEventListener('keydown', onKey); } };
-    document.addEventListener('keydown', onKey);
-    const cp = box.querySelector('.modal-copy');
-    cp.addEventListener('click', async () => {
-      try { await navigator.clipboard.writeText(mail); cp.textContent = 'Đã sao chép'; }
-      catch (err) { cp.textContent = mail; }
-      setTimeout(() => { cp.textContent = 'Sao chép email'; }, 1800);
-    });
-  });
+/* Nút "Gửi hồ sơ" ở cuối trang danh sách tuyển dụng */
+function initApplyCTA() {
+  const btn = document.getElementById('p-job-cta-btn');
+  if (!btn) return;
+  const el = btn.cloneNode(true);       // gỡ mọi sự kiện cũ
+  btn.replaceWith(el);
+  el.setAttribute('href', '#');
+  el.addEventListener('click', e => { e.preventDefault(); openApplyBox(''); });
 }

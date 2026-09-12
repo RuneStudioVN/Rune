@@ -78,7 +78,10 @@ collections:
           - { label: "Trang Tuyển dụng — mô tả", name: "job_lead", widget: "text" }
           - { label: "Trang Tuyển dụng — khối kêu gọi: tiêu đề", name: "job_cta_title", widget: "string" }
           - { label: "Trang Tuyển dụng — khối kêu gọi: mô tả", name: "job_cta_lead", widget: "text", required: false }
-          - { label: "Trang Tuyển dụng — khối kêu gọi: chữ nút", name: "job_cta_btn", widget: "string" }
+          - { label: "Trang Tuyển dụng — khối kêu gọi: chữ nút", name: "job_cta_btn", widget: "string", hint: "Bấm nút này sẽ mở hộp thông tin gửi hồ sơ" }
+          - { label: "Email nhận hồ sơ", name: "job_email", widget: "string", hint: "VD: tuyendung@runestudio.art — dùng cho nút Ứng tuyển và Gửi hồ sơ" }
+          - { label: "Hộp gửi hồ sơ — tiêu đề", name: "job_apply_title", widget: "string" }
+          - { label: "Hộp gửi hồ sơ — dòng hướng dẫn", name: "job_apply_note", widget: "text" }
           - { label: "Trang Tuyển dụng — khối kêu gọi: link nút", name: "job_cta_link", widget: "string" }
 
           - { label: "▸ Trang Liên hệ — tiêu đề", name: "ct_title", widget: "string" }
