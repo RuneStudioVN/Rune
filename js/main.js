@@ -140,7 +140,7 @@ async function renderProjectDetail(listSel, detailSel) {
       <div class="prose">${md(p.body)}</div>
       <div class="btn-row" style="margin-top:32px"><a class="btn btn--ghost" href="du-an.html">← Tất cả dự án</a><a class="btn btn--signal" href="lien-he.html">Gửi brief dự án</a></div>
     </div></section>`;
-  buildTOC('#project-detail');
+  tagHeadings();
   return true;
 }
 
@@ -171,7 +171,7 @@ async function renderPostDetail(listSel, detailSel) {
       <div class="prose">${md(p.body)}</div>
       <div class="btn-row" style="margin-top:32px"><a class="btn btn--ghost" href="tin-tuc.html">← Tất cả bài viết</a></div>
     </div></section>`;
-  buildTOC('#post-detail');
+  tagHeadings();
   return true;
 }
 
@@ -314,9 +314,10 @@ async function renderJobDetail(listSel, detailSel) {
     <section class="section"><div class="wrap detail">
       ${hasImg(j.image) ? `<div class="ph ph--wide"><img src="${esc(j.image)}" alt="${esc(j.title)}"></div>` : ''}
       <div class="prose">${md(j.body)}</div>
-      <div class="btn-row" style="margin-top:32px"><a class="btn btn--signal" href="lien-he.html">Ứng tuyển</a><a class="btn btn--ghost" href="tuyen-dung.html">← Tất cả vị trí</a></div>
+      <div class="btn-row" style="margin-top:32px"><button class="btn btn--signal" type="button" id="apply-btn">Ứng tuyển</button><a class="btn btn--ghost" href="tuyen-dung.html">← Tất cả vị trí</a></div>
     </div></section>`;
-  buildTOC('#job-detail');
+  tagHeadings();
+  initApply(j.title);
   return true;
 }
 
@@ -338,7 +339,7 @@ async function renderServiceDetail(listSel, detailSel) {
       <div class="prose" style="margin-top:24px">${md(s.body)}</div>
       <div class="btn-row" style="margin-top:32px"><a class="btn btn--signal" href="lien-he.html">Gửi brief</a><a class="btn btn--ghost" href="dich-vu.html">← Tất cả dịch vụ</a></div>
     </div></section>`;
-  buildTOC('#svc-detail');
+  tagHeadings();
   return true;
 }
 
@@ -571,68 +572,61 @@ async function renderBriefFields(sel) {
   setTimeout(sweep, 1500);
 })();
 
-/* ---------- Mục lục bên trái cho trang bài dài ---------- */
-function buildTOC(rootSel) {
-  const wrap = document.querySelector(rootSel + ' .detail');
-  if (!wrap || wrap.classList.contains('with-toc')) return;
-  const prose = wrap.querySelector('.prose');
-  if (!prose) return;
-  const heads = [...prose.querySelectorAll('h2, h3, h4')];
-  if (heads.length < 2) return;
-  const minLv = Math.min(...heads.map(h => +h.tagName[1]));
 
-  const slugify = s => norm(s).slice(0, 60) || 'muc';
+
+/* ---------- Gắn mã cho tiêu đề trong bài (thanh trái đọc từ đây) ---------- */
+function tagHeadings() {
+  const prose = document.querySelector('.detail .prose');
+  if (!prose) return;
   const used = {};
-  heads.forEach(h => {
-    let id = slugify(h.textContent);
+  prose.querySelectorAll('h2, h3, h4').forEach(h => {
+    let id = norm(h.textContent).slice(0, 60) || 'muc';
     if (used[id]) { used[id]++; id += '-' + used[id]; } else used[id] = 1;
     h.id = id;
     h.classList.add('toc-target');
   });
+}
 
-  // gom nội dung hiện có vào một cột
-  const main = document.createElement('div');
-  main.className = 'detail-main';
-  while (wrap.firstChild) main.appendChild(wrap.firstChild);
+/* ---------- Hộp thông tin ứng tuyển ---------- */
+function initApply(jobTitle) {
+  const btn = document.getElementById('apply-btn');
+  if (!btn) return;
+  const S = window.SITE || {};
+  const mail = S.email || 'Runestudio.vn@gmail.com';
+  const phone = S.phone || '0876 697 687';
+  const zalo = S.zalo || ('https://zalo.me/' + String(phone).replace(/\s/g, ''));
+  const subject = encodeURIComponent('Ứng tuyển: ' + (jobTitle || ''));
 
-  const aside = document.createElement('aside');
-  aside.className = 'toc';
-  aside.innerHTML = '<div class="toc-title">Trong bài này</div><nav>' +
-    heads.map(h => `<a href="#${h.id}" class="${+h.tagName[1] > minLv ? 'toc-sub' : ''}">${esc(h.textContent)}</a>`).join('') +
-    '</nav>';
-
-  wrap.classList.add('with-toc');
-  wrap.appendChild(aside);
-  wrap.appendChild(main);
-
-  const links = [...aside.querySelectorAll('a')];
-  links.forEach(a => a.addEventListener('click', e => {
-    e.preventDefault();
-    const t = document.getElementById(a.getAttribute('href').slice(1));
-    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }));
-
-  // đánh dấu mục đang đọc
-  if ('IntersectionObserver' in window) {
-    const mark = id => links.forEach(a => a.classList.toggle('is-now', a.getAttribute('href') === '#' + id));
-    const seen = new Set();
-    const ids = heads.map(h => h.id);
-    const update = () => {
-      // chạm đáy trang -> sáng mục cuối
-      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) { mark(ids[ids.length - 1]); return; }
-      const first = ids.find(id => seen.has(id));
-      if (first) { mark(first); return; }
-      // không mục nào trong tầm nhìn -> lấy mục gần nhất phía trên
-      let cur = ids[0];
-      heads.forEach(h => { if (h.getBoundingClientRect().top <= 120) cur = h.id; });
-      mark(cur);
-    };
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(en => en.isIntersecting ? seen.add(en.target.id) : seen.delete(en.target.id));
-      update();
-    }, { rootMargin: '-90px 0px -60% 0px', threshold: 0 });
-    heads.forEach(h => io.observe(h));
-    window.addEventListener('scroll', update, { passive: true });
-    mark(ids[0]);
-  }
+  btn.addEventListener('click', () => {
+    if (document.querySelector('.modal')) return;
+    const box = document.createElement('div');
+    box.className = 'modal';
+    box.innerHTML = `
+      <div class="modal-card" role="dialog" aria-label="Thông tin ứng tuyển">
+        <button class="modal-x" type="button" aria-label="Đóng">&times;</button>
+        <h3>Gửi hồ sơ cho Rune Studio</h3>
+        <p class="small">Gửi CV kèm portfolio, hoặc vài bài viết tâm đắc nhất.</p>
+        <div class="modal-rows">
+          <a class="modal-row" href="mailto:${esc(mail)}?subject=${subject}">
+            <span class="modal-lb">Email</span><span class="modal-v">${esc(mail)}</span>
+          </a>
+          <a class="modal-row" href="${esc(zalo)}" target="_blank" rel="noopener">
+            <span class="modal-lb">Zalo</span><span class="modal-v">${esc(phone)}</span>
+          </a>
+        </div>
+        <button class="btn btn--ghost modal-copy" type="button">Sao chép email</button>
+      </div>`;
+    document.body.appendChild(box);
+    const close = () => box.remove();
+    box.querySelector('.modal-x').addEventListener('click', close);
+    box.addEventListener('click', e => { if (e.target === box) close(); });
+    const onKey = e => { if (e.key === 'Escape') { close(); document.removeEventListener('keydown', onKey); } };
+    document.addEventListener('keydown', onKey);
+    const cp = box.querySelector('.modal-copy');
+    cp.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(mail); cp.textContent = 'Đã sao chép'; }
+      catch (err) { cp.textContent = mail; }
+      setTimeout(() => { cp.textContent = 'Sao chép email'; }, 1800);
+    });
+  });
 }

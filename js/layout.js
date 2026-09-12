@@ -157,7 +157,30 @@ function buildPageNav() {
     const secs = [...document.querySelectorAll('main > section[id], body > section[id], #project-list > section[id], #post-list > section[id], #job-list > section[id], #svc-list > section[id]')]
       .filter(s => s.offsetParent !== null || true);
     const items = [];
-    document.querySelectorAll('section[id]').forEach(s => {
+    let mode = 'sec';
+
+    // Trang bài chi tiết -> lấy tiêu đề trong bài
+    const prose = document.querySelector('.detail .prose');
+    if (prose) {
+      const heads = [...prose.querySelectorAll('h2, h3, h4')];
+      if (heads.length >= 2) {
+        const minLv = Math.min(...heads.map(h => +h.tagName[1]));
+        const used = {};
+        heads.forEach(h => {
+          let id = (h.textContent || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/đ/g, 'd').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-|-$/g, '').slice(0, 60) || 'muc';
+          if (used[id]) { used[id]++; id += '-' + used[id]; } else used[id] = 1;
+          h.id = id; h.classList.add('toc-target');
+          let label = h.textContent.trim();
+          if (label.length > 46) label = label.slice(0, 44).trim() + '…';
+          items.push({ id, label, sub: +h.tagName[1] > minLv });
+        });
+        mode = 'art';
+      }
+    }
+
+    if (!items.length) document.querySelectorAll('section[id]').forEach(s => {
       if (s.closest('.toc')) return;
       if (s.offsetParent === null) return;              // khối đang ẩn thì bỏ qua
       const h = s.querySelector('h1, h2');
@@ -167,8 +190,7 @@ function buildPageNav() {
       items.push({ id: s.id, label });
     });
     // Trang ít mục -> dùng menu web cho thanh trái không bị trống
-    let mode = 'sec';
-    if (items.length < 3) {
+    if (items.length < 3 && mode !== 'art') {
       mode = 'menu';
       const here = location.pathname.split('/').pop() || 'index.html';
       items.length = 0;
@@ -181,10 +203,11 @@ function buildPageNav() {
 
     const rail = document.createElement('aside');
     rail.className = 'pagenav';
-    rail.innerHTML = `<div class="pagenav-title">${mode === 'sec' ? 'Trên trang này' : 'Khám phá'}</div><nav>` +
-      items.map(i => mode === 'sec'
-        ? `<a href="#${i.id}">${i.label}</a>`
-        : `<a href="${i.href}" class="${i.sub ? 'pn-sub' : ''}${i.cur ? ' is-now' : ''}">${i.label}</a>`).join('') + '</nav>';
+    const title = mode === 'art' ? 'Trong bài này' : mode === 'sec' ? 'Trên trang này' : 'Khám phá';
+    rail.innerHTML = `<div class="pagenav-title">${title}</div><nav>` +
+      items.map(i => mode === 'menu'
+        ? `<a href="${i.href}" class="${i.sub ? 'pn-sub' : ''}${i.cur ? ' is-now' : ''}">${i.label}</a>`
+        : `<a href="#${i.id}" class="${i.sub ? 'pn-sub' : ''}">${i.label}</a>`).join('') + '</nav>';
     document.body.appendChild(rail);
     document.documentElement.classList.add('has-pagenav');
 
@@ -222,7 +245,7 @@ function buildPageNav() {
     });
 
     const links = [...rail.querySelectorAll('a')];
-    if (mode !== 'sec') return;   // kiểu menu thì để link chạy bình thường
+    if (mode === 'menu') return;   // kiểu menu thì để link chạy bình thường
     links.forEach(a => a.addEventListener('click', e => {
       e.preventDefault();
       const t = document.getElementById(a.getAttribute('href').slice(1));

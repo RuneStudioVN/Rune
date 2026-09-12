@@ -1,29 +1,27 @@
-RUNE STUDIO — BẢN GỘP TẤT CẢ (v5)
+RUNE STUDIO — BẢN GỘP TẤT CẢ (v6)
 =================================
 KHÔNG có thư mục content -> mọi thứ ngài sửa trong /admin giữ nguyên 100%.
 
 UP: GitHub repo Rune -> Add file -> Upload files
 -> kéo 3 thư mục (css, js, admin) + 7 file .html -> Commit.
 
-===== THANH BÊN TRÁI — ĐÓNG/MỞ BẰNG NÚT 3 GẠCH =====
-Mặc định ĐÓNG. Người xem chỉ thấy một nút 3 gạch nhỏ ở góc trái.
-Bấm vào -> thanh trượt ra, nút biến thành dấu X. Bấm lần nữa -> đóng.
-Trình duyệt NHỚ trạng thái: mở rồi thì sang trang khác vẫn mở.
+===== SỬA LẦN NÀY =====
+1. BỎ THANH ĐIỀU HƯỚNG BỊ DƯ
+   Trang chi tiết trước đây có 2 thanh: thanh trái + mục lục trong bài.
+   Nay gộp làm MỘT. Thanh trái tự đổi nội dung theo trang:
+   - Đang xem bài chi tiết -> "TRONG BÀI NÀY" + tiêu đề trong bài
+   - Trang nhiều phần      -> "TRÊN TRANG NÀY" + các phần
+   - Trang ít phần         -> "KHÁM PHÁ" + menu web
 
-  - Trang nhiều phần (Trang chủ, Giới thiệu, Dịch vụ):
-    "TRÊN TRANG NÀY" + danh sách các phần, bấm là trượt tới đúng chỗ.
-  - Trang ít phần (Dự án, Tin tức, Tuyển dụng, Liên hệ):
-    "KHÁM PHÁ" + menu web, đánh dấu trang đang xem.
-  - Mục đang xem tô nâu, có gạch dọc bên trái.
-  - Tự bỏ qua khối đang ẩn (VD gallery chưa có ảnh).
-  - Nhãn dài tự cắt gọn 2 dòng.
-  - Điện thoại: nút nằm góc dưới trái, bấm ra ngoài hoặc chọn một mục
-    thì tự đóng.
-
-Bài chi tiết dài (từ 2 tiêu đề ## trở lên) vẫn có mục lục riêng
-theo tiêu đề trong bài.
+2. NÚT ỨNG TUYỂN
+   Trước: bấm là nhảy sang trang Liên hệ.
+   Nay: sổ ra hộp nhỏ có Email + Zalo, kèm nút "Sao chép email".
+   Bấm Email là mở sẵn thư với tiêu đề "Ứng tuyển: <tên vị trí>".
+   Email và Zalo lấy tự động từ admin -> Liên hệ & mạng xã hội.
+   Đóng bằng nút X, bấm ra ngoài, hoặc phím Esc.
 
 ===== ĐÃ CÓ TỪ CÁC BẢN TRƯỚC =====
+- Thanh trái đóng/mở bằng nút 3 gạch, nhớ trạng thái
 - Ô xám giữ chỗ: bỏ sạch (chưa điền ảnh / ô trắng / ảnh hỏng)
 - Hết nhấp nháy khi vào web
 - Thanh menu trên dính khi cuộn
@@ -32,5 +30,8 @@ theo tiêu đề trong bài.
 - Bỏ khối Case study
 - Bài Tin tức bỏ ảnh đại diện
 - Đội ngũ: bỏ Vai trò, ảnh 170px chữ nhật dọc
+
+GHI CHÚ: 3 mục con dưới "Dịch vụ" ở menu là do ngài tự thêm.
+Muốn bỏ: /admin -> Menu -> mở mục Dịch vụ -> xoá từng mục con.
 
 ĐÃ KIỂM TRA: 48/48 lượt trên 4 kích thước màn hình, 0 lỗi.
