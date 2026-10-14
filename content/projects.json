@@ -1,7 +1,7 @@
 {
   "projects": [
     {
-      "body": "**Vấn đề của khách hàng:** Những chủ đề về huyền học, tôn giáo, thần thoại hay ma thuật thường mang màu sắc khô khan, khó hiểu hoặc dễ bị gắn mác mê tín, khiến các bạn trẻ khó tiếp cận dù có nhu cầu tìm hiểu rất lớn.\n\n**Cách làm:** Rune Studio trực tiếp xây dựng và phát triển kênh TikTok P.O.M theo phong cách tiểu luận ngắn, kết hợp giữa sự nghiêm túc và trẻ trung:\n\n* Chắt lọc và đơn giản hóa các kiến thức phức tạp về huyền học, siêu hình, tín ngưỡng thành những câu chuyện dễ hiểu, cuốn hút.\n* Xây dựng kịch bản video ngắn với góc nhìn khách quan, khoa học nhưng vẫn giữ được chiều sâu tâm linh và sự huyền bí vốn có.\n* Thiết lập không gian nội dung vừa mang tính giải trí lành mạnh, vừa góp phần định hướng, xây dựng và củng cố niềm tin tích cực cho cộng đồng người xem trẻ.\n\n**Kết quả chi tiết:** Xây dựng thành công kênh TikTok P.O.M với bản sắc riêng biệt, thu hút đông đảo các bạn trẻ quan tâm đến các chủ đề huyền học, biến những kiến thức hàn lâm thành nội dung số gần gũi, văn minh và lôi cuốn",
+      "body": "**Vấn đề của khách hàng:** Những chủ đề về huyền học, tôn giáo, thần thoại hay ma thuật thường mang màu sắc khô khan, khó hiểu hoặc dễ bị gắn mác mê tín, khiến các bạn trẻ khó tiếp cận dù có nhu cầu tìm hiểu rất lớn.\n\n**Cách làm:** Rune Studio trực tiếp xây dựng và phát triển kênh TikTok P.O.M theo phong cách tiểu luận ngắn, kết hợp giữa sự nghiêm túc và trẻ trung:\n\n* Chắt lọc và đơn giản hóa các kiến thức phức tạp về huyền học, siêu hình, tín ngưỡng thành những câu chuyện dễ hiểu, cuốn hút.\n* Xây dựng kịch bản video ngắn với góc nhìn khách quan, khoa học nhưng vẫn giữ được chiều sâu tâm linh và sự huyền bí vốn có.\n* Thiết lập không gian nội dung vừa mang tính giải trí lành mạnh, vừa góp phần định hướng, xây dựng và củng cố niềm tin tích cực cho cộng đồng người xem trẻ.\n\n**Kết quả chi tiết:** Xây dựng thành công kênh TikTok P.O.M với bản sắc riêng biệt, kênh đạt4.4K follow · 47.5K lượt thích chỉ sau 7 video. Thu hút đông đảo các bạn trẻ quan tâm đến các chủ đề huyền học, biến những kiến thức hàn lâm thành nội dung số gần gũi, văn minh và lôi cuốn",
       "slug": "pom-mystic",
       "client": "P.O.M (Piece Of Mystic)",
       "featured": true,
@@ -111,6 +111,19 @@
         "Content & Campaign Management"
       ],
       "category": "beauty"
+    },
+    {
+      "body": "**Vấn đề của khách hàng:** Chủ chuỗi cửa hàng iPhone cũ muốn có tiếng nói riêng trong ngành, để khách biết mình là ai trước khi bước vào cửa hàng. Nhưng thị trường máy cũ đầy lời đồn, người bán nào cũng nói mình uy tín — nên nói thêm một lần nữa thì không ai nghe.\n\n**Cách làm:** Kênh được xây theo hướng thương hiệu cá nhân, lấy góc nhìn và quan điểm riêng của founder làm chất liệu chính:\n\n* Lên tuyến nội dung quanh những chuyện trong ngành mà người bán thường tránh nói, cùng quan điểm cá nhân về cách mua, cách chọn và cách định giá máy cũ.\n* Viết kịch bản giữ nguyên cách nói thẳng của founder, nói cả mặt dở của thị trường và của chính nghề mình.\n* Quay và dựng trực tiếp, nhịp nhanh gọn, hạn chế dàn dựng để giữ cảm giác người thật đang nói chuyện thật.\n* Giữ một quan điểm xuyên suốt qua hàng trăm video, để người xem nhận ra giọng của kênh trước khi nhận ra sản phẩm.\n\n**Kết quả chi tiết:** Kênh đạt 36.8K follow và 1.3M lượt thích sau 304 video. Founder có chỗ đứng riêng về tiếng nói trong ngành máy cũ, và kênh trở thành nguồn khách ổn định cho chuỗi cửa hàng.",
+      "slug": "mr-de-mobile",
+      "client": "Mr. Đế Mobile",
+      "featured": true,
+      "title": "Mr. Đế Mobile",
+      "video": "https://www.tiktok.com/@mr.hoang.de",
+      "result": "36.8K follow · 1.3M lượt thích · 304 video",
+      "services": [
+        "Dịch vụ theo yêu cầu"
+      ],
+      "category": "Personal Branding"
     }
   ]
 }
