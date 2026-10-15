@@ -1,0 +1,1305 @@
+<!doctype html>
+<html lang="vi" class="rs-boot">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lò Rèn Prompt — Rune Studio</title>
+<meta name="description" content="Công cụ miễn phí biến nhu cầu thô thành prompt chi tiết, dùng được với ChatGPT, Gemini, Claude hay bất kỳ AI nào.">
+<link rel="canonical" href="https://runestudio.art/cong-cu.html">
+<meta property="og:site_name" content="Rune Studio">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lò Rèn Prompt — Rune Studio">
+<meta property="og:description" content="Điền mẫu, nhận prompt đầy đủ vai trò, ngữ cảnh, yêu cầu và định dạng. Miễn phí, không giới hạn.">
+<meta property="og:image" content="https://runestudio.art/assets/uploads/share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* ===== LÒ RÈN PROMPT — CSS dùng chung. Màu lấy từ biến của style.css ===== */
+
+.fg-bench{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
+  gap:28px;
+  align-items:start;
+}
+@media (max-width:920px){ .fg-bench{grid-template-columns:minmax(0,1fr);gap:24px} }
+
+.fg-col{min-width:0}
+
+/* ---- bước ---- */
+.fg-stepbox{margin-bottom:22px}
+.fg-stepnum{
+  display:flex;align-items:baseline;gap:9px;margin-bottom:9px;
+}
+.fg-stepnum b{
+  font-size:11px;font-weight:700;letter-spacing:.12em;
+  color:var(--pulse,#C9A227);
+}
+.fg-stepnum span{
+  font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--smoke,#6F6152);
+}
+.fg-stepnum i{
+  font-style:normal;font-size:12px;color:var(--smoke,#6F6152);
+  margin-left:auto;flex:0 0 auto;
+}
+
+/* ---- ô nhập ---- */
+#fg-rough{
+  width:100%;min-height:92px;resize:vertical;
+  padding:13px 14px;
+  border:1px solid var(--mist,#E3D7BE);
+  border-left:3px solid var(--signal,#6B4A2F);
+  border-radius:3px;
+  background:var(--white,#FFFDF8);
+  color:var(--ink,#1C1B19);
+  font:inherit;font-size:15px;line-height:1.6;
+}
+#fg-rough::placeholder{color:var(--smoke,#6F6152);opacity:.7}
+
+#fg-domain{
+  width:100%;padding:10px 11px;
+  border:1px solid var(--mist,#E3D7BE);border-radius:3px;
+  background:var(--white,#FFFDF8);color:var(--ink,#1C1B19);
+  font:inherit;font-size:14.5px;font-weight:600;
+}
+
+/* ---- ô điền động ---- */
+.fg-grid{display:flex;flex-direction:column;gap:13px}
+.fg-f{display:flex;flex-direction:column;gap:5px;min-width:0}
+.fg-f-lab{
+  display:flex;align-items:center;gap:7px;
+  font-size:12.5px;font-weight:600;color:var(--ink,#1C1B19);
+}
+.fg-f-lab em{
+  font-style:normal;font-size:9.5px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:1px 5px;border-radius:2px;
+  background:var(--signal,#6B4A2F);color:var(--white,#FFFDF8);
+}
+.fg-f-in{
+  width:100%;padding:9px 11px;
+  border:1px solid var(--mist,#E3D7BE);border-radius:3px;
+  background:var(--white,#FFFDF8);color:var(--ink,#1C1B19);
+  font:inherit;font-size:14px;line-height:1.55;
+}
+textarea.fg-f-in{resize:vertical;min-height:62px}
+.fg-f-in::placeholder{color:var(--smoke,#6F6152);opacity:.72}
+.fg-f--req .fg-f-in{border-left:2px solid var(--signal,#6B4A2F)}
+
+#fg-morebtn{
+  margin-top:13px;
+  font:inherit;font-size:13px;font-weight:600;
+  padding:7px 13px;cursor:pointer;
+  background:transparent;
+  border:1px dashed var(--mist,#E3D7BE);border-radius:3px;
+  color:var(--smoke,#6F6152);
+}
+#fg-morebtn:hover{border-color:var(--signal,#6B4A2F);color:var(--signal,#6B4A2F)}
+#fg-more{margin-top:13px;display:flex;flex-direction:column;gap:13px}
+
+/* ---- tuỳ chọn + nút ---- */
+.fg-opts{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));
+  gap:11px;margin-top:20px;padding-top:18px;
+  border-top:1px solid var(--mist,#E3D7BE);
+}
+.fg-opt{display:flex;flex-direction:column;gap:5px;min-width:0}
+.fg-opt > span{
+  font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--smoke,#6F6152);
+}
+.fg-opt select{
+  width:100%;padding:8px 10px;
+  border:1px solid var(--mist,#E3D7BE);border-radius:3px;
+  background:var(--white,#FFFDF8);color:var(--ink,#1C1B19);
+  font:inherit;font-size:13.5px;
+}
+
+.fg-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.fg-btn{
+  font:inherit;font-size:14.5px;font-weight:600;
+  padding:11px 21px;border-radius:3px;border:1px solid transparent;cursor:pointer;
+}
+.fg-btn--go{background:var(--signal,#6B4A2F);color:var(--white,#FFFDF8)}
+.fg-btn--go:hover{filter:brightness(1.12)}
+.fg-btn--ghost{background:transparent;border-color:var(--mist,#E3D7BE);color:var(--ink,#1C1B19)}
+.fg-btn--ghost:hover{border-color:var(--signal,#6B4A2F);color:var(--signal,#6B4A2F)}
+
+/* ---- kết quả ---- */
+.fg-result{
+  border:1px solid var(--mist,#E3D7BE);border-radius:3px;
+  background:var(--white,#FFFDF8);overflow:hidden;
+}
+.fg-bar{
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  padding:10px 13px;border-bottom:1px solid var(--mist,#E3D7BE);
+}
+.fg-badge{
+  font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 8px;border-radius:2px;
+  background:var(--signal,#6B4A2F);color:var(--white,#FFFDF8);
+}
+.fg-bar .fg-sp{flex:1 1 auto}
+.fg-copy{
+  font:inherit;font-size:13px;font-weight:600;
+  padding:7px 14px;border:0;border-radius:3px;cursor:pointer;
+  background:var(--ink,#1C1B19);color:var(--paper,#F7F1E4);
+}
+
+#fg-out{
+  margin:0;padding:15px 13px;
+  max-height:min(64vh,660px);overflow:auto;
+  font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  font-size:12.6px;line-height:1.74;
+  white-space:pre-wrap;overflow-wrap:break-word;
+  color:var(--ink,#1C1B19);
+}
+#fg-out b{font-weight:700;color:var(--signal,#6B4A2F);letter-spacing:.03em}
+#fg-out mark{
+  background:var(--pulse,#C9A227);color:var(--ink,#1C1B19);
+  padding:0 3px;border-radius:2px;
+}
+.fg-empty{
+  display:block;padding:28px 14px;text-align:center;
+  color:var(--smoke,#6F6152);font-family:inherit;font-size:13.5px;
+}
+
+/* ---- chỗ còn thiếu ---- */
+.fg-gaps{
+  margin-top:15px;
+  border:1px solid var(--mist,#E3D7BE);
+  border-left:3px solid var(--pulse,#C9A227);
+  border-radius:3px;background:var(--white,#FFFDF8);
+  padding:14px 15px;
+}
+.fg-gaps h3{
+  font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--smoke,#6F6152);margin:0 0 11px;
+}
+.fg-gaps ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.fg-gaps li{display:flex;gap:9px;font-size:13.5px;min-width:0;align-items:flex-start}
+.fg-gaps code{
+  font-family:inherit;font-size:9.5px;font-weight:700;
+  letter-spacing:.07em;text-transform:uppercase;
+  padding:2px 6px;border-radius:2px;flex:0 0 auto;margin-top:2px;
+  background:var(--mist,#E3D7BE);color:var(--smoke,#6F6152);
+}
+.fg-gaps .fg-gap--req code{background:var(--signal,#6B4A2F);color:var(--white,#FFFDF8)}
+.fg-gaps .fg-gl{min-width:0}
+.fg-gaps .fg-gl i{display:block;font-style:normal;color:var(--smoke,#6F6152);font-size:12.5px}
+
+/* ---- hướng dẫn ---- */
+.fg-steps{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));
+  gap:24px;
+}
+.fg-how{min-width:0}
+.fg-how .fg-n{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--pulse,#C9A227)}
+.fg-how h3{margin:4px 0 5px;font-size:15.5px}
+.fg-how p{margin:0;font-size:13.5px;color:var(--smoke,#6F6152)}
+.fg-foot{margin-top:26px;font-size:12.5px;color:var(--smoke,#6F6152)}
+
+@media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} }
+
+</style>
+</head>
+<body>
+
+<div id="header"></div>
+
+<main>
+  <section id="cong-cu" class="section">
+    <div class="wrap">
+      <h1>Lò Rèn Prompt</h1>
+      <p class="lead">Điền mẫu bên dưới, nhận lại một prompt đầy đủ vai trò, ngữ cảnh, yêu cầu và định dạng. Copy rồi dán vào ChatGPT, Gemini, Claude hay bất kỳ AI nào bạn đang dùng.</p>
+
+      <div class="fg-bench">
+
+        <div class="fg-col">
+
+          <div class="fg-stepbox">
+            <div class="fg-stepnum">
+              <b>01</b><span>Bạn cần AI làm gì</span>
+              <i>gõ thô cũng được</i>
+            </div>
+            <textarea id="fg-rough" rows="3" spellcheck="false"
+              placeholder="Cứ gõ như lúc bạn nghĩ trong đầu. Viết tắt, sai chính tả, thiếu ý đều được."></textarea>
+          </div>
+
+          <div class="fg-stepbox">
+            <div class="fg-stepnum">
+              <b>02</b><span>Lĩnh vực</span>
+              <i>tự đoán, sai thì bạn đổi</i>
+            </div>
+            <select id="fg-domain"></select>
+          </div>
+
+          <div class="fg-stepbox" id="fg-step3" style="display:none">
+            <div class="fg-stepnum">
+              <b>03</b><span>Điền thông tin</span>
+              <i>bỏ trống cũng chạy</i>
+            </div>
+            <div class="fg-grid" id="fg-fields"></div>
+            <button type="button" id="fg-morebtn" style="display:none">Chi tiết thêm</button>
+            <div id="fg-more" style="display:none"></div>
+          </div>
+
+          <div class="fg-opts">
+            <label class="fg-opt">
+              <span>Ngôn ngữ</span>
+              <select id="fg-lang">
+                <option value="vi">Tiếng Việt</option>
+                <option value="en">English</option>
+                <option value="keep">Giống câu tôi gõ</option>
+              </select>
+            </label>
+            <label class="fg-opt">
+              <span>Giọng điệu</span>
+              <select id="fg-tone">
+                <option value="">AI tự chọn</option>
+                <option>Chuyên nghiệp, điềm đạm</option>
+                <option>Thân mật, như nói chuyện</option>
+                <option>Thẳng thắn, không vòng vo</option>
+                <option>Hài, châm biếm nhẹ</option>
+                <option>Trang trọng, nghiêm túc</option>
+                <option>Truyền cảm hứng</option>
+              </select>
+            </label>
+            <label class="fg-opt">
+              <span>Độ chi tiết</span>
+              <select id="fg-depth">
+                <option value="std">Chuẩn</option>
+                <option value="lite">Gọn</option>
+                <option value="max">Tối đa</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="fg-actions">
+            <button type="button" class="fg-btn fg-btn--go" id="fg-go">Rèn prompt</button>
+            <button type="button" class="fg-btn fg-btn--ghost" id="fg-clear">Xoá hết</button>
+          </div>
+
+        </div>
+
+        <div class="fg-col">
+          <div class="fg-stepnum">
+            <b>04</b><span>Prompt đã rèn</span>
+            <i id="fg-meta"></i>
+          </div>
+
+          <div class="fg-result">
+            <div class="fg-bar" id="fg-barwrap" style="display:none">
+              <span class="fg-badge" id="fg-badge">—</span>
+              <span class="fg-sp"></span>
+              <button type="button" class="fg-copy" id="fg-copy">Copy prompt</button>
+            </div>
+            <pre id="fg-out"><span class="fg-empty">Prompt sẽ hiện ở đây sau khi bạn bấm Rèn prompt.</span></pre>
+          </div>
+
+          <div class="fg-gaps" id="fg-gaps" style="display:none">
+            <h3>Chỗ bạn nên điền thêm</h3>
+            <ul id="fg-gaplist"></ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="huong-dan" class="section">
+    <div class="wrap">
+      <h2>Dùng thế nào</h2>
+      <div class="fg-steps">
+        <div class="fg-how">
+          <span class="fg-n">01</span>
+          <h3>Gõ nhu cầu thật thô</h3>
+          <p>Không cần nghĩ cách diễn đạt. Công cụ tự đoán lĩnh vực rồi mở ra đúng bộ ô cần điền.</p>
+        </div>
+        <div class="fg-how">
+          <span class="fg-n">02</span>
+          <h3>Điền được bao nhiêu thì điền</h3>
+          <p>Ô nào bỏ trống thì prompt để lại chỗ trống và bắt AI hỏi bạn trước khi làm. Điền càng nhiều, AI càng khỏi đoán.</p>
+        </div>
+        <div class="fg-how">
+          <span class="fg-n">03</span>
+          <h3>Copy, dán vào AI của bạn</h3>
+          <p>ChatGPT, Gemini, Claude, Grok hay con nào cũng nhận. Prompt viết theo chuẩn chung.</p>
+        </div>
+      </div>
+      <p class="fg-foot">Miễn phí, không giới hạn số lượt, chạy hoàn toàn trong trình duyệt của bạn — những gì bạn điền không được gửi đi đâu cả.</p>
+    </div>
+  </section>
+
+</main>
+
+<div id="footer"></div>
+
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+<script>
+/* ===== LÒ RÈN PROMPT — lõi dữ liệu & logic (không chạm DOM) ===== */
+
+function fgNorm(s){
+  return (s||"").toLowerCase()
+    .normalize("NFD").replace(/[̀-ͯ]/g,"")
+    .replace(/đ/g,"d")
+    .replace(/\s+/g," ");
+}
+
+/* t: '' = 1 dòng · 'area' = nhiều dòng · 'sel' = chọn (o = danh sách)
+   req: ô quan trọng, hiện ngay; còn lại nằm trong phần "Chi tiết thêm" */
+var FG_DOMAINS = {
+
+/* ─────────── A. NỘI DUNG & KÊNH ─────────── */
+
+kenh:{
+  g:"Nội dung & kênh", n:"Xây kênh, thương hiệu cá nhân",
+  role:"người xây kênh mạng xã hội, đã dựng kênh từ con số 0 cho cả cá nhân và doanh nghiệp",
+  fields:[
+    {k:"nghe", l:"Bạn làm nghề gì, bán gì", h:"nghề chính, và thứ bạn muốn kênh dẫn khách tới", req:1},
+    {k:"vonco", l:"Bạn có gì để kể", h:"kinh nghiệm, câu chuyện, thứ bạn làm giỏi hơn người xung quanh", t:"area", req:1},
+    {k:"nentang", l:"Nền tảng", h:"", t:"sel", o:["TikTok","Facebook","YouTube","Instagram","Threads","LinkedIn","Nhiều nền tảng cùng lúc"], req:1},
+    {k:"khach", l:"Bạn muốn ai theo dõi mình", h:"tuổi, nghề, họ đang vướng chuyện gì", req:1},
+    {k:"lenmat", l:"Bạn có chịu lên mặt không", h:"", t:"sel", o:["Lên mặt bình thường","Chỉ lấy giọng, không lên mặt","Giấu mặt hoàn toàn","Chưa quyết"]},
+    {k:"thoigian", l:"Mỗi tuần bỏ ra được bao nhiêu", h:"quay được mấy buổi, ra được mấy video, có ai hỗ trợ không"},
+    {k:"muctieu", l:"Sau 3 tháng bạn muốn có gì", h:"bao nhiêu follow, bao nhiêu khách hỏi, hay chỉ cần có chỗ đứng"},
+    {k:"hiencó", l:"Kênh hiện tại đang ở đâu", h:"đã có bao nhiêu follow, đã đăng bao nhiêu video, hay mới con số 0"}
+  ],
+  musts:[
+    "Định vị kênh phải gói được trong một câu: kênh này nói về gì, cho ai, và vì sao người đó theo dõi tôi chứ không theo dõi người khác cùng ngành.",
+    "Chia lộ trình theo giai đoạn. Mỗi giai đoạn nói rõ mốc thời gian, việc phải làm, và dấu hiệu nào cho biết được phép sang giai đoạn sau.",
+    "Đề xuất 4–6 tuyến nội dung. Mỗi tuyến kèm 3 ý tưởng video cụ thể, có hook luôn, không phải chủ đề chung chung.",
+    "Mọi đề xuất phải nằm trong thời gian và điều kiện tôi đã nêu. Không đề xuất việc cần ê-kíp hay thiết bị mà tôi không có.",
+    "Nêu rõ trong 30 ngày đầu cần đo chỉ số nào để biết hướng đi đúng hay sai."
+  ],
+  format:"Trả về theo thứ tự: Định vị kênh trong một câu · Chân dung người xem · 4–6 tuyến nội dung kèm ý tưởng video · Lộ trình theo giai đoạn · 10 video đầu tiên nên làm · Chỉ số cần theo dõi · Những việc nên tránh ở giai đoạn đầu.",
+  avoid:"Không đưa lời khuyên chung chung kiểu hãy đăng đều đặn, hãy là chính mình, hãy tạo giá trị. Mỗi câu khuyên phải chỉ ra làm cụ thể cái gì."
+},
+
+video:{
+  g:"Nội dung & kênh", n:"Kịch bản video ngắn",
+  role:"biên kịch video ngắn, 8 năm viết cho TikTok, Reels và YouTube Shorts",
+  fields:[
+    {k:"chude", l:"Video này nói về cái gì", h:"một câu thôi, nội dung chính", t:"area", req:1},
+    {k:"sanpham", l:"Sản phẩm / dịch vụ trong video", h:"tên, giá, điểm khác biệt so với chỗ khác", req:1},
+    {k:"khach", l:"Ai sẽ xem", h:"tuổi, nghề, họ đang vướng chuyện gì", req:1},
+    {k:"thoiluong", l:"Thời lượng", h:"", t:"sel", o:["Dưới 15 giây","15–30 giây","30–60 giây","1–3 phút","Trên 3 phút"], req:1},
+    {k:"nentang", l:"Nền tảng", h:"", t:"sel", o:["TikTok","Reels","YouTube Shorts","Facebook","Nhiều nền tảng"]},
+    {k:"muctieu", l:"Xem xong bạn muốn họ làm gì", h:"nhắn tin, tới quán, lưu lại, theo dõi kênh…"},
+    {k:"km", l:"Có chương trình khuyến mãi không", h:"giảm bao nhiêu, áp dụng cho gì, từ ngày nào tới ngày nào"},
+    {k:"nguoidien", l:"Ai xuất hiện trong video", h:"chủ quán, nhân viên, khách, hay không ai lên mặt"},
+    {k:"dieukien", l:"Điều kiện quay", h:"quay bằng điện thoại, có mic chưa, quay ở đâu"}
+  ],
+  musts:[
+    "Ba giây đầu phải nói thẳng điều người xem đang quan tâm. Không mở bài kiểu chào hỏi, không giới thiệu tên thương hiệu trước.",
+    "Chia kịch bản theo mốc thời gian. Mỗi mốc ghi rõ lời thoại và hình cần quay.",
+    "Lời thoại viết theo văn nói, câu ngắn, đọc lên nghe như người thật đang nói chuyện.",
+    "Cài một câu khiến người xem muốn bình luận ở khoảng 70% thời lượng.",
+    "Kết bằng một hành động cụ thể, nói rõ phải làm gì và làm ở đâu.",
+    "Chỉ đề xuất cảnh quay nằm trong điều kiện tôi đã nêu."
+  ],
+  format:"Bảng ba cột: Mốc thời gian | Lời thoại | Hình cần quay.\nSau bảng ghi thêm: 3 phương án hook khác nhau · 1 caption · 5 hashtag · 1 câu chữ chạy trên hình.",
+  avoid:"Không dùng tính từ tự khen như tuyệt vời, hàng đầu, số một, chất lượng cao. Không viết câu nào mà thay tên thương hiệu khác vào vẫn đúng."
+},
+
+vlog:{
+  g:"Nội dung & kênh", n:"Vlog, video dài",
+  role:"biên kịch video dài, quen dựng mạch cho vlog và video kể chuyện 8–20 phút",
+  fields:[
+    {k:"chude", l:"Vlog này về cái gì", h:"chuyến đi, một ngày làm việc, một thử thách…", t:"area", req:1},
+    {k:"thoiluong", l:"Dài bao nhiêu", h:"", t:"sel", o:["5–8 phút","8–15 phút","15–25 phút","Trên 25 phút"], req:1},
+    {k:"cosan", l:"Bạn đã có sẵn những cảnh gì", h:"liệt kê cảnh đã quay, hoặc nói là chưa quay gì", t:"area", req:1},
+    {k:"khach", l:"Ai sẽ xem", h:"tuổi, họ xem vlog để tìm gì"},
+    {k:"giọng", l:"Giọng kể", h:"", t:"sel", o:["Tự nhiên, như kể cho bạn nghe","Điềm đạm, có chiêm nghiệm","Hài, lầy","Thông tin, gọn gàng"]},
+    {k:"muctieu", l:"Xem xong bạn muốn họ cảm thấy gì"}
+  ],
+  musts:[
+    "Mở đầu bằng cảnh gay nhất hoặc câu hỏi lớn nhất của cả video, rồi mới quay về đầu câu chuyện.",
+    "Chia video thành các chương, mỗi chương có một câu móc nối sang chương sau để người xem không rời.",
+    "Cứ khoảng 90 giây phải có một điểm đổi nhịp: đổi cảnh, đổi giọng, một câu bất ngờ, hoặc một con số.",
+    "Chỉ dựng mạch bằng những cảnh tôi đã nêu là có sẵn. Cảnh nào cần quay thêm thì ghi rõ vào danh sách riêng.",
+    "Lời dẫn viết theo văn nói, đọc lên không bị cứng."
+  ],
+  format:"Trả về: Câu mở đầu · Sơ đồ chương kèm mốc phút · Lời dẫn từng chương · Danh sách cảnh còn phải quay thêm · Tiêu đề video kèm 2 phương án · Mô tả video.",
+  avoid:"Không viết lời dẫn kiểu đọc báo. Không dựng mạch chỉ bằng thứ tự thời gian, phải có cao trào."
+},
+
+fnb:{
+  g:"Nội dung & kênh", n:"Content cho quán ăn, cà phê",
+  role:"người làm nội dung cho ngành ăn uống, quen cả bếp lẫn vận hành quán nhỏ",
+  fields:[
+    {k:"quan", l:"Quán bán gì, ở đâu", h:"món chính, khu vực, giá trung bình một người", req:1},
+    {k:"khacbiet", l:"Quán có gì khác những chỗ xung quanh", h:"món lạ, không gian, giá, cách phục vụ", t:"area", req:1},
+    {k:"vande", l:"Quán đang vướng chuyện gì", h:"vắng khách, khách tới một lần không quay lại, chưa ai biết tới…", t:"area", req:1},
+    {k:"giaidoan", l:"Quán đang ở giai đoạn nào", h:"", t:"sel", o:["Chưa khai trương","Mới mở dưới 3 tháng","Đang chạy ổn","Đang xuống khách"], req:1},
+    {k:"khach", l:"Khách chủ yếu là ai", h:"tuổi, nghề, tới vào giờ nào"},
+    {k:"nentang", l:"Đang làm trên kênh nào", h:"", t:"sel", o:["TikTok","Facebook","Cả hai","Chưa có gì"]},
+    {k:"nguoidien", l:"Ai lên hình được", h:"chủ quán, nhân viên, hay chỉ quay món"},
+    {k:"km", l:"Có chương trình gì đang chạy", h:"khuyến mãi, món mới, sự kiện"}
+  ],
+  musts:[
+    "Nội dung phải khai thác cái quán đang có mà lạ, chứ không phải cái quán còn thiếu.",
+    "Mỗi ý tưởng phải quay được trong điều kiện quán đang vận hành, không cần đóng cửa hay thuê ê-kíp.",
+    "Món ăn phải tả bằng cảm giác thật khi ăn, không dùng từ chung chung như ngon, đậm đà, hấp dẫn.",
+    "Phân rõ hai loại nội dung: loại kéo người lạ biết tới quán, và loại khiến người đã biết chịu tới.",
+    "Mỗi ý tưởng nói rõ quay ở đâu trong quán, vào giờ nào."
+  ],
+  format:"Trả về: Góc kể của quán trong một câu · 12 ý tưởng video chia theo tuyến · 3 ý tưởng quay được ngay hôm nay · Lịch đăng gợi ý cho 2 tuần · Những thứ ở quán nên quay mà chủ quán thường bỏ qua.",
+  avoid:"Không đề xuất kiểu quay món rồi gắn nhạc trend. Không khuyên mời KOL khi tôi chưa nói có ngân sách."
+},
+
+shop:{
+  g:"Nội dung & kênh", n:"Content cho shop bán lẻ, online",
+  role:"người làm nội dung bán hàng, quen cả sàn thương mại điện tử và mạng xã hội",
+  fields:[
+    {k:"sanpham", l:"Bán sản phẩm gì", h:"loại hàng, giá, ai thường mua", req:1},
+    {k:"khacbiet", l:"Hàng của bạn khác hàng chỗ khác ở đâu", h:"chất liệu, nguồn, bảo hành, giá", t:"area", req:1},
+    {k:"loai", l:"Bán ở đâu", h:"", t:"sel", o:["Shopee / Lazada / TikTok Shop","Livestream","Facebook / Zalo","Website riêng","Cửa hàng thật"], req:1},
+    {k:"vande", l:"Khách thường chần chừ vì điều gì", h:"sợ hàng không giống hình, sợ giá, sợ ship lâu…", req:1},
+    {k:"khach", l:"Khách chủ yếu là ai", h:"tuổi, nghề, vùng miền"},
+    {k:"km", l:"Có chương trình gì đang chạy", h:"giảm giá, combo, freeship, quà kèm"}
+  ],
+  musts:[
+    "Mỗi nội dung phải xử lý đúng một nỗi chần chừ của khách, nói thẳng nỗi đó ra rồi mới gỡ.",
+    "Mọi lời khen sản phẩm phải đi kèm một bằng chứng xem được: cận cảnh, thử tại chỗ, con số, hoặc lời khách cũ.",
+    "Nói rõ giá và điều kiện. Không giấu giá để bắt khách phải nhắn tin.",
+    "Viết đúng luật sàn: không hứa chữa bệnh, không cam kết tuyệt đối, không so sánh hạ đối thủ."
+  ],
+  format:"Trả về: 5 góc bán hàng khác nhau · Với mỗi góc: 1 tiêu đề, 1 đoạn mô tả, 1 câu chốt · 10 câu trả lời cho các thắc mắc khách hay hỏi · 3 kịch bản video ngắn.",
+  avoid:"Không dùng sáo ngữ bán hàng: hàng chính hãng 100%, giá tốt nhất thị trường, cam kết hài lòng."
+},
+
+seeding:{
+  g:"Nội dung & kênh", n:"Seeding, bình luận mồi",
+  role:"người làm seeding mạng xã hội, viết bình luận nghe như người thật chứ không như quảng cáo",
+  fields:[
+    {k:"noidung", l:"Bài hoặc video cần seeding nói về gì", h:"dán nội dung hoặc tả lại", t:"area", req:1},
+    {k:"doituong", l:"Người xem là ai", h:"tuổi, vùng miền, cách họ nói chuyện", req:1},
+    {k:"muctieu", l:"Muốn bình luận dẫn tới đâu", h:"", t:"sel", o:["Tạo tranh luận cho đông bình luận","Gỡ nghi ngờ của khách","Hỏi về giá và cách mua","Khen nhưng nghe tự nhiên","Trộn nhiều loại"], req:1},
+    {k:"soluong", l:"Cần bao nhiêu bình luận", h:"và chia cho mấy tài khoản"},
+    {k:"tranh", l:"Có điều gì tuyệt đối không được nhắc", h:"tên đối thủ, chuyện nội bộ, từ bị khóa…"}
+  ],
+  musts:[
+    "Mỗi bình luận viết theo một giọng khác nhau. Không được nhận ra là cùng một người viết.",
+    "Dùng cách viết của người thật: viết tắt, sai chính tả nhẹ, câu cụt, không dấu câu đầy đủ.",
+    "Chia rõ cặp mồi và câu trả lời, để chuỗi bình luận đẻ thêm trả lời chứ không đứng một mình.",
+    "Bình luận gây tranh luận phải chạm vào chuyện thật, không được bịa chuyện xấu về sản phẩm.",
+    "Không có bình luận nào nghe như lời quảng cáo của chủ."
+  ],
+  format:"Trả về bảng: Số thứ tự | Vai người viết | Bình luận | Câu trả lời đi kèm (nếu có) | Lý do cài câu này.",
+  avoid:"Không viết kiểu sản phẩm tuyệt vời mình rất thích, shop uy tín lắm nha. Không dùng dấu câu quá chuẩn."
+},
+
+content:{
+  g:"Nội dung & kênh", n:"Caption, bài đăng",
+  role:"người viết nội dung thương mại 10 năm, quen viết cho cả mạng xã hội và website",
+  fields:[
+    {k:"chude", l:"Bài này nói về cái gì", h:"", t:"area", req:1},
+    {k:"sanpham", l:"Sản phẩm / dịch vụ nhắc tới", h:"tên, giá, điểm khác biệt", req:1},
+    {k:"khach", l:"Ai sẽ đọc", h:"tuổi, nghề, họ đang vướng chuyện gì", req:1},
+    {k:"nentang", l:"Đăng ở đâu", h:"", t:"sel", o:["Facebook","TikTok","Instagram","Threads","LinkedIn","Website / blog","Zalo"], req:1},
+    {k:"dodai", l:"Dài bao nhiêu", h:"", t:"sel", o:["Rất ngắn, dưới 50 từ","Ngắn, 50–150 từ","Vừa, 150–400 từ","Dài, trên 400 từ"]},
+    {k:"muctieu", l:"Đọc xong bạn muốn họ làm gì"},
+    {k:"thuonghieu", l:"Tên thương hiệu và cách gọi khách", h:"gọi khách là bạn / anh chị / quý khách"}
+  ],
+  musts:[
+    "Mở đầu bằng một câu chạm đúng chuyện người đọc đang gặp, không mở bằng câu dẫn chung chung.",
+    "Mỗi đoạn giữ một ý. Đoạn dài không quá bốn câu.",
+    "Mọi lời khen sản phẩm phải đi kèm một dẫn chứng cụ thể. Không có dẫn chứng thì bỏ câu đó.",
+    "Kết bằng một việc người đọc làm được ngay."
+  ],
+  format:"Trả về: Tiêu đề kèm 2 phương án thay thế · Phần thân bài · Câu kêu gọi hành động · 5 hashtag nếu nền tảng cần.",
+  avoid:"Không dùng sáo ngữ marketing: giải pháp toàn diện, đồng hành cùng bạn, trải nghiệm đẳng cấp, uy tín hàng đầu."
+},
+
+ads:{
+  g:"Nội dung & kênh", n:"Quảng cáo chạy tiền",
+  role:"người viết nội dung quảng cáo có chạy tiền, quen tối ưu theo chỉ số",
+  fields:[
+    {k:"sanpham", l:"Quảng cáo cho sản phẩm gì", h:"tên, giá, điểm khác biệt", req:1},
+    {k:"doituong", l:"Nhắm tới ai", h:"tuổi, khu vực, sở thích, hành vi", req:1},
+    {k:"muctieu", l:"Mục tiêu chiến dịch", h:"", t:"sel", o:["Tin nhắn","Điền form lấy số","Đơn hàng trên sàn","Tới cửa hàng","Nhận biết thương hiệu","Kéo theo dõi"], req:1},
+    {k:"kenh", l:"Chạy ở đâu", h:"", t:"sel", o:["Facebook","TikTok Ads","Google","Nhiều kênh"], req:1},
+    {k:"ngansach", l:"Ngân sách và thời gian chạy", h:"mỗi ngày bao nhiêu, chạy mấy ngày"},
+    {k:"cu", l:"Trước đây đã chạy gì chưa", h:"mẫu nào tốt, mẫu nào dở, chỉ số ra sao"}
+  ],
+  musts:[
+    "Viết nhiều mẫu theo các góc tiếp cận khác nhau, không phải nhiều cách diễn đạt của cùng một góc.",
+    "Mỗi mẫu nêu rõ nó thử nghiệm giả thuyết gì, để đo xong biết góc nào thắng.",
+    "Ba giây hoặc một dòng đầu phải đứng được một mình, vì phần sau bị cắt.",
+    "Viết đúng luật quảng cáo: không hứa hiệu quả tuyệt đối, không nhắm vào khuyết điểm cơ thể, không khẳng định chữa bệnh.",
+    "Nếu chi phí mỗi kết quả chưa hợp lý với giá sản phẩm, nói thẳng ra."
+  ],
+  format:"Trả về: 5 mẫu quảng cáo theo 5 góc khác nhau · Mỗi mẫu gồm dòng đầu, phần thân, câu chốt, và giả thuyết đang thử · Gợi ý nhắm đối tượng · Chỉ số cần theo dõi và ngưỡng nên tắt mẫu.",
+  avoid:"Không viết chung chung kiểu sản phẩm chất lượng giá tốt. Không hứa điều không kiểm chứng được."
+},
+
+live:{
+  g:"Nội dung & kênh", n:"Livestream bán hàng",
+  role:"người dựng kịch bản livestream bán hàng, quen giữ người xem và chốt đơn trong phiên",
+  fields:[
+    {k:"sanpham", l:"Phiên live bán gì", h:"liệt kê sản phẩm và giá", t:"area", req:1},
+    {k:"thoiluong", l:"Live bao lâu", h:"", t:"sel", o:["Dưới 1 tiếng","1–2 tiếng","2–4 tiếng","Trên 4 tiếng"], req:1},
+    {k:"nentang", l:"Live ở đâu", h:"", t:"sel", o:["TikTok","Facebook","Shopee","Nhiều nơi"], req:1},
+    {k:"nguoi", l:"Mấy người lên live", h:"một người, hay có người phụ"},
+    {k:"km", l:"Có deal gì trong phiên", h:"giá sốc, combo, quà, mã giảm"},
+    {k:"khach", l:"Khách xem là ai", h:"tuổi, vùng miền"}
+  ],
+  musts:[
+    "Chia phiên thành các vòng. Mỗi vòng có sản phẩm chủ lực, mốc thời gian, và một lý do để người mới vào ở lại.",
+    "Cứ 10–15 phút phải quay lại giới thiệu từ đầu, vì người xem vào giữa phiên không biết đang bán gì.",
+    "Soạn sẵn câu trả lời cho các thắc mắc hay gặp, để không bị đứng khi bình luận dồn.",
+    "Có câu xử lý lúc phòng vắng người và lúc bình luận đổ dồn một lúc.",
+    "Mỗi lần chốt phải nói rõ giá, cách đặt, và điều kiện."
+  ],
+  format:"Trả về: Kịch bản theo mốc thời gian từng vòng · Lời mở phiên · Lời giới thiệu lặp lại cho người mới vào · Câu chốt từng sản phẩm · 15 câu trả lời thắc mắc · Câu xử lý tình huống khó.",
+  avoid:"Không viết lời thoại cứng như đọc văn bản. Không hứa số lượng có hạn khi không đúng."
+},
+
+audio:{
+  g:"Nội dung & kênh", n:"Podcast, truyện audio",
+  role:"người viết cho định dạng chỉ có tiếng, quen dựng hình trong đầu người nghe bằng âm thanh",
+  fields:[
+    {k:"chude", l:"Nội dung nói về gì", h:"chủ đề podcast, hoặc cốt truyện", t:"area", req:1},
+    {k:"loai", l:"Dạng gì", h:"", t:"sel", o:["Podcast một người nói","Podcast phỏng vấn","Truyện kể","Truyện có nhiều nhân vật"], req:1},
+    {k:"thoiluong", l:"Dài bao nhiêu", h:"", t:"sel", o:["Dưới 5 phút","5–15 phút","15–40 phút","Trên 40 phút"], req:1},
+    {k:"nguoinghe", l:"Ai nghe, nghe lúc nào", h:"lúc lái xe, lúc ngủ, lúc làm việc"},
+    {k:"giong", l:"Giọng đọc", h:"", t:"sel", o:["Người thật đọc","Giọng máy (AI)","Chưa quyết"]}
+  ],
+  musts:[
+    "Người nghe không thấy hình, nên mọi thứ quan trọng phải nói ra bằng lời hoặc bằng tiếng động.",
+    "Câu phải ngắn và dễ đọc liền hơi. Tránh câu nhiều tầng mệnh đề.",
+    "Ghi chú tiếng động và khoảng lặng ở đúng chỗ, trong ngoặc vuông.",
+    "Nếu là giọng máy, tránh từ dễ đọc sai và viết số thành chữ.",
+    "Ba mươi giây đầu phải nêu được lý do để nghe tiếp."
+  ],
+  format:"Trả về: Lời mở · Nội dung chia theo đoạn kèm mốc thời gian · Ghi chú tiếng động và khoảng lặng · Lời kết · Tiêu đề kèm 2 phương án · Mô tả tập.",
+  avoid:"Không viết câu dài khó đọc liền hơi. Không mô tả bằng thứ chỉ thấy được bằng mắt."
+},
+
+/* ─────────── B. CÔNG VIỆC & KINH DOANH ─────────── */
+
+email:{
+  g:"Công việc & kinh doanh", n:"Email, tin nhắn",
+  role:"người phụ trách giao tiếp công việc, viết ngắn mà vẫn ra việc",
+  fields:[
+    {k:"viec", l:"Bạn cần nhắn chuyện gì", h:"", t:"area", req:1},
+    {k:"nguoinhan", l:"Người nhận là ai", h:"chức vụ, quan hệ với bạn", req:1},
+    {k:"quanhe", l:"Đã có liên hệ trước chưa", h:"", t:"sel", o:["Lần đầu nhắn","Đã nói chuyện vài lần","Làm việc thường xuyên","Đang có việc chưa xong"], req:1},
+    {k:"muctieu", l:"Bạn muốn họ làm gì sau khi đọc", req:1},
+    {k:"kenh", l:"Gửi qua đâu", h:"", t:"sel", o:["Email","Zalo","Tin nhắn Facebook","LinkedIn","SMS"]},
+    {k:"kho", l:"Có chỗ nào khó nói không", h:"đòi tiền, từ chối, báo tin xấu, xin lỗi…"}
+  ],
+  musts:[
+    "Toàn bộ không quá 150 từ.",
+    "Câu đầu tiên nói rõ lý do viết. Không hỏi thăm sức khoẻ, không rào trước.",
+    "Nêu đúng một đề nghị, và nói rõ người nhận cần làm gì tiếp.",
+    "Giữ thái độ ngang hàng: không xin xỏ, cũng không lên giọng.",
+    "Nếu có chỗ khó nói, nói ra một lần cho rõ rồi chuyển sang hướng giải quyết, không vòng vo."
+  ],
+  format:"Trả về: 3 phương án tiêu đề · Nội dung thư · Một bản rút gọn dưới 50 từ để nhắn tin · Một câu nhắc lại nếu họ không trả lời sau 3 ngày.",
+  avoid:"Không viết câu không mang thông tin như hy vọng bạn đang có một ngày tốt lành, rất mong nhận được phản hồi sớm."
+},
+
+business:{
+  g:"Công việc & kinh doanh", n:"Kế hoạch, chiến lược",
+  role:"người tư vấn vận hành, quen làm với doanh nghiệp nhỏ và nguồn lực hạn chế",
+  fields:[
+    {k:"viec", l:"Bạn cần lên kế hoạch cho việc gì", h:"", t:"area", req:1},
+    {k:"boicanh", l:"Tình hình hiện tại", h:"quy mô, ngành, doanh thu, đang ở giai đoạn nào", t:"area", req:1},
+    {k:"muctieu", l:"Muốn đạt gì, trong bao lâu", h:"càng cụ thể càng tốt", req:1},
+    {k:"ngansach", l:"Có bao nhiêu tiền, người, thời gian", h:"nói thật, để khỏi nhận đề xuất làm không nổi", req:1},
+    {k:"canhtranh", l:"Đối thủ hoặc hình mẫu tham khảo", h:"chỗ nào đang làm tốt việc này"},
+    {k:"dathu", l:"Đã thử gì mà không được", h:"để khỏi đề xuất lại"}
+  ],
+  musts:[
+    "Mọi đề xuất phải nằm trong nguồn lực đã nêu. Không đề xuất việc cần tiền hay người mà tôi không có.",
+    "Xếp theo thứ tự ưu tiên, nói rõ làm gì trước và vì sao.",
+    "Mỗi đề xuất kèm một cách đo xem có hiệu quả hay không.",
+    "Nêu rõ rủi ro, và trường hợp nào thì đề xuất này không còn phù hợp.",
+    "Chỉ ra những việc nên bỏ, không chỉ việc nên thêm."
+  ],
+  format:"Trả về: Chẩn đoán hiện trạng · Ba việc nên làm trước · Kế hoạch theo mốc thời gian · Cách đo kết quả · Rủi ro · Những việc nên bỏ.",
+  avoid:"Không khuyên chung chung kiểu cần tập trung vào khách hàng, nên xây dựng thương hiệu, cần chuyển đổi số."
+},
+
+data:{
+  g:"Công việc & kinh doanh", n:"Phân tích dữ liệu, báo cáo",
+  role:"người phân tích dữ liệu quen làm báo cáo cho người không chuyên đọc",
+  fields:[
+    {k:"cauhoi", l:"Bạn muốn biết điều gì từ dữ liệu này", h:"", t:"area", req:1},
+    {k:"dulieu", l:"Dữ liệu gồm những gì", h:"dán số liệu vào, hoặc tả các cột đang có", t:"area", req:1},
+    {k:"nguon", l:"Dữ liệu lấy từ đâu, trong khoảng nào", h:"nguồn, thời gian, đã lọc gì chưa", req:1},
+    {k:"nguoidoc", l:"Ai đọc báo cáo này", h:"sếp, khách, đồng nghiệp, hay chính bạn"},
+    {k:"quyetdinh", l:"Đọc xong sẽ quyết định việc gì", h:"để biết nên nhấn vào phần nào"}
+  ],
+  musts:[
+    "Nói kết luận trước, dẫn chứng sau.",
+    "Mỗi con số đưa ra phải nói rõ lấy từ đâu và tính thế nào.",
+    "Phân biệt rõ đâu là số liệu có thật, đâu là phần suy luận.",
+    "Nếu dữ liệu không đủ để trả lời câu hỏi, nói thẳng là không đủ. Tuyệt đối không bịa số.",
+    "Nêu rõ giới hạn của dữ liệu: khoảng thời gian ngắn, mẫu nhỏ, thiếu nhóm nào."
+  ],
+  format:"Trả về: Kết luận trong 3 câu · Bảng số liệu chính · Những điều đáng chú ý · Việc nên làm tiếp · Giới hạn của dữ liệu này.",
+  avoid:"Không dùng từ mơ hồ như tăng đáng kể, giảm mạnh, cải thiện rõ rệt mà không kèm con số."
+},
+
+slide:{
+  g:"Công việc & kinh doanh", n:"Thuyết trình, slide",
+  role:"người dựng bài thuyết trình, quen làm cho buổi có người quyết định ngồi nghe",
+  fields:[
+    {k:"chude", l:"Thuyết trình về cái gì", h:"", t:"area", req:1},
+    {k:"nguoinghe", l:"Ai nghe", h:"sếp, khách hàng, nhà đầu tư, lớp học", req:1},
+    {k:"muctieu", l:"Nghe xong bạn muốn họ quyết gì", h:"duyệt ngân sách, chọn phương án, hiểu vấn đề", req:1},
+    {k:"thoiluong", l:"Nói bao lâu", h:"", t:"sel", o:["Dưới 5 phút","5–15 phút","15–30 phút","Trên 30 phút"], req:1},
+    {k:"noidung", l:"Bạn đã có sẵn nội dung gì", h:"số liệu, kết quả, tài liệu — dán vào hoặc tả lại", t:"area"},
+    {k:"phanbac", l:"Người nghe có thể phản bác điều gì", h:"để chuẩn bị sẵn"}
+  ],
+  musts:[
+    "Slide đầu phải nêu được điều bạn muốn người nghe quyết, không phải lời giới thiệu bản thân.",
+    "Một slide một ý. Mỗi slide ghi rõ tiêu đề, nội dung trên slide, và lời nói kèm.",
+    "Chỉ dùng số liệu tôi đã cấp. Chỗ nào cần số mà tôi chưa có thì ghi rõ là còn thiếu.",
+    "Ước lượng số slide theo thời lượng, đừng làm nhiều hơn thời gian cho phép.",
+    "Chuẩn bị sẵn phần trả lời cho các câu phản bác."
+  ],
+  format:"Trả về bảng: Số slide | Tiêu đề | Nội dung trên slide | Lời nói kèm.\nSau bảng: Câu mở đầu · Câu kết · 5 câu hỏi khó và cách trả lời · Những số liệu còn thiếu.",
+  avoid:"Không nhồi chữ vào slide. Không mở đầu bằng slide giới thiệu công ty."
+},
+
+vanban:{
+  g:"Công việc & kinh doanh", n:"Hợp đồng, văn bản hành chính",
+  role:"người soạn văn bản hành chính và thương mại, viết rõ ràng để tránh tranh chấp sau này",
+  fields:[
+    {k:"loai", l:"Cần soạn văn bản gì", h:"hợp đồng, báo giá, đơn, biên bản, thông báo…", req:1},
+    {k:"cacben", l:"Các bên liên quan", h:"ai với ai, vai gì", req:1},
+    {k:"noidung", l:"Nội dung thoả thuận hoặc cần thông báo", h:"càng chi tiết càng tốt: việc gì, tiền bao nhiêu, thời hạn nào", t:"area", req:1},
+    {k:"lo", l:"Bạn lo nhất chuyện gì xảy ra", h:"trễ hạn, không trả tiền, đổi yêu cầu giữa chừng…", req:1},
+    {k:"nganh", l:"Thuộc lĩnh vực gì", h:"để dùng đúng thuật ngữ"}
+  ],
+  musts:[
+    "Viết rõ từng điều, đánh số. Mỗi điều một nội dung.",
+    "Chỗ nào tôi chưa cấp thông tin thì để trống trong dấu ngoặc vuông, tuyệt đối không tự điền số hay ngày.",
+    "Có điều khoản xử lý đúng chuyện tôi đang lo.",
+    "Nói rõ ở cuối rằng đây là bản thảo, cần người có chuyên môn pháp lý xem lại trước khi ký.",
+    "Dùng câu đơn giản, tránh câu dài nhiều tầng khiến hiểu hai nghĩa."
+  ],
+  format:"Trả về: Bản thảo văn bản đầy đủ · Danh sách chỗ còn trống cần điền · Những điều khoản nên thêm nếu giá trị hợp đồng lớn · Những chỗ nên nhờ người có chuyên môn pháp lý xem.",
+  avoid:"Không tự bịa số tiền, ngày tháng, tên, địa chỉ. Không khẳng định văn bản này đã đủ tính pháp lý."
+},
+
+hr:{
+  g:"Công việc & kinh doanh", n:"Tuyển dụng, CV, xin việc",
+  role:"người làm tuyển dụng lâu năm, đọc hồ sơ bằng mắt nhà tuyển dụng",
+  fields:[
+    {k:"viec", l:"Bạn cần gì", h:"", t:"sel", o:["Viết CV","Viết thư xin việc","Viết tin tuyển dụng","Chuẩn bị phỏng vấn","Viết mô tả công việc"], req:1},
+    {k:"vitri", l:"Vị trí và nơi ứng tuyển", h:"tên vị trí, tên công ty, ngành", req:1},
+    {k:"kinhnghiem", l:"Kinh nghiệm và kết quả của bạn", h:"2–3 việc đã làm, kèm số liệu nếu có", t:"area", req:1},
+    {k:"yeucau", l:"Tin tuyển dụng yêu cầu gì", h:"dán phần yêu cầu vào, để viết đúng trọng tâm", t:"area"},
+    {k:"yeu", l:"Bạn thấy mình yếu chỗ nào", h:"thiếu bằng, đổi ngành, nghỉ việc một thời gian…"}
+  ],
+  musts:[
+    "Mọi câu nói về năng lực phải gắn với một việc đã làm và một kết quả đo được.",
+    "Viết ở thể chủ động, nêu rõ phần việc tôi trực tiếp làm, không nói gộp thành việc của cả nhóm.",
+    "Bỏ hết tính từ tự đánh giá nếu không có dẫn chứng đi kèm.",
+    "Chỉ dùng thông tin tôi đã cấp. Không thêm kinh nghiệm, bằng cấp hay con số nào tôi chưa nói.",
+    "Giữ gọn, người đọc chỉ dành khoảng 30 giây.",
+    "Nếu tôi có điểm yếu, đưa cách trình bày trung thực mà vẫn có lợi, không che giấu."
+  ],
+  format:"Trả về: Bản chính · Bản rút gọn còn một nửa · Những chỗ còn thiếu dẫn chứng · 5 câu hỏi nhà tuyển dụng có thể hỏi và cách trả lời.",
+  avoid:"Không dùng câu ai cũng viết được: chăm chỉ, chịu được áp lực, ham học hỏi, kỹ năng làm việc nhóm tốt."
+},
+
+/* ─────────── C. KỸ THUẬT & HỌC TẬP ─────────── */
+
+code:{
+  g:"Kỹ thuật & học tập", n:"Lập trình, sửa lỗi",
+  role:"lập trình viên senior, quen đọc lỗi và sửa gọn chứ không viết lại từ đầu",
+  fields:[
+    {k:"viec", l:"Bạn cần làm gì", h:"", t:"sel", o:["Sửa lỗi đang gặp","Viết mới một đoạn code","Tối ưu code chạy nhanh hơn","Giải thích code có sẵn","Chuyển sang ngôn ngữ khác"], req:1},
+    {k:"ngonngu", l:"Ngôn ngữ, phiên bản, thư viện", h:"Python 3.11, React 18, PostgreSQL 16…", req:1},
+    {k:"chitiet", l:"Mô tả việc cần làm, hoặc dán code", h:"", t:"area", req:1},
+    {k:"loi", l:"Thông báo lỗi nguyên văn", h:"dán cả đoạn lỗi, đừng tóm tắt", t:"area"},
+    {k:"mongdoi", l:"Đáng ra nó phải ra kết quả gì"},
+    {k:"dathu", l:"Đã thử cách nào chưa", h:"để khỏi gợi ý lại"}
+  ],
+  musts:[
+    "Chỉ ra nguyên nhân gốc trước, rồi mới đưa cách sửa.",
+    "Đưa code ở dạng chạy được, không để đoạn giả định hay dấu ba chấm.",
+    "Giải thích vì sao cách sửa đó đúng, trong tối đa ba câu.",
+    "Nếu có nhiều cách, nói rõ mỗi cách đánh đổi cái gì.",
+    "Nếu thiếu dữ kiện để xác định nguyên nhân, nói thẳng là chưa đủ và hỏi lại. Không đoán.",
+    "Không dùng hàm hay thư viện nào mà bạn không chắc có thật trong phiên bản tôi đang dùng."
+  ],
+  format:"Trả về: Nguyên nhân · Code đã sửa · Giải thích · Những chỗ khác nên kiểm tra thêm · Cách thử xem đã hết lỗi chưa.",
+  avoid:"Không viết lại toàn bộ file nếu chỉ cần sửa vài dòng. Không bịa tên hàm hay thư viện không tồn tại."
+},
+
+anh:{
+  g:"Kỹ thuật & học tập", n:"Tạo hình ảnh, thiết kế",
+  role:"art director quen viết brief cho công cụ tạo ảnh",
+  fields:[
+    {k:"canh", l:"Bạn muốn ra hình gì", h:"tả chủ thể, bối cảnh, đang làm gì", t:"area", req:1},
+    {k:"dung", l:"Hình này dùng làm gì", h:"ảnh bìa, poster, ảnh sản phẩm, minh hoạ bài viết…", req:1},
+    {k:"phongcach", l:"Phong cách", h:"", t:"sel", o:["Ảnh chụp thật","3D","Vẽ tay / minh hoạ","Tối giản, phẳng","Anime / truyện tranh","Cổ điển, phim nhựa"], req:1},
+    {k:"tyle", l:"Tỷ lệ khung", h:"", t:"sel", o:["1:1 vuông","9:16 dọc","16:9 ngang","4:5","3:2"], req:1},
+    {k:"mau", l:"Bảng màu", h:"tên màu hoặc mã màu cụ thể"},
+    {k:"tranh", l:"Không được có gì trong hình", h:"chữ, người, logo, vật gì…"},
+    {k:"congcu", l:"Dùng công cụ nào", h:"", t:"sel", o:["Midjourney","DALL·E / ChatGPT","Stable Diffusion","Gemini","Chưa biết"]}
+  ],
+  musts:[
+    "Tách rõ từng phần: chủ thể, bối cảnh, ánh sáng, góc chụp, ống kính, tâm trạng, bảng màu.",
+    "Nói rõ cả những thứ không được xuất hiện trong hình.",
+    "Dùng tên màu cụ thể hoặc mã màu, không nói màu ấm, màu hiện đại.",
+    "Viết prompt bằng tiếng Anh, vì công cụ tạo ảnh hiểu tiếng Anh tốt hơn.",
+    "Nếu công cụ tôi dùng có cú pháp riêng, viết đúng cú pháp đó."
+  ],
+  format:"Trả về: Prompt tiếng Anh dùng được ngay · Bản dịch nghĩa sang tiếng Việt · Danh sách từ loại trừ · 3 biến thể theo 3 hướng khác nhau · Những thông số nên đặt trong công cụ.",
+  avoid:"Không dùng từ mơ hồ như đẹp, hiện đại, chuyên nghiệp, ấn tượng mà không nói rõ đẹp theo kiểu gì."
+},
+
+dich:{
+  g:"Kỹ thuật & học tập", n:"Dịch thuật",
+  role:"dịch giả chuyên nghiệp, dịch theo nghĩa và ngữ cảnh chứ không dịch từng chữ",
+  fields:[
+    {k:"nguon", l:"Văn bản cần dịch", h:"dán vào đây", t:"area", req:1},
+    {k:"cap", l:"Dịch từ đâu sang đâu", h:"ví dụ tiếng Việt sang tiếng Anh", req:1},
+    {k:"dung", l:"Bản dịch dùng để làm gì", h:"gửi khách, đăng web, nộp hồ sơ, nói chuyện thường", req:1},
+    {k:"linhvuc", l:"Thuộc lĩnh vực gì", h:"để dịch đúng thuật ngữ"},
+    {k:"muc", l:"Mức trang trọng", h:"", t:"sel", o:["Trang trọng","Bình thường, công việc","Thân mật","Giữ y như bản gốc"]},
+    {k:"giunguyen", l:"Có từ nào phải giữ nguyên không", h:"tên riêng, tên thương hiệu, thuật ngữ"}
+  ],
+  musts:[
+    "Dịch theo ý và văn phong, không dịch máy móc từng từ.",
+    "Giữ nguyên thuật ngữ chuyên ngành, tên riêng và đơn vị đo.",
+    "Chỗ nào bản gốc tối nghĩa thì nêu ra, đừng tự đoán rồi dịch luôn.",
+    "Giữ đúng mức độ trang trọng đã nêu.",
+    "Nếu một chỗ có nhiều cách dịch đúng, nêu cả các cách và nói rõ khác nhau ở đâu."
+  ],
+  format:"Trả về: Bản dịch · Ghi chú những chỗ phải chọn giữa nhiều cách dịch · Những chỗ bản gốc tối nghĩa · Bảng thuật ngữ đã dùng.",
+  avoid:"Không thêm ý không có trong bản gốc, không lược bỏ ý có trong bản gốc."
+},
+
+research:{
+  g:"Kỹ thuật & học tập", n:"Nghiên cứu, so sánh",
+  role:"người nghiên cứu độc lập, trình bày cân bằng và luôn nói rõ độ tin cậy",
+  fields:[
+    {k:"cauhoi", l:"Bạn cần biết điều gì", h:"viết thành câu hỏi càng rõ càng tốt", t:"area", req:1},
+    {k:"dung", l:"Biết để làm gì", h:"ra quyết định gì, hay chỉ tìm hiểu", req:1},
+    {k:"pham", l:"Giới hạn phạm vi", h:"ở Việt Nam hay thế giới, trong khoảng thời gian nào", req:1},
+    {k:"doituong", l:"So sánh những lựa chọn nào", h:"nếu đang chọn giữa nhiều phương án thì liệt kê ra"},
+    {k:"tieuchi", l:"Tiêu chí quan trọng với bạn", h:"giá, độ bền, dễ dùng, hỗ trợ…"},
+    {k:"biet", l:"Bạn đã biết gì rồi", h:"để khỏi nhắc lại"}
+  ],
+  musts:[
+    "Tách rõ ba loại: điều đã được xác nhận, điều còn tranh cãi, điều chưa ai biết.",
+    "Khi có nhiều quan điểm trái nhau, trình bày cả hai phía trước khi nhận xét.",
+    "Mỗi khẳng định quan trọng phải nói rõ dựa trên nguồn nào, và nguồn đó đáng tin đến mức nào.",
+    "Nếu không chắc, nói là không chắc. Không lấp chỗ trống bằng suy đoán nghe hợp lý.",
+    "Nếu thông tin có thể đã lỗi thời, nói rõ mốc thời gian của thông tin đó."
+  ],
+  format:"Trả về: Trả lời ngắn · Bảng so sánh theo tiêu chí của tôi · Những điều đã rõ · Những điều còn tranh cãi · Những chỗ còn thiếu dữ kiện · Nguồn tham khảo kèm mức độ tin cậy.",
+  avoid:"Không trích dẫn nguồn mà không chắc nguồn đó tồn tại. Không gán số liệu cho một tổ chức nếu không chắc."
+},
+
+learn:{
+  g:"Kỹ thuật & học tập", n:"Giải thích, học tập",
+  role:"người dạy giỏi, giải thích bằng ví dụ gần gũi chứ không đọc định nghĩa",
+  fields:[
+    {k:"chude", l:"Bạn cần hiểu cái gì", h:"", t:"area", req:1},
+    {k:"trinhdo", l:"Trình độ hiện tại của bạn", h:"", t:"sel", o:["Chưa biết gì","Biết sơ sơ","Có nền, cần hiểu sâu","Dạy lại cho người khác"], req:1},
+    {k:"dung", l:"Học để làm gì", h:"thi, làm việc, nói chuyện, tò mò", req:1},
+    {k:"vuong", l:"Bạn đang vướng ở chỗ nào", h:"phần nào đọc mãi không hiểu"},
+    {k:"nghe", l:"Nghề hoặc sở thích của bạn", h:"để lấy ví dụ từ thứ bạn đã quen"}
+  ],
+  musts:[
+    "Bắt đầu bằng một câu trả lời thẳng, rồi mới mở rộng.",
+    "Mỗi khái niệm mới đi kèm một ví dụ cụ thể, ưu tiên lấy từ nghề hoặc sở thích tôi đã nêu.",
+    "Dùng ngôn ngữ thường ngày. Thuật ngữ buộc phải dùng thì giải thích ngay lần đầu.",
+    "Nêu luôn những chỗ người học hay hiểu sai.",
+    "Giải thích đúng mức trình độ tôi đã nêu, không nói xuống cũng không nói quá cao."
+  ],
+  format:"Trả về: Câu trả lời ngắn · Giải thích theo từng bước · Một ví dụ cụ thể · Những lỗi hay gặp · Ba câu hỏi để tôi tự kiểm tra xem đã hiểu chưa · Nên học gì tiếp.",
+  avoid:"Không dùng phép so sánh rối hơn cả thứ đang giải thích. Không đọc định nghĩa sách vở rồi để đó."
+},
+
+/* ─────────── D. ĐỜI SỐNG ─────────── */
+
+dulich:{
+  g:"Đời sống", n:"Du lịch, lịch trình",
+  role:"người lên lịch trình du lịch, tính cả thời gian di chuyển và sức người thật",
+  fields:[
+    {k:"noi", l:"Đi đâu", h:"", req:1},
+    {k:"ngay", l:"Đi mấy ngày, vào khoảng nào", h:"để tính thời tiết và mùa cao điểm", req:1},
+    {k:"nguoi", l:"Đi với ai", h:"số người, có trẻ nhỏ hay người lớn tuổi không", req:1},
+    {k:"tien", l:"Ngân sách", h:"tổng, hoặc mỗi người mỗi ngày", req:1},
+    {k:"thich", l:"Thích kiểu gì", h:"", t:"sel", o:["Nghỉ ngơi, chậm rãi","Đi nhiều, xem nhiều","Ăn uống là chính","Thiên nhiên, leo núi","Chụp ảnh","Trộn nhiều kiểu"]},
+    {k:"dichuyen", l:"Đi lại bằng gì", h:"xe máy, ô tô, máy bay, tàu, thuê xe"},
+    {k:"tranh", l:"Có gì cần tránh không", h:"dị ứng món, không leo cao, không đi đêm…"}
+  ],
+  musts:[
+    "Mỗi ngày không xếp quá nhiều điểm. Tính cả thời gian di chuyển giữa các điểm và thời gian ăn nghỉ.",
+    "Mọi đề xuất phải nằm trong ngân sách đã nêu. Ghi chi phí ước tính cho từng khoản.",
+    "Lịch trình phải phù hợp với người đi cùng đã nêu.",
+    "Nêu rõ chỗ nào cần đặt trước, chỗ nào tới là vào được.",
+    "Giá cả và giờ mở cửa có thể đã thay đổi, nên ghi rõ cần kiểm tra lại trước khi đi."
+  ],
+  format:"Trả về: Lịch trình từng ngày theo giờ · Chi phí ước tính theo khoản · Những chỗ cần đặt trước · Mang theo gì · Phương án thay thế nếu mưa · Những điều dễ bị hớ ở nơi này.",
+  avoid:"Không xếp lịch kín từ sáng tới đêm. Không khẳng định giá vé và giờ mở cửa như thông tin chắc chắn."
+},
+
+suckhoe:{
+  g:"Đời sống", n:"Sức khoẻ, tập luyện, ăn uống",
+  role:"huấn luyện viên và người tư vấn lối sống, làm việc trong giới hạn của mình và biết lúc nào phải chuyển cho bác sĩ",
+  fields:[
+    {k:"muctieu", l:"Bạn muốn đạt điều gì", h:"", t:"area", req:1},
+    {k:"hientai", l:"Hiện tại bạn đang thế nào", h:"mức vận động, giờ sinh hoạt, thói quen ăn uống", t:"area", req:1},
+    {k:"dieukien", l:"Điều kiện của bạn", h:"có phòng gym không, tập được mấy buổi một tuần, mỗi buổi bao lâu", req:1},
+    {k:"gioihan", l:"Có giới hạn gì về sức khoẻ không", h:"chấn thương, bệnh, đang dùng thuốc, đang mang thai"},
+    {k:"dathu", l:"Đã thử gì mà không duy trì được", h:"để khỏi lặp lại"}
+  ],
+  musts:[
+    "Mọi đề xuất phải nằm trong điều kiện và thời gian tôi đã nêu.",
+    "Tăng dần, không đẩy cường độ cao ngay từ tuần đầu.",
+    "Nếu tôi có giới hạn sức khoẻ, nói rõ bài nào phải tránh và vì sao.",
+    "Nói rõ đây là thông tin chung, không thay thế lời khuyên của bác sĩ hay chuyên gia dinh dưỡng.",
+    "Nếu mục tiêu tôi nêu là không an toàn hoặc không thực tế trong thời gian đó, nói thẳng ra và đề xuất mốc hợp lý hơn.",
+    "Nếu có dấu hiệu nào cần đi gặp bác sĩ thì liệt kê ra."
+  ],
+  format:"Trả về: Nhận định ngắn về mục tiêu · Kế hoạch theo tuần · Những việc làm hằng ngày · Cách theo dõi tiến độ · Dấu hiệu nên dừng lại hoặc đi gặp bác sĩ · Cách duy trì khi mất động lực.",
+  avoid:"Không đưa con số calo hay liều lượng cụ thể như một đơn chỉ định. Không hứa kết quả trong thời gian ngắn."
+},
+
+/* ─────────── E. VIỆC CHUNG ─────────── */
+
+chung:{
+  g:"Việc chung", n:"Việc khác",
+  role:"chuyên gia trong đúng lĩnh vực của yêu cầu này",
+  fields:[
+    {k:"viec", l:"Bạn cần AI làm gì", h:"tả càng rõ càng tốt", t:"area", req:1},
+    {k:"boicanh", l:"Bối cảnh", h:"bạn là ai, đang làm việc gì, vì sao cần việc này", t:"area", req:1},
+    {k:"muctieu", l:"Kết quả bạn muốn nhận", h:"dạng gì, dùng để làm gì", req:1},
+    {k:"nguoidoc", l:"Ai sẽ đọc hoặc dùng kết quả"},
+    {k:"dodai", l:"Độ dài mong muốn", h:"số từ, số đoạn, số dòng"},
+    {k:"tranh", l:"Có gì cần tránh không"}
+  ],
+  musts:[
+    "Trả lời thẳng vào việc ngay câu đầu.",
+    "Mỗi khẳng định phải có lý do hoặc dẫn chứng đi kèm.",
+    "Chỗ nào không chắc thì nói rõ là không chắc, đừng viết cho trôi.",
+    "Nếu có cách làm tốt hơn cách tôi đang hỏi, cứ làm theo cách tôi hỏi trước rồi nói thêm ở cuối."
+  ],
+  format:"Trả về: Trả lời ngắn trước · Phần chi tiết · Việc nên làm tiếp.",
+  avoid:"Không mở đầu bằng câu nhắc lại yêu cầu. Không kết bằng câu tóm tắt lại những gì vừa nói."
+}
+
+};
+
+/* ─── nhận diện lĩnh vực từ câu thô ─── */
+var FG_STRONG = [
+  ["kenh",   ["xay kenh","thuong hieu ca nhan","personal brand","dinh vi kenh","phat trien kenh","lo trinh kenh","build kenh","len kenh tu dau"]],
+  ["hr",     ["cv ","so yeu ly lich","xin viec","ung tuyen","phong van","cover letter","mo ta cong viec","tin tuyen dung"]],
+  ["dich",   ["dich sang","dich tu","chuyen ngu","dich doan","dich bai","dich giup","dich ho"]],
+  ["code",   ["fix loi","sua loi code","debug","traceback","typeerror","syntaxerror","bao loi khi chay"]],
+  ["anh",    ["prompt anh","tao anh","tao hinh","midjourney","thiet ke logo","lam logo","thiet ke poster","ve anh"]],
+  ["live",   ["livestream","live ban hang","len live","phien live"]],
+  ["seeding",["seeding","binh luan moi","cmt moi","cay cmt","nick clone"]],
+  ["vlog",   ["vlog","video dai","youtube dai"]],
+  ["ads",    ["chay ads","chay quang cao","facebook ads","tiktok ads","google ads","chay tien","dot tien quang cao"]],
+  ["slide",  ["thuyet trinh","lam slide","powerpoint","pitch deck","bai bao cao truoc"]],
+  ["vanban", ["hop dong","bien ban","don xin","thong bao noi bo","phu luc","dieu khoan"]],
+  ["audio",  ["podcast","truyen audio","giong doc","audio book"]],
+  ["dulich", ["di du lich","lich trinh di","di choi may ngay","phuot"]],
+  ["suckhoe",["giam can","tang can","tap gym","che do an","lich tap"]]
+];
+/* Lưu ý: từ chỉ CHỦ ĐỀ (quán ăn, shopee, báo giá…) không được nằm ở đây.
+   Chúng chỉ nói nội dung nói về cái gì, không nói việc phải làm là gì.
+   Để ở đây thì "kịch bản video cho quán ăn" sẽ bị hiểu thành việc của quán ăn.
+   Những từ đó nằm dưới FG_CUES và cạnh tranh bằng điểm. */
+
+var FG_CUES = [
+  ["video",   ["kich ban","script","video","tiktok","reels","short","clip","thoai","hook","quay"]],
+  ["kenh",    ["kenh","follower","theo doi","tuyen noi dung","dinh vi","viral","content creator","kol","koc","tiktoker"]],
+  ["vlog",    ["vlog","video dai","chuong","mach phim"]],
+  ["fnb",     ["quan","mon an","thuc don","menu","bep","do uong","ca phe","tra sua","nha hang","khach toi quan"]],
+  ["shop",    ["ban hang","san pham","shop","don hang","gia si","ship","kho hang","ton kho"]],
+  ["seeding", ["binh luan","comment","cmt","tuong tac","moi"]],
+  ["content", ["content","noi dung","bai dang","caption","blog","post","seo","bai viet","landing","slogan","fanpage","thong cao"]],
+  ["ads",     ["quang cao","ads","ngan sach quang cao","nham doi tuong","chuyen doi"]],
+  ["live",    ["live","phien ban","chot don"]],
+  ["audio",   ["podcast","audio","giong doc","tap phat song"]],
+  ["email",   ["email","mail","thu ","tin nhan","nhan tin","zalo","chao hang","cold mail","phan hoi khach"]],
+  ["business",["ke hoach","chien luoc","kinh doanh","doanh thu","mo rong","dinh gia","van hanh","quy trinh","khoi nghiep","doi thu","thi truong","loi nhuan"]],
+  ["data",    ["phan tich","du lieu","data","excel","so lieu","bao cao","thong ke","dashboard","bieu do","bang tinh","csv","pivot"]],
+  ["slide",   ["slide","thuyet trinh","trinh bay","bao cao truoc"]],
+  ["vanban",  ["hop dong","van ban","dieu khoan","phap ly","thoa thuan","cam ket"]],
+  ["hr",      ["cv","resume","xin viec","ung tuyen","tuyen dung","jd ","phong van","portfolio","nhan su"]],
+  ["code",    ["code","lap trinh","function","ham ","bug","python","javascript","java","react","sql","api","database","css","html","php","typescript","git","deploy","regex"]],
+  ["anh",     ["thiet ke","hinh anh","logo","poster","banner","anh bia","minh hoa","thumbnail","mockup","giao dien","mau sac"]],
+  ["dich",    ["dich ","translate","chuyen ngu","song ngu","tieng anh","tieng trung"]],
+  ["research",["nghien cuu","tim hieu","so sanh","tong hop","tra cuu","danh gia","xu huong","nen chon"]],
+  ["learn",   ["giai thich","hoc ","day ","de hieu","tom tat","on tap","the nao la","la gi","cach hieu","vi sao","nguyen ly","khai niem"]],
+  ["dulich",  ["du lich","lich trinh","khach san","ve may bay","dia diem choi"]],
+  ["suckhoe", ["suc khoe","tap luyen","an uong","dinh duong","gym","chay bo","ngu"]]
+];
+
+function fgDetect(t){
+  var n = " " + fgNorm(t) + " ", s, q, i, j, k;
+  for (s=0;s<FG_STRONG.length;s++){
+    for (q=0;q<FG_STRONG[s][1].length;q++){
+      if (n.indexOf(FG_STRONG[s][1][q]) !== -1) return FG_STRONG[s][0];
+    }
+  }
+  var best=null, bestScore=0;
+  for (i=0;i<FG_CUES.length;i++){
+    var w = FG_CUES[i][1], score = 0;
+    for (j=0;j<w.length;j++){
+      if (n.indexOf(w[j]) === -1) continue;
+      var swallowed = false;
+      for (k=0;k<w.length;k++){
+        if (k!==j && w[k].length>w[j].length && w[k].indexOf(w[j])!==-1 && n.indexOf(w[k])!==-1){
+          swallowed = true; break;
+        }
+      }
+      if (!swallowed) score += w[j].length;
+    }
+    if (score > bestScore){ bestScore = score; best = FG_CUES[i][0]; }
+  }
+  return bestScore > 0 ? best : "chung";
+}
+
+/* ─── dựng prompt ───
+   vals: { fieldKey: "giá trị người dùng điền" }
+   opts: { lang, tone, depth } */
+function fgBuild(domKey, vals, opts){
+  var D = FG_DOMAINS[domKey] || FG_DOMAINS.chung;
+  vals = vals || {}; opts = opts || {};
+  var ctx = [], gaps = [], i, m, f, v;
+
+  for (i=0;i<D.fields.length;i++){
+    f = D.fields[i];
+    v = (vals[f.k] || "").trim();
+    if (v){
+      ctx.push("- " + f.l + ": " + v.replace(/\s*\n\s*/g, " / "));
+    } else {
+      ctx.push("- " + f.l + ": [___ " + (f.h || "chưa cung cấp") + "]");
+      gaps.push({label:f.l, hint:f.h || "", important:!!f.req});
+    }
+  }
+
+  if (opts.tone) ctx.push("- Giọng điệu cần giữ: " + opts.tone + ".");
+  if (opts.lang === "en") ctx.push("- Answer in English.");
+  else if (opts.lang === "keep") ctx.push("- Trả lời bằng đúng ngôn ngữ tôi đã dùng ở trên.");
+  else ctx.push("- Trả lời bằng tiếng Việt.");
+
+  var musts = D.musts.slice();
+  if (opts.depth !== "lite"){
+    musts.push("Không bịa thông tin. Chỗ nào bạn phải tự giả định thì ghi rõ là giả định, đặt trong dấu ngoặc vuông.");
+  }
+  if (opts.depth === "max"){
+    musts.push("Trước khi trả kết quả, tự soát lại một lượt theo đúng các yêu cầu trên và sửa những chỗ chưa đạt.");
+    musts.push("Nếu có cách làm khác tốt hơn hẳn cách tôi đang yêu cầu, làm theo yêu cầu của tôi trước, rồi nói thêm cách kia ở cuối.");
+  }
+
+  var P = [];
+  P.push("# VAI TRÒ");
+  P.push("Bạn là " + D.role + ". Bạn làm việc như một người làm thật: hỏi lại khi thiếu dữ kiện, không phỏng đoán số liệu, và nói rõ chỗ nào là giả định của bạn.");
+  P.push("");
+  P.push("# NGỮ CẢNH");
+  P.push(ctx.join("\n"));
+  P.push("");
+  P.push("# NHIỆM VỤ");
+  P.push("Làm đúng việc đã nêu trong phần NGỮ CẢNH, trong vai trò ở trên. Nếu có chỗ tôi diễn đạt chưa rõ, hiểu theo nghĩa hợp lý nhất rồi nói rõ bạn đã hiểu thế nào.");
+  P.push("");
+  P.push("# YÊU CẦU BẮT BUỘC");
+  for (m=0;m<musts.length;m++) P.push((m+1) + ". " + musts[m]);
+  P.push("");
+  P.push("# ĐỊNH DẠNG TRẢ VỀ");
+  P.push(D.format);
+  P.push("");
+  P.push("# TUYỆT ĐỐI TRÁNH");
+  P.push(D.avoid);
+  if (opts.depth !== "lite"){
+    P.push("Không mở đầu bằng câu nhắc lại yêu cầu của tôi. Không kết bằng câu tóm tắt lại những gì vừa viết. Vào thẳng nội dung.");
+  }
+  P.push("");
+  P.push("# TRƯỚC KHI BẮT ĐẦU");
+  var important = 0;
+  for (i=0;i<gaps.length;i++) if (gaps[i].important) important++;
+  if (important){
+    P.push("Ở phần NGỮ CẢNH còn " + gaps.length + " chỗ để trống trong dấu ngoặc vuông, trong đó " + important + " chỗ là thông tin quan trọng. Hãy hỏi tôi tối đa 3 câu quan trọng nhất để lấp những chỗ đó, rồi chờ tôi trả lời. Nếu tôi nói cứ làm đi, hãy tự điền giả định hợp lý và ghi rõ đó là giả định.");
+  } else if (gaps.length){
+    P.push("Thông tin quan trọng đã đủ. Bắt tay làm luôn. Mấy chỗ còn để trống trong ngoặc vuông là phần phụ, bạn tự suy luận hợp lý và ghi rõ đó là giả định.");
+  } else {
+    P.push("Thông tin đã đủ. Bắt tay làm luôn, không cần hỏi lại.");
+  }
+
+  return { text:P.join("\n"), gaps:gaps, domain:D.n, group:D.g };
+}
+
+if (typeof module !== "undefined" && module.exports){
+  module.exports = {FG_DOMAINS:FG_DOMAINS, fgDetect:fgDetect, fgBuild:fgBuild, fgNorm:fgNorm};
+}
+
+</script>
+<script>
+/* ===== LÒ RÈN PROMPT — phần giao diện (dùng chung cho mọi bản) ===== */
+(function(){
+"use strict";
+
+function $(id){ return document.getElementById(id); }
+var elRough = $("fg-rough");
+if (!elRough) return;
+
+var elDom    = $("fg-domain"),
+    elFields = $("fg-fields"),
+    elMore   = $("fg-more"),
+    elMoreBtn= $("fg-morebtn"),
+    elOut    = $("fg-out"),
+    elBar    = $("fg-barwrap"),
+    elBadge  = $("fg-badge"),
+    elMeta   = $("fg-meta"),
+    elGaps   = $("fg-gaps"),
+    elGapList= $("fg-gaplist"),
+    elCopy   = $("fg-copy"),
+    elStep   = $("fg-step3");
+
+var VALS = {};      /* giá trị người dùng đã điền, giữ lại khi đổi lĩnh vực */
+var lastText = "";
+var moreOpen = false;
+
+function esc(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+/* ---------- nạp danh sách lĩnh vực, có nhóm ---------- */
+(function(){
+  var groups = [], gmap = {}, k, D;
+  for (k in FG_DOMAINS){
+    if (!Object.prototype.hasOwnProperty.call(FG_DOMAINS,k)) continue;
+    D = FG_DOMAINS[k];
+    if (!gmap[D.g]){ gmap[D.g] = []; groups.push(D.g); }
+    gmap[D.g].push({k:k, n:D.n});
+  }
+  for (var i=0;i<groups.length;i++){
+    var og = document.createElement("optgroup");
+    og.label = groups[i];
+    for (var j=0;j<gmap[groups[i]].length;j++){
+      var op = document.createElement("option");
+      op.value = gmap[groups[i]][j].k;
+      op.textContent = gmap[groups[i]][j].n;
+      og.appendChild(op);
+    }
+    elDom.appendChild(og);
+  }
+})();
+
+/* ---------- dựng ô điền theo lĩnh vực ---------- */
+function makeField(f){
+  var wrap = document.createElement("label");
+  wrap.className = "fg-f" + (f.req ? " fg-f--req" : "");
+
+  var lab = document.createElement("span");
+  lab.className = "fg-f-lab";
+  lab.textContent = f.l;
+  if (f.req){
+    var dot = document.createElement("em");
+    dot.textContent = "cần";
+    lab.appendChild(dot);
+  }
+  wrap.appendChild(lab);
+
+  var inp;
+  if (f.t === "sel"){
+    inp = document.createElement("select");
+    var blank = document.createElement("option");
+    blank.value = ""; blank.textContent = "— chọn —";
+    inp.appendChild(blank);
+    for (var i=0;i<f.o.length;i++){
+      var o = document.createElement("option");
+      o.value = f.o[i]; o.textContent = f.o[i];
+      inp.appendChild(o);
+    }
+  } else if (f.t === "area"){
+    inp = document.createElement("textarea");
+    inp.rows = 3;
+    if (f.h) inp.placeholder = f.h;
+  } else {
+    inp = document.createElement("input");
+    inp.type = "text";
+    if (f.h) inp.placeholder = f.h;
+  }
+
+  inp.id = "fgf-" + f.k;
+  inp.className = "fg-f-in";
+  if (VALS[f.k]) inp.value = VALS[f.k];
+  inp.addEventListener("input", function(){ VALS[f.k] = inp.value; });
+  inp.addEventListener("change", function(){ VALS[f.k] = inp.value; });
+  wrap.appendChild(inp);
+
+  if (f.h && f.t !== "area" && f.t !== "sel"){
+    /* gợi ý đã nằm ở placeholder, không lặp lại */
+  }
+  return wrap;
+}
+
+function renderFields(){
+  var D = FG_DOMAINS[elDom.value] || FG_DOMAINS.chung;
+  elFields.innerHTML = "";
+  elMore.innerHTML = "";
+
+  var nMore = 0, i, f;
+
+  /* câu thô rót vào ô chính đầu tiên nếu ô đó còn trống */
+  var first = D.fields[0];
+  if (first && !VALS[first.k] && elRough.value.trim()){
+    VALS[first.k] = elRough.value.trim();
+  }
+
+  for (i=0;i<D.fields.length;i++){
+    f = D.fields[i];
+    if (f.req) elFields.appendChild(makeField(f));
+    else { elMore.appendChild(makeField(f)); nMore++; }
+  }
+
+  if (nMore){
+    elMoreBtn.style.display = "";
+    elMoreBtn.textContent = (moreOpen ? "Thu gọn" : "Chi tiết thêm") + " (" + nMore + " ô)";
+    elMore.style.display = moreOpen ? "" : "none";
+  } else {
+    elMoreBtn.style.display = "none";
+    elMore.style.display = "none";
+  }
+  elStep.style.display = "";
+}
+
+/* ---------- đoán lĩnh vực từ câu thô ---------- */
+var typing = null;
+function guess(){
+  var t = elRough.value.trim();
+  if (!t) return;
+  var k = fgDetect(t);
+  if (k && FG_DOMAINS[k]){
+    elDom.value = k;
+    renderFields();
+  }
+}
+elRough.addEventListener("input", function(){
+  clearTimeout(typing);
+  typing = setTimeout(guess, 450);
+});
+
+elDom.addEventListener("change", renderFields);
+
+elMoreBtn.addEventListener("click", function(){
+  moreOpen = !moreOpen;
+  elMore.style.display = moreOpen ? "" : "none";
+  var n = elMore.children.length;
+  elMoreBtn.textContent = (moreOpen ? "Thu gọn" : "Chi tiết thêm") + " (" + n + " ô)";
+});
+
+/* ---------- rèn ---------- */
+function forge(){
+  var D = FG_DOMAINS[elDom.value] || FG_DOMAINS.chung;
+  var res = fgBuild(elDom.value, VALS, {
+    lang:  $("fg-lang").value,
+    tone:  $("fg-tone").value,
+    depth: $("fg-depth").value
+  });
+
+  lastText = res.text;
+  elOut.innerHTML = esc(res.text)
+    .replace(/^# (.+)$/gm, "<b># $1</b>")
+    .replace(/\[___([^\]]*)\]/g, "<mark>[___$1]</mark>");
+
+  elBar.style.display = "";
+  elBadge.textContent = res.domain;
+  elMeta.textContent = res.text.length + " ký tự";
+  elCopy.textContent = "Copy prompt";
+
+  if (res.gaps.length){
+    elGapList.innerHTML = "";
+    for (var i=0;i<res.gaps.length;i++){
+      var g = res.gaps[i];
+      var li = document.createElement("li");
+      if (g.important) li.className = "fg-gap--req";
+      var c = document.createElement("code");
+      c.textContent = g.important ? "cần" : "nên";
+      var d = document.createElement("div");
+      d.className = "fg-gl";
+      d.appendChild(document.createTextNode(g.label));
+      if (g.hint){
+        var it = document.createElement("i");
+        it.textContent = g.hint;
+        d.appendChild(it);
+      }
+      li.appendChild(c); li.appendChild(d);
+      elGapList.appendChild(li);
+    }
+    elGaps.style.display = "";
+  } else {
+    elGaps.style.display = "none";
+  }
+
+  if (elOut.scrollIntoView) {
+    try { elOut.scrollIntoView({block:"nearest", behavior:"smooth"}); } catch(e){}
+  }
+}
+
+$("fg-go").addEventListener("click", forge);
+
+$("fg-clear").addEventListener("click", function(){
+  VALS = {}; lastText = ""; elRough.value = "";
+  renderFields();
+  elOut.innerHTML = '<span class="fg-empty">Prompt sẽ hiện ở đây sau khi bạn bấm Rèn prompt.</span>';
+  elBar.style.display = "none";
+  elGaps.style.display = "none";
+  elMeta.textContent = "";
+  elRough.focus();
+});
+
+["fg-lang","fg-tone","fg-depth"].forEach(function(id){
+  $(id).addEventListener("change", function(){ if (lastText) forge(); });
+});
+
+elCopy.addEventListener("click", function(){
+  if (!lastText) return;
+  function done(){
+    elCopy.textContent = "Đã copy";
+    setTimeout(function(){ elCopy.textContent = "Copy prompt"; }, 1800);
+  }
+  function fb(){
+    var r = document.createRange(); r.selectNodeContents(elOut);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    elCopy.textContent = "Đã bôi đen, bấm Ctrl+C";
+  }
+  try{
+    if (navigator.clipboard && navigator.clipboard.writeText)
+      navigator.clipboard.writeText(lastText).then(done, fb);
+    else fb();
+  }catch(e){ fb(); }
+});
+
+/* ---------- mở trang với một ví dụ thật, để thấy ngay tool làm gì ---------- */
+elRough.value = "t muốn xây kênh thương hiệu cá nhân mà ko biết bắt đầu từ đâu";
+elDom.value = "kenh";
+VALS = {
+  nghe:   "làm nghề dựng video, muốn nhận khách tự do",
+  vonco:  "5 năm dựng video ngắn, đã làm cho vài quán ăn và shop online",
+  nentang:"TikTok",
+  khach:  "chủ quán nhỏ, 28–45 tuổi, muốn tự làm content mà không biết bắt đầu"
+};
+renderFields();
+forge();
+
+})();
+
+</script>
+<script>
+/* bỏ màn che chờ tải, giống các trang khác */
+if (typeof window.rsReady === "function") window.rsReady();
+setTimeout(function(){ document.documentElement.classList.remove("rs-boot"); }, 2000);
+</script>
+</body>
+</html>
