@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="vi" class="rs-boot">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Soát kênh quán — Rune Studio</title>
+<meta name="description" content="Nhập số 5 clip gần nhất, biết kênh quán đang vướng chỗ nào và nhận câu lệnh AI sửa phần mở đầu. Tool miễn phí của Rune Studio.">
+<link rel="canonical" href="https://runestudio.art/soat-kenh.html">
+<meta property="og:site_name" content="Rune Studio">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Soát kênh quán — Rune Studio">
+<meta property="og:description" content="Kênh quán đang vướng chỗ nào? Nhập số 5 clip gần nhất là biết.">
+<meta property="og:image" content="https://runestudio.art/assets/uploads/share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="css/style.css">
+<style>
+
+.sk{
+  --sk-bg:#F2EAD9; --sk-paper:#FBF7EF; --sk-fg:#1C1B19; --sk-muted:#6B5F52;
+  --sk-line:#D9CDB8; --sk-accent:#6B4A2F; --sk-gold:#C9A227;
+  --sk-bad:#9A3412; --sk-badbg:#F7E6DD; --sk-ok:#2E6B3F; --sk-okbg:#E1EFE3;
+  --sk-info:#5A4B8A; --sk-infobg:#ECE8F5;
+  color:var(--sk-fg);
+  font-size:15px; line-height:1.5;
+}
+@media (prefers-color-scheme:dark){.sk:not([data-theme="light"]){
+  --sk-bg:#1C1B19; --sk-paper:#26231F; --sk-fg:#F2EAD9; --sk-muted:#B8AB98; --sk-line:#3B362F;
+  --sk-accent:#D9B98F; --sk-gold:#E0BC4A; --sk-bad:#E59A7C; --sk-badbg:#36211A;
+  --sk-ok:#8FD0A0; --sk-okbg:#1E3324; --sk-info:#B3A6DC; --sk-infobg:#24203A; color-scheme:dark}}
+
+.sk *{box-sizing:border-box}
+.sk h1{font-size:clamp(26px,5vw,34px);font-weight:800;line-height:1.1;margin:0 0 6px;
+  text-wrap:balance;letter-spacing:-.01em;color:var(--sk-fg)}
+.sk .sub{color:var(--sk-muted);margin:0 0 24px;max-width:62ch}
+.sk .eyebrow{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--sk-accent);margin:0 0 8px}
+.sk section{margin-bottom:28px}
+.sk .card{background:var(--sk-paper);border:1px solid var(--sk-line);border-radius:12px;padding:16px}
+.sk label{display:block;font-size:12px;font-weight:600;color:var(--sk-muted);margin-bottom:4px}
+.sk input,.sk select{width:100%;font:inherit;font-size:15px;padding:9px 10px;
+  border:1px solid var(--sk-line);border-radius:8px;background:var(--sk-bg);color:var(--sk-fg);min-width:0}
+
+/* chữ gợi ý: nghiêng và mờ */
+.sk input::placeholder{color:var(--sk-muted);opacity:.62;font-style:italic}
+.sk input::-webkit-input-placeholder{color:var(--sk-muted);opacity:.62;font-style:italic}
+
+.sk input:focus,.sk select:focus,.sk button:focus{outline:2px solid var(--sk-gold);outline-offset:1px}
+.sk .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.sk .clips{display:grid;gap:10px;margin-top:12px}
+.sk .clip{display:grid;gap:8px;grid-template-columns:repeat(4,minmax(0,1fr));align-items:end;
+  padding:10px;border:1px dashed var(--sk-line);border-radius:10px}
+.sk .clip .n{grid-column:1/-1;font-size:12px;font-weight:600;color:var(--sk-accent)}
+@media (max-width:520px){.sk .clip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.sk input[type=number]{font-variant-numeric:tabular-nums}
+.sk button{font:inherit;font-weight:600;cursor:pointer;border-radius:999px;
+  border:1px solid transparent;padding:11px 20px}
+.sk .primary{background:var(--sk-accent);color:var(--sk-paper);font-size:16px;width:100%;margin-top:16px}
+.sk .ghost{background:transparent;color:var(--sk-accent);border-color:var(--sk-line);padding:8px 14px;font-size:13px}
+.sk .verdicts{display:grid;gap:10px}
+.sk .v{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;padding:14px;
+  border-radius:12px;border:1px solid var(--sk-line);background:var(--sk-paper)}
+.sk .v.bad{background:var(--sk-badbg);border-color:var(--sk-bad)}
+.sk .v.ok{background:var(--sk-okbg);border-color:var(--sk-ok)}
+.sk .v.info{background:var(--sk-infobg);border-color:var(--sk-info)}
+.sk .pill{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  padding:4px 9px;border-radius:999px;white-space:nowrap;margin-top:2px}
+.sk .bad .pill{background:var(--sk-bad);color:#fff}
+.sk .ok .pill{background:var(--sk-ok);color:#fff}
+.sk .info .pill{background:var(--sk-info);color:#fff}
+.sk .v h3{margin:0 0 4px;font-size:15px;color:var(--sk-fg)}
+.sk .v p{margin:0;color:var(--sk-muted);font-size:14px}
+.sk .v p b{color:var(--sk-fg)}
+.sk .v .src{display:block;margin-top:7px;font-size:11.5px;color:var(--sk-muted);opacity:.8;font-style:normal}
+.sk .summary{display:flex;flex-wrap:wrap;gap:16px 28px;margin-bottom:14px;font-variant-numeric:tabular-nums}
+.sk .summary div{min-width:0}
+.sk .summary .k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--sk-muted)}
+.sk .summary .val{font-size:22px;font-weight:800;color:var(--sk-fg)}
+.sk pre{white-space:pre-wrap;word-break:break-word;font:inherit;font-size:14px;margin:0;padding:14px;
+  background:var(--sk-bg);border:1px solid var(--sk-line);border-radius:10px;max-height:340px;overflow:auto;
+  color:var(--sk-fg)}
+.sk .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.sk .note{font-size:12px;color:var(--sk-muted);margin-top:8px}
+.sk .tags{display:flex;flex-wrap:wrap;gap:6px}
+.sk .tag{font-size:13px;padding:4px 10px;border-radius:999px;background:var(--sk-bg);border:1px solid var(--sk-line)}
+.sk .banner{border-left:4px solid var(--sk-gold)}
+.sk .banner strong{display:block;margin-bottom:6px;color:var(--sk-fg)}
+.sk .banner p{margin:0;color:var(--sk-muted);font-size:14px}
+.sk .src p{margin:0 0 10px;font-size:13.5px;color:var(--sk-muted)}
+.sk .src p b{color:var(--sk-fg)}
+.sk .src p:last-of-type{margin-bottom:0}
+@media (prefers-reduced-motion:no-preference){.sk .v{transition:background .2s}}
+
+.sk{max-width:860px;margin:0 auto}
+</style>
+</head>
+<body>
+
+<div id="header"></div>
+
+<main>
+  <section class="section">
+    <div class="wrap">
+      <div class="sk">
+  <p class="eyebrow">Rune Studio · tool miễn phí cho chủ quán</p>
+  <h1>Kênh quán đang vướng chỗ nào?</h1>
+  <p class="sub">Nhập số của 5 clip gần nhất lấy từ TikTok Studio. Tool soát 4 chỗ, mỗi chỗ nói rõ ngưỡng lấy từ đâu, rồi ghép sẵn câu lệnh AI để sửa clip sau.</p>
+
+  <section class="card">
+    <p class="eyebrow">Về quán và kênh</p>
+    <div class="grid">
+      <div><label for="ten">Tên quán</label><input id="ten" placeholder="Quán nhậu Bờ Kè"></div>
+      <div><label for="mon">Bán gì</label><input id="mon" placeholder="hải sản, lẩu, view sông"></div>
+      <div><label for="khu">Khu vực</label><input id="khu" placeholder="Biên Hòa"></div>
+      <div>
+        <label for="tuoi">Kênh mở bao lâu rồi</label>
+        <select id="tuoi">
+          <option value="7">Dưới 2 tuần</option>
+          <option value="45" selected>2 tuần đến 3 tháng</option>
+          <option value="180">Trên 3 tháng</option>
+        </select>
+      </div>
+      <div><label for="tongclip">Đã đăng tổng cộng bao nhiêu clip</label><input id="tongclip" type="number" min="0" step="1" placeholder="40"></div>
+      <div><label for="tanso">Đang đăng đều cỡ nào</label><input id="tanso" placeholder="1 ngày 2 video, hoặc 1 tuần 3 video, hoặc không đều"></div>
+    </div>
+
+    <div style="margin-top:12px">
+      <label for="tags">Hashtag đang gắn</label>
+      <input id="tags" placeholder="quannhau bienhoa haisan" autocapitalize="off" autocomplete="off" spellcheck="false">
+      <p class="note">Gõ chữ rồi bấm dấu cách, tool tự thêm dấu thăng.</p>
+    </div>
+
+    <p class="eyebrow" style="margin-top:18px">5 clip gần nhất</p>
+    <div class="clips" id="clips"></div>
+    <p class="note">Mỗi clip phải có đủ ba số: thời lượng, view và thời gian xem trung bình. Thiếu một trong ba thì clip đó không tính được. Lấy ở TikTok Studio, mục Phân tích, bấm vào từng video. Điền được mấy clip cũng chạy, càng nhiều càng sát.</p>
+    <button class="primary" id="run">Soát kênh</button>
+  </section>
+
+  <section id="newbanner" hidden>
+    <div class="card banner">
+      <strong>Kênh còn mới, mấy con số dưới đây chưa nói lên nhiều.</strong>
+      <p>Tài khoản mới thường mất 7 đến 14 ngày đầu để TikTok dò xem kênh nói về cái gì và nên đưa cho ai. Trong giai đoạn đó, 50 đến 300 view mỗi clip là bình thường, không phải kênh bị lỗi. Cứ đăng đều, soát lại sau khi qua 10 clip.</p>
+    </div>
+  </section>
+
+  <section id="out" hidden>
+    <p class="eyebrow">Kết quả</p>
+    <div class="card">
+      <div class="summary">
+        <div><div class="k">View trung vị</div><div class="val" id="s-view">–</div></div>
+        <div><div class="k">Giữ chân</div><div class="val" id="s-ret">–</div></div>
+        <div><div class="k">Chia sẻ</div><div class="val" id="s-share">–</div></div>
+        <div><div class="k">Đang vướng</div><div class="val" id="s-n">–</div></div>
+      </div>
+      <p class="note" id="socl" style="margin:0 0 12px"></p>
+      <div class="verdicts" id="verdicts"></div>
+    </div>
+  </section>
+
+  <section id="fix" hidden>
+    <p class="eyebrow">Hashtag nên gắn</p>
+    <div class="card">
+      <div class="tags" id="tagfix"></div>
+      <p class="note">Ba đến năm thẻ cụ thể: tên quán, món, khu vực, cộng một thẻ đúng nội dung clip đó.</p>
+    </div>
+  </section>
+
+  <section id="prompt" hidden>
+    <div class="row">
+      <p class="eyebrow" style="margin:0">Câu lệnh AI để sửa phần mở đầu</p>
+      <button class="ghost" id="copy">Sao chép câu lệnh</button>
+    </div>
+    <div class="card"><pre id="ptext"></pre></div>
+    <p class="note">Dán vào ChatGPT, Gemini hoặc Claude. Chọn một trong 10 câu nó trả về, quay đúng câu đó cho clip tiếp theo.</p>
+  </section>
+
+  <section id="nguon" hidden>
+    <p class="eyebrow">Mấy con số trong tool lấy từ đâu</p>
+    <div class="card src">
+      <p><b>Mốc chia sẻ</b> — khảo sát 1,4 triệu video của 32.000 kênh, tháng 11/2025 đến 01/2026. Trung bình toàn nền tảng 0,41%, riêng ngành ăn uống 0,61%.</p>
+      <p><b>Thứ tự nặng nhẹ của tín hiệu</b> — thời gian xem, tỷ lệ coi hết và chia sẻ nặng nhất; bình luận, theo dõi từ clip và lưu đứng sau; tim nhẹ hơn. TikTok không công bố trọng số chính thức, đây là mức tổng hợp từ tài liệu của họ và hành vi quan sát được.</p>
+      <p><b>Giai đoạn kênh mới</b> — 7 đến 14 ngày đầu là lúc nền tảng dò tệp, 50 đến 300 view mỗi clip là bình thường.</p>
+      <p><b>Tỷ lệ lưu</b> — không tổ chức nào công bố mốc chuẩn, nên tool chỉ so các clip của chính kênh với nhau, không chấm đạt hay chưa.</p>
+      <p class="note" style="margin-top:12px">Một chỗ tool cố tình không chấm: số clip đăng trong tuần. Nhiều nơi dạy rằng đăng nhiều thì clip cũ bị bóp view. Khảo sát 11,4 triệu bài đăng của hơn 150.000 tài khoản cho kết quả ngược lại — đăng dày hơn thì view trung bình mỗi clip cao hơn, nhóm đăng từ 11 bài một tuần hơn nhóm đăng 1 bài khoảng 34%. Nên tool chỉ ghi nhận con số đó để đưa vào câu lệnh AI, không lấy ra bắt lỗi ai.</p>
+    </div>
+  </section>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="footer"></div>
+
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+<script>
+/* ===== SOÁT KÊNH QUÁN — lõi chấm điểm, tách riêng để test được =====
+   Mọi ngưỡng đều có nguồn, ghi ngay cạnh. Không có ngưỡng tự bịa. */
+
+var SK = (function(){
+"use strict";
+
+/* Mốc chia sẻ: 1,4 triệu video, 32.000 kênh, 11/2025–01/2026 (TT Calculator).
+   Trung bình toàn nền tảng 0,41%. Ngành ăn uống 0,61%. */
+var SHARE = { viral:2.0, xuatsac:1.0, tot:0.5, trungbinh:0.25, duoitb:0.10 };
+var SHARE_FNB = 0.61;
+
+/* Giữ chân: mốc của chính ngài — video tốt trên kênh đang làm giữ ~50% ở giây thứ 5.
+   Cộng với: giữ chân 3 giây đầu là bộ lọc lớn nhất của vòng phân phối đầu. */
+var RET_TOT = 0.50, RET_YEU = 0.25;
+
+/* Kênh mới: 7–14 ngày đầu là giai đoạn hiệu chỉnh, 50–300 view mỗi bài là bình thường. */
+var MOI_NGAY = 14, MOI_CLIP = 10;
+
+function med(a){
+  var b = a.slice().sort(function(x,y){ return x-y; });
+  var m = Math.floor(b.length/2);
+  return b.length % 2 ? b[m] : (b[m-1]+b[m])/2;
+}
+function sum(a, k){ var s=0; for (var i=0;i<a.length;i++) s += a[i][k]; return s; }
+
+/* Chuẩn hoá hashtag: tách theo dấu cách, bỏ dấu, so khớp NGUYÊN TỪ.
+   Không dò chuỗi con — "#banhxeo" không được tính là dính "#xh". */
+var TAG_RONG = ["xuhuong","xuhuong2026","viral","viralvideo","fyp","foryou","foryoupage",
+                "thinhhanh","trending","xh","trend","tiktok","douyin"];
+
+function slug(s){
+  return (s||"").toLowerCase().normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"").replace(/\u0111/g,"d")
+    .replace(/[^a-z0-9]/g,"");
+}
+
+function locTag(raw){
+  var tho = (raw||"").split(/[\s,]+/).filter(function(t){ return t.trim(); });
+  var rong = [], rieng = [];
+  for (var i=0;i<tho.length;i++){
+    var s = slug(tho[i]);
+    if (!s) continue;
+    if (TAG_RONG.indexOf(s) !== -1) rong.push(tho[i].replace(/^#*/,"#"));
+    else rieng.push(tho[i].replace(/^#*/,"#"));
+  }
+  return { rong:rong, rieng:rieng, tong:rong.length + rieng.length };
+}
+
+/* ===== chấm ===== */
+function cham(d){
+  /* chặn số âm và số rác ngay từ đây, không để lọt xuống phần tính */
+  var clips = d.clips.map(function(c){
+    var o = {}, k;
+    for (k in c) if (Object.prototype.hasOwnProperty.call(c,k)){
+      var v = Number(c[k]);
+      o[k] = (isFinite(v) && v > 0) ? v : 0;
+    }
+    return o;
+  }).filter(function(c){ return c.view > 0 && c.dur > 0 && c.watch > 0; });
+  if (!clips.length) return null;
+
+  var views   = clips.map(function(c){ return c.view; });
+  var medView = med(views);
+  var tongView = sum(clips,"view");
+
+  var avgWatch = sum(clips,"watch") / clips.length;
+  var avgDur   = sum(clips,"dur")   / clips.length;
+  var ret      = avgDur > 0 ? avgWatch/avgDur : 0;
+
+  var shareRate = tongView ? sum(clips,"share")/tongView*100 : 0;
+  var saveRate  = tongView ? sum(clips,"save") /tongView*100 : 0;
+  var likeRate  = tongView ? sum(clips,"like") /tongView*100 : 0;
+
+  /* lưu: không có mốc ngoài, nên so clip tốt nhất với clip tệ nhất của chính kênh */
+  var saveMoi = clips.map(function(c){ return c.view ? c.save/c.view*100 : 0; });
+  var saveMax = Math.max.apply(null, saveMoi);
+  var saveMin = Math.min.apply(null, saveMoi);
+
+  var tag = locTag(d.tags);
+  var moi = (d.tuoiNgay > 0 && d.tuoiNgay < MOI_NGAY) || (d.tongClip > 0 && d.tongClip < MOI_CLIP);
+
+  var V = [];
+
+  /* 1 — trụ chính: giữ chân */
+  var retYeu = ret < RET_YEU;
+  V.push({
+    key:"giuchan", bad:retYeu, chinh:true,
+    title:"Ba giây đầu giữ được người xem không",
+    text: ret >= 1
+      ? "Người xem coi hết rồi coi lại, giữ chân " + (ret*100).toFixed(0) + "%. Đây là tín hiệu mạnh nhất mà một clip có thể có. Giữ nguyên cách mở đầu này."
+      : retYeu
+        ? "Người xem ở lại trung bình " + avgWatch.toFixed(1) + " giây trên clip " + avgDur.toFixed(0) + " giây, tức " + (ret*100).toFixed(0) + "%. Vòng phát đầu tiên chỉ vài trăm người, và thứ quyết định clip có đi tiếp hay không là họ có coi qua mấy giây đầu không. Sửa câu mở đầu trước, mọi thứ khác tính sau."
+        : "Người xem ở lại " + (ret*100).toFixed(0) + "% clip" + (ret >= RET_TOT ? ", đạt mức tốt" : ", mức này tạm được") + ". Phần mở đầu đang làm đúng việc của nó.",
+    nguon:"Giữ chân sớm là bộ lọc lớn nhất của vòng phân phối đầu"
+  });
+
+  /* 2 — chia sẻ, có mốc thật */
+  var shareYeu = shareRate < SHARE.trungbinh;
+  var bac = shareRate >= SHARE.viral ? "mức viral"
+          : shareRate >= SHARE.xuatsac ? "mức xuất sắc"
+          : shareRate >= SHARE.tot ? "mức tốt"
+          : shareRate >= SHARE.trungbinh ? "mức trung bình"
+          : shareRate >= SHARE.duoitb ? "dưới trung bình" : "mức thấp";
+  V.push({
+    key:"share", bad:shareYeu,
+    title:"Người xem có gửi clip cho người khác không",
+    text:"Tỷ lệ chia sẻ " + shareRate.toFixed(2) + "%, " + bac + ". Trung bình ngành ăn uống là " +
+         SHARE_FNB + "%, toàn nền tảng 0,41%." +
+         (shareYeu
+           ? " Chia sẻ là tín hiệu nặng ngang thời gian xem. Clip chưa có chỗ nào khiến người ta muốn gửi cho bạn bè — thiếu một câu nói hộ họ, hoặc một thứ đáng rủ nhau đi."
+           : " Đang có người chịu gửi clip đi, đây là tín hiệu nặng ngang thời gian xem."),
+    nguon:"1,4 triệu video, 32.000 kênh, 11/2025–01/2026"
+  });
+
+  /* 3 — lưu: so với chính kênh, không có mốc ngoài */
+  var saveLech = saveMax > 0 && saveMax >= saveMin*3 && clips.length >= 3;
+  V.push({
+    key:"save", bad:false, info:true,
+    title:"Clip nào được lưu nhiều nhất",
+    text:"Tỷ lệ lưu trung bình " + saveRate.toFixed(2) + "%. Không tổ chức nào công bố mốc chuẩn cho chỉ số này, nên chỉ so được với chính kênh mình. " +
+         (saveLech
+           ? "Clip cao nhất được lưu gấp hơn 3 lần clip thấp nhất (" + saveMax.toFixed(2) + "% so với " + saveMin.toFixed(2) + "%). Coi lại clip cao nhất làm về cái gì, làm thêm dạng đó."
+           : "Các clip đang được lưu ngang nhau, chưa thấy dạng nào nổi hẳn."),
+    nguon:"Không có mốc công bố, so nội bộ kênh"
+  });
+
+  /* 4 — tim nhiều mà không ai ở lại */
+  var timLech = likeRate >= 4 && ret < RET_YEU;
+  V.push({
+    key:"tim", bad:timLech,
+    title:"Tim đang đến từ người thật xem clip, hay từ người quen",
+    text: timLech
+      ? "Tim đạt " + likeRate.toFixed(1) + "% số view, nhưng người xem chỉ ở lại " + (ret*100).toFixed(0) + "% clip. Hai con số này không đi với nhau: người coi chưa tới một phần tư clip thì khó mà thả tim thật. Nhiều khả năng tim tới từ nhân viên và người quen. Vấn đề không phải TikTok phạt, mà là tim vốn là tín hiệu nhẹ — nhờ người quen thả tim không bù được chỗ giữ chân đang thiếu."
+      : "Tim " + likeRate.toFixed(1) + "% đi cùng giữ chân " + (ret*100).toFixed(0) + "%, hai con số khớp nhau. Tương tác đang tới từ người xem thật.",
+    nguon:"Tim là tín hiệu nhẹ, dưới thời gian xem, chia sẻ, bình luận và lưu"
+  });
+
+  /* 5 — hashtag */
+  var tagXau = tag.rong.length > 0;
+  V.push({
+    key:"tag", bad:tagXau,
+    title:"Hashtag có dẫn được người cần tìm tới quán không",
+    text: tagXau
+      ? "Đang gắn " + tag.rong.join(" ") + ". Mấy thẻ này không làm clip bị phạt, nhưng cũng không thêm gì: TikTok vẫn chấm clip cho trang Dành cho bạn dù có gắn hay không, mà chữ đó thì cả triệu clip đang dùng. Thay bằng 3 đến 5 thẻ cụ thể: tên quán, món, khu vực."
+      : "Hashtag đang cụ thể, không có thẻ chung chung. Giữ ở mức 3 đến 5 thẻ.",
+    nguon:"Thẻ chung chung không cộng thêm reach; khuyến nghị 3–5 thẻ cụ thể"
+  });
+
+  var loi = V.filter(function(v){ return v.bad; }).length;
+
+  return {
+    soClip: clips.length,
+    moi: moi,
+    medView: medView,
+    avgWatch: avgWatch,
+    avgDur: avgDur,
+    ret: ret,
+    shareRate: shareRate,
+    saveRate: saveRate,
+    likeRate: likeRate,
+    tag: tag,
+    V: V,
+    loi: loi,
+    tongCham: V.filter(function(v){ return !v.info; }).length
+  };
+}
+
+/* ===== câu lệnh AI ===== */
+function lenh(d, r){
+  var errs = r.V.filter(function(v){ return v.bad; })
+               .map(function(v){ return "- " + v.title; }).join("\n")
+      || "- Chưa dính lỗi nào trong các mục đã soát";
+
+  var p = "Bạn là người viết kịch bản TikTok cho " + d.ten + " ở " + d.khu + ", bán " + d.mon + ". "
+        + "Người xem mục tiêu là khách sống hoặc làm việc gần " + d.khu + ".\n\n"
+        + "Tình trạng kênh, lấy từ 5 clip gần nhất:\n"
+        + "- View trung vị: " + Math.round(r.medView) + "\n"
+        + "- Người xem ở lại trung bình " + r.avgWatch.toFixed(1) + " giây trên clip dài " + r.avgDur.toFixed(0) + " giây (" + (r.ret*100).toFixed(0) + "%)\n"
+        + "- Tỷ lệ chia sẻ " + r.shareRate.toFixed(2) + "%, tỷ lệ lưu " + r.saveRate.toFixed(2) + "%\n"
+        + (d.tanSo ? "- Nhịp đăng, chủ quán tự mô tả: " + d.tanSo + "\n" : "")
+        + "\n"
+        + "Đang vướng:\n" + errs + "\n\n"
+        + "Viết cho tôi 10 câu mở đầu cho clip tiếp theo, mỗi câu dưới 15 chữ, văn nói miền Nam. Yêu cầu từng câu:\n"
+        + "1. Trong 5 chữ đầu phải nói rõ người xem là ai hoặc họ đang cần gì. Ví dụ: nhóm bạn 8 người tối thứ 6, dân văn phòng tan ca.\n"
+        + "2. Nhắc tới " + d.khu + " hoặc một địa danh ở đó.\n"
+        + "3. Không khoe quán đẹp, món ngon, giá rẻ. Không mở bằng thành tích của quán.\n"
+        + "4. Mỗi câu một kiểu khác nhau: cảnh báo sai lầm, câu hỏi, con số cụ thể, hứa kết quả, tình huống thật của khách.\n";
+
+  if (r.V.filter(function(v){ return v.key==="share" && v.bad; }).length){
+    p += "5. Trong 10 câu đó, ít nhất 3 câu phải là câu người xem muốn gửi cho bạn bè: nói hộ điều họ hay than, hoặc nêu một dịp đáng rủ nhau đi.\n";
+  }
+
+  p += "\nTrình bày thành bảng 3 cột: câu mở đầu | kiểu mở đầu | cảnh nên quay trong 3 giây đầu, một dòng, quay được bằng điện thoại.";
+  return p;
+}
+
+function goiTag(d){
+  var monDau = (d.mon||"").split(",")[0].trim();
+  return ["#"+slug(d.ten), "#"+slug(monDau), "#"+slug(d.khu),
+          "#"+slug(monDau)+slug(d.khu), "#[theo đúng nội dung clip]"];
+}
+
+return { cham:cham, lenh:lenh, goiTag:goiTag, locTag:locTag, slug:slug,
+         SHARE:SHARE, SHARE_FNB:SHARE_FNB, RET_TOT:RET_TOT, RET_YEU:RET_YEU };
+})();
+
+if (typeof module !== "undefined" && module.exports) module.exports = SK;
+
+</script>
+<script>
+
+(function(){
+  var cols=[["dur","Thời lượng (s)"],["view","View"],["watch","Xem TB (s)"],
+            ["like","Tim"],["cmt","Bình luận"],["share","Chia sẻ"],["save","Lưu"]];
+  var mau=[[62,312,7.1,21,2,1,3],[48,287,6.4,18,1,0,2],[75,401,8.2,25,3,2,4],
+           [55,266,5.9,14,1,0,1],[40,338,6.8,19,2,1,2]];
+  if(!document.getElementById("clips")) return;
+  var html="";
+  for(var i=0;i<5;i++){
+    html+='<div class="clip"><div class="n">Clip '+(i+1)+'</div>';
+    for(var c=0;c<cols.length;c++){
+      var id="c"+i+"_"+cols[c][0];
+      html+='<div><label for="'+id+'">'+cols[c][1]+'</label>'+
+            '<input id="'+id+'" type="number" min="0" step="any" placeholder="'+mau[i][c]+'"></div>';
+    }
+    html+='</div>';
+  }
+  document.getElementById("clips").innerHTML=html;
+
+  function $(id){return document.getElementById(id)}
+  function num(id){var v=parseFloat($(id).value);return (isFinite(v)&&v>0)?v:0}
+  function txt(id,d){var v=$(id).value.trim();return v||d}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+  function fmt(n){return Math.round(n).toLocaleString("vi-VN")}
+
+  /* ---- hashtag: gõ chữ xong bấm dấu cách là tự có dấu thăng ---- */
+  var oTag=$("tags");
+  function chuanTag(v){
+    var duoi = /\s$/.test(v);
+    var tu = v.split(/\s+/).filter(function(t){return t && t!=="#"});
+    tu = tu.map(function(t){ return "#" + t.replace(/^#+/,""); });
+    return tu.join(" ") + (duoi ? " #" : "");
+  }
+  oTag.addEventListener("input", function(){
+    var cuoi = this.selectionStart === this.value.length;
+    var moi = chuanTag(this.value);
+    if(moi !== this.value){
+      this.value = moi;
+      if(cuoi){ try{ this.setSelectionRange(moi.length, moi.length); }catch(e){} }
+    }
+  });
+  oTag.addEventListener("blur", function(){
+    this.value = this.value.replace(/\s*#\s*$/,"").trim();
+  });
+
+  function thuThap(){
+    var clips=[];
+    for(var i=0;i<5;i++){
+      var o={};
+      for(var c=0;c<cols.length;c++) o[cols[c][0]]=num("c"+i+"_"+cols[c][0]);
+      clips.push(o);
+    }
+    return {ten:txt("ten","quán"),mon:txt("mon","món chính"),khu:txt("khu","khu vực"),
+            tuoiNgay:parseFloat($("tuoi").value)||0,tongClip:num("tongclip"),
+            tanSo:$("tanso").value.trim(),tags:oTag.value,clips:clips};
+  }
+
+  function run(){
+    var d=thuThap(), r=SK.cham(d);
+    if(!r){
+      ["out","fix","prompt","nguon","newbanner"].forEach(function(id){$(id).hidden=true});
+      var b=$("run");
+      b.textContent="Cần ít nhất 1 clip có đủ thời lượng, view và thời gian xem";
+      setTimeout(function(){b.textContent="Soát kênh"},3000);
+      return;
+    }
+    $("newbanner").hidden=!r.moi;
+
+    $("s-view").textContent=fmt(r.medView);
+    $("s-ret").textContent=(r.ret*100).toFixed(0)+"%";
+    $("s-share").textContent=r.shareRate.toFixed(2)+"%";
+    $("s-n").textContent=r.loi+" / "+r.tongCham;
+    var dem=$("socl"); if(dem) dem.textContent = r.soClip<5
+      ? "Đang tính trên "+r.soClip+" clip. Điền thêm clip thì kết quả sát hơn."
+      : "Đang tính trên 5 clip.";
+
+    $("verdicts").innerHTML=r.V.map(function(v){
+      var cls=v.info?"info":(v.bad?"bad":"ok");
+      var nhan=v.info?"Ghi nhận":(v.bad?"Cần sửa":"Ổn");
+      return '<div class="v '+cls+'"><span class="pill">'+nhan+'</span><div><h3>'+
+             esc(v.title)+'</h3><p>'+v.text+'<i class="src">Nguồn ngưỡng: '+
+             esc(v.nguon)+'</i></p></div></div>';
+    }).join("");
+
+    $("tagfix").innerHTML=SK.goiTag(d).map(function(t){
+      return '<span class="tag">'+esc(t)+'</span>'}).join("");
+    $("ptext").textContent=SK.lenh(d,r);
+
+    ["out","fix","prompt","nguon"].forEach(function(id){$(id).hidden=false});
+    $("out").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+
+  $("run").addEventListener("click",run);
+
+  $("copy").addEventListener("click",function(){
+    var t=$("ptext").textContent,b=this;
+    function xong(){b.textContent="Đã sao chép";setTimeout(function(){b.textContent="Sao chép câu lệnh"},1800)}
+    function chon(){
+      try{
+        var rg=document.createRange();rg.selectNodeContents($("ptext"));
+        var s=window.getSelection();s.removeAllRanges();s.addRange(rg);
+        b.textContent="Đã bôi đen, bấm Ctrl+C";
+      }catch(e){b.textContent="Chọn tay rồi copy"}
+    }
+    try{
+      if(navigator.clipboard&&navigator.clipboard.writeText)
+        navigator.clipboard.writeText(t).then(xong,chon);
+      else chon();
+    }catch(e){chon()}
+  });
+
+})();
+
+</script>
+<script>
+if (typeof window.rsReady === "function") window.rsReady();
+setTimeout(function(){ document.documentElement.classList.remove("rs-boot"); }, 2000);
+</script>
+</body>
+</html>
