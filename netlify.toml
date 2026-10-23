@@ -1,4 +1,8 @@
+# Dữ liệu sửa trong /admin: trình duyệt được giữ lại bản đã tải, nhưng
+# mỗi lần dùng phải hỏi máy chủ xem có đổi chưa. Chưa đổi thì nhận 304
+# rỗng (nhanh, gần như không tốn gì). Vừa sửa xong trong /admin thì lần
+# vào sau thấy ngay, không phải chờ hết hạn bộ nhớ đệm.
 [[headers]]
   for = "/content/*"
   [headers.values]
-    Cache-Control = "no-cache"
+    Cache-Control = "no-cache, must-revalidate"
