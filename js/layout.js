@@ -14,14 +14,42 @@ const MENU_MACDINH = [
 ];
 
 const _jsonCache = {};
+/* Không gắn ?v=Date.now() nữa. Thêm chuỗi đó vào thì mỗi lần tải là một
+   đường dẫn mới, trình duyệt và Netlify đều coi là file lạ nên phải tải
+   lại toàn bộ. Để nguyên đường dẫn thì trình duyệt hỏi máy chủ "file có
+   đổi không", chưa đổi thì nhận 304 rỗng — vẫn thấy ngay nội dung sửa
+   trong /admin mà không tốn băng thông. netlify.toml đã đặt no-cache
+   cho /content/* nên luôn có bước hỏi lại này. */
 function loadJSON(path) {
   if (!_jsonCache[path]) {
-    _jsonCache[path] = fetch(path + '?v=' + Date.now())
+    _jsonCache[path] = fetch(path)
       .then(r => { if (!r.ok) throw new Error(path); return r.json(); })
       .catch(e => { delete _jsonCache[path]; throw e; });
   }
   return _jsonCache[path];
 }
+
+/* Nạp trước — gọi sớm để các file đi CÙNG MỘT LÚC thay vì xếp hàng.
+   loadJSON lưu lại lời hứa theo đường dẫn, nên khi đoạn dựng trang gọi
+   tới thì nó dùng lại đúng lời hứa đang bay, không tải lần hai. */
+/* pages.json và services.json có ở mọi trang: pages.json cho chữ các
+   trang con, services.json cho menu con ở chân trang. */
+const _CHUNG = ['pages', 'services'];
+const _PREFETCH = {
+  'index.html':       ['hero', 'home', 'projects', 'posts', 'categories'],
+  'gioi-thieu.html':  ['about'],
+  'dich-vu.html':     [],
+  'du-an.html':       ['projects', 'categories'],
+  'tin-tuc.html':     ['posts'],
+  'tuyen-dung.html':  ['jobs'],
+  'lien-he.html':     [],
+};
+(function napTruoc() {
+  const trang = location.pathname.split('/').pop() || 'index.html';
+  _CHUNG.concat(_PREFETCH[trang] || []).forEach(ten => {
+    loadJSON('content/' + ten + '.json').catch(() => {});
+  });
+})();
 /* Bỏ lớp che khi trang đã dựng xong */
 function rsReady() {
   try { buildPageNav(); } catch (e) {}
