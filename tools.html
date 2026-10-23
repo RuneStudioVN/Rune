@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tools — Rune Studio</title>
+<meta name="description" content="Công cụ miễn phí cho chủ quán: soát kênh TikTok, tìm chỗ đang vướng, nhận câu lệnh AI để sửa clip.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Rune Studio">
+<meta property="og:title" content="Tools — Rune Studio">
+<meta property="og:description" content="Công cụ miễn phí cho chủ quán: soát kênh TikTok, tìm chỗ đang vướng, nhận câu lệnh AI để sửa clip.">
+<meta property="og:image" content="https://runestudio.art/assets/uploads/share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://runestudio.art/tools.html">
+<script>document.documentElement.classList.add('rs-boot');setTimeout(function(){document.documentElement.classList.remove('rs-boot')},2500);</script>
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* Nhãn nhỏ góc thẻ tool — chỉ dùng ở trang này */
+.tool-badge{display:inline-block;align-self:flex-start;font-size:12px;letter-spacing:.06em;
+  text-transform:uppercase;padding:4px 10px;border-radius:999px;
+  background:var(--sand,#F2EAD9);color:var(--signal,#6B4A2F);border:1px solid var(--mist)}
+.tool-empty{color:var(--smoke);font-size:15px}
+</style>
+</head>
+<body>
+<div id="header"></div>
+
+<section class="page-hero"><div class="wrap">
+  <h1 id="tools-title">Tools miễn phí</h1>
+  <p class="lead" id="tools-lead"></p>
+</div></section>
+
+<div class="wrap">
+  <div class="grid grid-3" id="tools-list" style="margin:48px 0"></div>
+</div>
+
+<section class="cta"><div class="wrap">
+  <h2 id="tools-cta-title"></h2>
+  <a class="btn" id="tools-cta-btn" href="lien-he.html"></a>
+</div></section>
+
+<div id="footer"></div>
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+<script>
+/* Trang Tools — nội dung lấy từ content/tools.json, sửa trong /admin → Tools.
+   Dựng ngay tại đây để khỏi phải đụng vào js/main.js. */
+SITE_READY.then(async () => {
+  var T = {};
+  try { T = await loadJSON('content/tools.json'); } catch (e) { T = {}; }
+
+  var dat = function (id, v) {
+    var el = document.getElementById(id);
+    if (el && v) el.textContent = v;
+  };
+  dat('tools-title', T.page_title);
+  dat('tools-lead', T.page_lead);
+  dat('tools-cta-title', T.cta_title);
+  dat('tools-cta-btn', T.cta_btn);
+
+  var nut = document.getElementById('tools-cta-btn');
+  if (nut && T.cta_link) nut.setAttribute('href', T.cta_link);
+  /* Chưa điền chữ cho khối kêu gọi thì ẩn luôn, đỡ hở một mảng trống */
+  if (!T.cta_title && !T.cta_btn) {
+    var kh = document.querySelector('.cta');
+    if (kh) kh.hidden = true;
+  }
+
+  var ds = (T.tools || []).filter(function (t) { return t && t.title && t.link; });
+  var o = document.getElementById('tools-list');
+  if (!o) return;
+
+  if (!ds.length) {
+    o.innerHTML = '<p class="tool-empty">Chưa có tool nào. Thêm trong /admin → Tools.</p>';
+    return;
+  }
+
+  o.innerHTML = ds.map(function (t) {
+    return '<div class="card">' +
+      (t.badge ? '<span class="tool-badge">' + esc(t.badge) + '</span>' : '') +
+      '<h3>' + esc(t.title) + '</h3>' +
+      (t.summary ? '<p>' + esc(t.summary) + '</p>' : '') +
+      '<a class="btn btn--ghost" href="' + esc(t.link) + '">' +
+        esc(t.cta || 'Dùng thử') + '</a>' +
+    '</div>';
+  }).join('');
+}).finally(function () { rsReady(); });
+</script>
+</body>
+</html>
