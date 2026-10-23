@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Nhập số 5 clip gần nhất, biết ngay kênh quán đang dính lỗi nào và nhận câu lệnh AI sửa 3 giây đầu. Tool miễn phí của Rune Studio.">
+<meta property="og:title" content="Soát Kênh Quán – Rune Studio">
+<meta property="og:description" content="Kênh quán đang dính lỗi nào? Nhập số 5 clip gần nhất là biết.">
+<title>Soát Kênh Quán</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&display=swap">
+<style>
+/* Layout: one column, form on top, verdict cards + prompt below. Brand palette "Đất nung" of Rune Studio. */
+:root{
+  --bg:#F2EAD9; --paper:#FBF7EF; --fg:#1C1B19; --muted:#6B5F52;
+  --line:#D9CDB8; --accent:#6B4A2F; --gold:#C9A227;
+  --bad:#B3261E; --bad-bg:#F9E3E0; --ok:#2E6B3F; --ok-bg:#E1EFE3;
+  --font:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1C1B19; --paper:#26231F; --fg:#F2EAD9; --muted:#B8AB98; --line:#3B362F;
+  --accent:#D9B98F; --gold:#E0BC4A; --bad:#F08A7E; --bad-bg:#3A1F1C; --ok:#8FD0A0; --ok-bg:#1E3324; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1C1B19; --paper:#26231F; --fg:#F2EAD9; --muted:#B8AB98; --line:#3B362F;
+  --accent:#D9B98F; --gold:#E0BC4A; --bad:#F08A7E; --bad-bg:#3A1F1C; --ok:#8FD0A0; --ok-bg:#1E3324; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1{font-size:clamp(26px,5vw,34px);font-weight:800;line-height:1.1;margin:0 0 6px;text-wrap:balance;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:0 0 24px;max-width:60ch}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+section{margin-bottom:28px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px}
+label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:4px}
+input,select{width:100%;font:inherit;font-size:15px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);min-width:0}
+input:focus,select:focus,button:focus{outline:2px solid var(--gold);outline-offset:1px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.clips{display:grid;gap:10px;margin-top:12px}
+.clip{display:grid;gap:8px;grid-template-columns:repeat(4,minmax(0,1fr));align-items:end;padding:10px;border:1px dashed var(--line);border-radius:10px}
+.clip .n{grid-column:1/-1;font-size:12px;font-weight:600;color:var(--accent)}
+@media (max-width:480px){.clip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+input[type=number]{font-variant-numeric:tabular-nums}
+button{font:inherit;font-weight:600;cursor:pointer;border-radius:999px;border:1px solid transparent;padding:11px 20px}
+.primary{background:var(--accent);color:var(--bg);font-size:16px;width:100%;margin-top:16px}
+.ghost{background:transparent;color:var(--accent);border-color:var(--line);padding:8px 14px;font-size:13px}
+.verdicts{display:grid;gap:10px}
+.v{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;padding:14px;border-radius:12px;border:1px solid var(--line);background:var(--paper)}
+.v.bad{background:var(--bad-bg);border-color:var(--bad)}
+.v.ok{background:var(--ok-bg);border-color:var(--ok)}
+.pill{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:999px;white-space:nowrap;margin-top:2px}
+.bad .pill{background:var(--bad);color:#fff}
+.ok .pill{background:var(--ok);color:#fff}
+.v h3{margin:0 0 4px;font-size:15px}
+.v p{margin:0;color:var(--muted);font-size:14px}
+.v p b{color:var(--fg)}
+.summary{display:flex;flex-wrap:wrap;gap:16px 28px;margin-bottom:14px;font-variant-numeric:tabular-nums}
+.summary div{min-width:0}
+.summary .k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.summary .val{font-size:22px;font-weight:800}
+pre{white-space:pre-wrap;word-break:break-word;font:inherit;font-size:14px;margin:0;padding:14px;background:var(--bg);border:1px solid var(--line);border-radius:10px;max-height:320px;overflow:auto}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.note{font-size:12px;color:var(--muted);margin-top:8px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tag{font-size:13px;padding:4px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
+footer{color:var(--muted);font-size:12px;margin-top:32px}
+@media (prefers-reduced-motion:no-preference){.v{transition:background .2s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Rune Studio · tool cho chủ quán</p>
+  <h1>Kênh quán đang dính lỗi nào?</h1>
+  <p class="sub">Nhập số của 5 clip gần nhất lấy từ TikTok Studio. Tool chấm 3 lỗi chủ quán hay bị chỉ sai, cộng lỗi gốc ở 3 giây đầu, rồi ghép sẵn câu lệnh AI để sửa clip sau.</p>
+
+  <section class="card">
+    <p class="eyebrow">Về quán</p>
+    <div class="grid">
+      <div><label for="ten">Tên quán</label><input id="ten" value="Quán nhậu Bờ Kè"></div>
+      <div><label for="mon">Bán gì</label><input id="mon" value="hải sản, lẩu, view sông"></div>
+      <div><label for="khu">Khu vực</label><input id="khu" value="Biên Hòa"></div>
+      <div><label for="freq">Số clip đăng mỗi ngày (tuần qua)</label><input id="freq" type="number" min="0" step="0.5" value="3"></div>
+    </div>
+    <div style="margin-top:12px"><label for="tags">Hashtag đang gắn (cách nhau bằng dấu cách)</label><input id="tags" value="#xuhuong #viral #fyp #quannhau #bienhoa"></div>
+
+    <p class="eyebrow" style="margin-top:18px">5 clip gần nhất</p>
+    <div class="clips" id="clips"></div>
+    <p class="note">Số mẫu bên trên là ví dụ, sửa lại bằng số thật của quán. Thời gian xem trung bình lấy ở TikTok Studio, mục Phân tích.</p>
+    <button class="primary" id="run">Soát kênh</button>
+  </section>
+
+  <section id="out" hidden>
+    <p class="eyebrow">Kết quả</p>
+    <div class="card">
+      <div class="summary">
+        <div><div class="k">View trung vị</div><div class="val" id="s-view">–</div></div>
+        <div><div class="k">Xem trung bình</div><div class="val" id="s-watch">–</div></div>
+        <div><div class="k">Giữ chân</div><div class="val" id="s-ret">–</div></div>
+        <div><div class="k">Lỗi đang dính</div><div class="val" id="s-n">–</div></div>
+      </div>
+      <div class="verdicts" id="verdicts"></div>
+    </div>
+  </section>
+
+  <section id="fix" hidden>
+    <p class="eyebrow">Hashtag nên gắn</p>
+    <div class="card">
+      <div class="tags" id="tagfix"></div>
+      <p class="note">Tối đa 5 hashtag: tên quán, món, khu vực, cộng 2 cái theo đúng nội dung clip đó.</p>
+    </div>
+  </section>
+
+  <section id="prompt" hidden>
+    <div class="row">
+      <p class="eyebrow" style="margin:0">Câu lệnh AI để sửa 3 giây đầu</p>
+      <button class="ghost" id="copy">Sao chép câu lệnh</button>
+    </div>
+    <div class="card"><pre id="ptext"></pre></div>
+    <p class="note">Dán vào ChatGPT, Gemini hoặc Claude. Chọn 1 trong 10 câu nó trả về, quay đúng câu đó cho clip tiếp theo.</p>
+  </section>
+
+  <footer>Luật chấm lấy từ cách TikTok phân phối: 200 người xem đầu tiên quyết định clip có đi tiếp hay không. Tool của Rune Studio, dùng miễn phí.</footer>
+</div>
+
+<script>
+(function(){
+  var sample=[[62,312,7.1,21,2,1,3],[48,287,6.4,18,1,0,2],[75,401,8.2,25,3,2,4],[55,266,5.9,14,1,0,1],[40,338,6.8,19,2,1,2]];
+  var cols=[["dur","Thời lượng (s)"],["view","View"],["watch","Xem TB (s)"],["like","Tim"],["cmt","Bình luận"],["share","Chia sẻ"],["save","Lưu"]];
+  var box=document.getElementById("clips"),html="";
+  for(var i=0;i<5;i++){
+    html+='<div class="clip"><div class="n">Clip '+(i+1)+'</div>';
+    for(var c=0;c<cols.length;c++){
+      var id="c"+i+"_"+cols[c][0];
+      html+='<div><label for="'+id+'">'+cols[c][1]+'</label><input id="'+id+'" type="number" min="0" step="any" value="'+sample[i][c]+'"></div>';
+    }
+    html+='</div>';
+  }
+  box.innerHTML=html;
+
+  function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
+  function median(a){var b=a.slice().sort(function(x,y){return x-y});var m=Math.floor(b.length/2);return b.length%2?b[m]:(b[m-1]+b[m])/2;}
+  function fmt(n){return Math.round(n).toLocaleString("vi-VN");}
+
+  function run(){
+    var clips=[];
+    for(var i=0;i<5;i++){
+      var o={};for(var c=0;c<cols.length;c++)o[cols[c][0]]=num("c"+i+"_"+cols[c][0]);
+      if(o.view>0)clips.push(o);
+    }
+    if(!clips.length)return;
+    var views=clips.map(function(c){return c.view});
+    var medView=median(views);
+    var avgWatch=clips.reduce(function(s,c){return s+c.watch},0)/clips.length;
+    var avgDur=clips.reduce(function(s,c){return s+c.dur},0)/clips.length;
+    var ret=avgDur?avgWatch/avgDur:0;
+    var likeRate=clips.reduce(function(s,c){return s+c.like},0)/clips.reduce(function(s,c){return s+c.view},0);
+    var saveRate=clips.reduce(function(s,c){return s+c.save},0)/clips.reduce(function(s,c){return s+c.view},0);
+    var freq=num("freq");
+    var tags=document.getElementById("tags").value.toLowerCase();
+    var badTags=["xuhuong","xu hướng","viral","fyp","trending","thinhhanh","foryou","xh"].filter(function(t){return tags.indexOf(t)>=0});
+    var stuck=views.every(function(v){return v>=150&&v<=600});
+    var ten=document.getElementById("ten").value.trim()||"quán";
+    var mon=document.getElementById("mon").value.trim()||"món chính";
+    var khu=document.getElementById("khu").value.trim()||"khu vực";
+
+    var V=[];
+    V.push({bad:freq>2,title:"Đăng quá nhiều clip mỗi ngày",
+      text:freq>2?"Đang đăng <b>"+freq+" clip/ngày</b>. View TikTok phát cho một kênh là có hạn, clip mới nhận view thì clip cũ đang lên bị bóp. Về <b>1–2 clip/ngày</b>, cách nhau 5–6 tiếng.":"Đang đăng "+freq+" clip/ngày, mức này ổn. Dồn công vào từng clip thay vì đăng thêm."});
+    var fake=stuck&&likeRate>=0.05&&ret<0.3;
+    V.push({bad:fake,title:"Tương tác từ người quen, không phải khách",
+      text:fake?"Cả 5 clip kẹt quanh <b>"+fmt(medView)+" view</b>, tim tới <b>"+(likeRate*100).toFixed(1)+"%</b> nhưng người xem chỉ ở lại "+(ret*100).toFixed(0)+"% clip. Dấu hiệu của tim từ nhân viên, người quen: TikTok thấy người ta lướt qua nên dừng đẩy ngay vòng 200 người đầu. Ngưng nhờ thả tim, để người lạ gần quán xem thật.":"Không thấy dấu hiệu tim ảo. Tương tác đang đến từ người xem thật."});
+    V.push({bad:badTags.length>0,title:"Hashtag chung chung",
+      text:badTags.length?"Đang gắn <b>"+badTags.map(function(t){return "#"+t.replace(" ","")}).join(" ")+"</b>. Hashtag là biển chỉ đường, chữ xu hướng thì cả triệu clip đang giành nên không ai tìm tới quán. Đổi sang tên quán, món, khu vực.":"Hashtag đang đúng hướng: không có hashtag xu hướng, viral."});
+    var hookBad=avgWatch<5||ret<0.25;
+    V.push({bad:hookBad,title:"Lỗi gốc: 3 giây đầu không giữ được người xem",
+      text:hookBad?"Người xem ở lại trung bình <b>"+avgWatch.toFixed(1)+"s</b> trên clip "+avgDur.toFixed(0)+"s, tức "+(ret*100).toFixed(0)+"%. 200 người đầu không coi qua 3 giây thì TikTok không mở vòng tiếp. Sửa câu mở đầu trước, mọi thứ khác tính sau. Câu lệnh bên dưới làm đúng việc này.":"Người xem ở lại "+(ret*100).toFixed(0)+"% clip, 3 giây đầu đang làm tốt. Giữ cách mở đầu này."});
+
+    var n=V.filter(function(v){return v.bad}).length;
+    document.getElementById("s-view").textContent=fmt(medView);
+    document.getElementById("s-watch").textContent=avgWatch.toFixed(1)+"s / "+avgDur.toFixed(0)+"s";
+    document.getElementById("s-ret").textContent=(ret*100).toFixed(0)+"%";
+    document.getElementById("s-n").textContent=n+" / 4";
+    document.getElementById("verdicts").innerHTML=V.map(function(v){
+      return '<div class="v '+(v.bad?"bad":"ok")+'"><span class="pill">'+(v.bad?"Dính":"Ổn")+'</span><div><h3>'+v.title+'</h3><p>'+v.text+'</p></div></div>';
+    }).join("");
+
+    var slug=function(s){return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/[^a-z0-9]/g,"")};
+    var monFirst=mon.split(",")[0].trim();
+    var tf=["#"+slug(ten),"#"+slug(monFirst),"#"+slug(khu),"#"+slug(monFirst)+slug(khu),"#[theo nội dung clip]"];
+    document.getElementById("tagfix").innerHTML=tf.map(function(t){return '<span class="tag">'+t+'</span>'}).join("");
+
+    var errs=V.filter(function(v){return v.bad}).map(function(v){return "- "+v.title}).join("\n")||"- Chưa dính lỗi nào trong 4 lỗi trên";
+    var p="Bạn là người viết kịch bản TikTok cho "+ten+" ở "+khu+", bán "+mon+". Người xem mục tiêu là khách sống hoặc làm việc gần "+khu+".\n\n"
+      +"Tình trạng kênh: 5 clip gần nhất đạt khoảng "+fmt(medView)+" view, người xem ở lại trung bình "+avgWatch.toFixed(1)+" giây trên clip dài "+avgDur.toFixed(0)+" giây.\n"
+      +"Lỗi đang dính:\n"+errs+"\n\n"
+      +"Viết cho tôi 10 câu mở đầu cho clip tiếp theo, mỗi câu dưới 15 chữ, văn nói miền Nam. Yêu cầu từng câu:\n"
+      +"1. Trong 5 chữ đầu phải nói rõ người xem là ai hoặc họ đang cần gì (ví dụ: nhóm bạn 8 người tối thứ 6, dân văn phòng tan ca).\n"
+      +"2. Nhắc tới "+khu+" hoặc một địa danh ở đó.\n"
+      +"3. Không khoe quán đẹp, món ngon, giá rẻ. Không mở bằng thành tích của quán.\n"
+      +"4. Mỗi câu dùng một kiểu khác nhau: cảnh báo sai lầm, câu hỏi, con số cụ thể, hứa kết quả, tình huống thật của khách.\n\n"
+      +"Trình bày thành bảng 3 cột: câu mở đầu | kiểu mở đầu | cảnh nên quay trong 3 giây đầu (một dòng, quay được bằng điện thoại).";
+    document.getElementById("ptext").textContent=p;
+
+    ["out","fix","prompt"].forEach(function(id){document.getElementById(id).hidden=false});
+    document.getElementById("out").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  document.getElementById("run").addEventListener("click",run);
+
+  document.getElementById("copy").addEventListener("click",function(){
+    var t=document.getElementById("ptext").textContent,btn=this;
+    function done(){btn.textContent="Đã sao chép";setTimeout(function(){btn.textContent="Sao chép câu lệnh"},1800)}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done).catch(sel)}else sel();
+    function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById("ptext"));var s=window.getSelection();s.removeAllRanges();s.addRange(r);btn.textContent="Đã chọn, bấm Copy"}
+  });
+  run();
+})();
+</script>
+</body>
+</html>
