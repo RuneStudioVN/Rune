@@ -313,6 +313,27 @@ collections:
               - { label: "Ảnh đại diện", name: "image", widget: "image", required: false }
               - { label: "Nội dung chi tiết (chèn ảnh tuỳ ý)", name: "body", widget: "markdown", required: false, hint: "Bấm biểu tượng ảnh trên thanh công cụ để chèn hình vào giữa bài" }
 
+      - name: "tools"
+        label: "Tools (trang công cụ miễn phí)"
+        file: "content/tools.json"
+        fields:
+          - { label: "Tiêu đề trang", name: "page_title", widget: "string" }
+          - { label: "Dòng giới thiệu dưới tiêu đề", name: "page_lead", widget: "text" }
+          - label: "Danh sách tool"
+            name: "tools"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Tên tool", name: "title", widget: "string" }
+              - { label: "Mã (không dấu)", name: "slug", widget: "string", required: false }
+              - { label: "Link tới tool", name: "link", widget: "string", hint: "VD: soat-kenh.html — hoặc dán link đầy đủ nếu tool nằm ở web khác" }
+              - { label: "Nhãn nhỏ góc thẻ", name: "badge", widget: "string", required: false, hint: "VD: Miễn phí, Mới, Beta — để trống thì ẩn" }
+              - { label: "Mô tả ngắn", name: "summary", widget: "text", required: false }
+              - { label: "Chữ trên nút", name: "cta", widget: "string", required: false, hint: "Để trống thì mặc định là: Dùng thử" }
+          - { label: "▸ Khối kêu gọi cuối trang — tiêu đề", name: "cta_title", widget: "string", required: false }
+          - { label: "Khối kêu gọi — chữ nút", name: "cta_btn", widget: "string", required: false }
+          - { label: "Khối kêu gọi — link nút", name: "cta_link", widget: "string", required: false }
+
   - name: "projects"
     label: "Dự án"
     files:
