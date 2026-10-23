@@ -119,14 +119,20 @@
           <option value="180">Trên 3 tháng</option>
         </select>
       </div>
-      <div><label for="tongclip">Đã đăng tổng cộng bao nhiêu clip</label><input id="tongclip" type="number" min="0" step="1" placeholder="40"></div>
+      <div>
+        <label for="tongclip">Kênh đã có khoảng bao nhiêu clip</label>
+        <select id="tongclip">
+          <option value="5">Dưới 10 clip</option>
+          <option value="20" selected>Khoảng 10 đến 30 clip</option>
+          <option value="60">Trên 30 clip</option>
+        </select>
+      </div>
       <div><label for="tanso">Đang đăng đều cỡ nào</label><input id="tanso" placeholder="1 ngày 2 video, hoặc 1 tuần 3 video, hoặc không đều"></div>
     </div>
 
     <div style="margin-top:12px">
       <label for="tags">Hashtag đang gắn</label>
-      <input id="tags" placeholder="quannhau bienhoa haisan" autocapitalize="off" autocomplete="off" spellcheck="false">
-      <p class="note">Gõ chữ rồi bấm dấu cách, tool tự thêm dấu thăng.</p>
+      <input id="tags" placeholder="quannhau bienhoa haisan — gõ cách nhau, có dấu thăng hay không đều được" autocapitalize="off" autocomplete="off" spellcheck="false">
     </div>
 
     <p class="eyebrow" style="margin-top:18px">5 clip gần nhất</p>
@@ -428,25 +434,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = SK;
   function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
   function fmt(n){return Math.round(n).toLocaleString("vi-VN")}
 
-  /* ---- hashtag: gõ chữ xong bấm dấu cách là tự có dấu thăng ---- */
   var oTag=$("tags");
-  function chuanTag(v){
-    var duoi = /\s$/.test(v);
-    var tu = v.split(/\s+/).filter(function(t){return t && t!=="#"});
-    tu = tu.map(function(t){ return "#" + t.replace(/^#+/,""); });
-    return tu.join(" ") + (duoi ? " #" : "");
-  }
-  oTag.addEventListener("input", function(){
-    var cuoi = this.selectionStart === this.value.length;
-    var moi = chuanTag(this.value);
-    if(moi !== this.value){
-      this.value = moi;
-      if(cuoi){ try{ this.setSelectionRange(moi.length, moi.length); }catch(e){} }
-    }
-  });
-  oTag.addEventListener("blur", function(){
-    this.value = this.value.replace(/\s*#\s*$/,"").trim();
-  });
 
   function thuThap(){
     var clips=[];
@@ -456,7 +444,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = SK;
       clips.push(o);
     }
     return {ten:txt("ten","quán"),mon:txt("mon","món chính"),khu:txt("khu","khu vực"),
-            tuoiNgay:parseFloat($("tuoi").value)||0,tongClip:num("tongclip"),
+            tuoiNgay:parseFloat($("tuoi").value)||0,tongClip:parseFloat($("tongclip").value)||0,
             tanSo:$("tanso").value.trim(),tags:oTag.value,clips:clips};
   }
 
