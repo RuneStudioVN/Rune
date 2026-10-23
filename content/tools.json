@@ -1,0 +1,17 @@
+{
+  "page_title": "Tools miễn phí",
+  "page_lead": "Mấy công cụ Rune Studio làm ra để chủ quán tự soát kênh, tự gỡ chỗ đang vướng. Dùng thoải mái, không cần đăng ký, không thu phí.",
+  "cta_title": "Soát xong thấy cần người làm cùng?",
+  "cta_btn": "Nhắn cho Rune Studio",
+  "cta_link": "lien-he.html",
+  "tools": [
+    {
+      "title": "Soát kênh quán",
+      "slug": "soat-kenh",
+      "link": "soat-kenh.html",
+      "badge": "Miễn phí",
+      "summary": "Nhập số của 5 clip gần nhất lấy trong TikTok Studio. Tool soát bốn chỗ hay hỏng nhất, mỗi chỗ nói rõ ngưỡng lấy từ đâu, rồi ghép sẵn câu lệnh AI để ngài sửa clip sau.",
+      "cta": "Soát thử"
+    }
+  ]
+}
