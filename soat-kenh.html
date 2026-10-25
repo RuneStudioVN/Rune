@@ -162,6 +162,20 @@
     </div>
   </section>
 
+  <section id="ngoai" hidden>
+    <div class="card banner">
+      <strong>Mấy chỗ tool soát được đều ổn — nên chỗ đang kẹt nằm ngoài tầm công cụ này.</strong>
+      <p>Tool chỉ soát được những thứ đo bằng số trong TikTok Studio. Kênh sạch hết mấy chỗ đó mà vẫn không lên thì phần hỏng thường nằm ở chỗ không có con số nào chỉ ra:</p>
+      <ul>
+        <li>Clip đang nói với sai người — hay mà không phải nói cho khách quanh quán.</li>
+        <li>Quán chưa có thứ gì đáng để quay — nội dung đúng kỹ thuật nhưng không có cái để kể.</li>
+        <li>Đăng sai giờ khách của quán cầm điện thoại.</li>
+        <li>Hình và tiếng chưa tới: quay tối, tiếng ồn, chữ trên màn che mất món.</li>
+      </ul>
+      <p class="note">Mấy cái này phải coi clip mới biết, con số không nói ra được. Gửi kênh cho Rune Studio coi giúp, không tính phí buổi đầu.</p>
+    </div>
+  </section>
+
   <section id="fix" hidden>
     <p class="eyebrow">Hashtag nên gắn</p>
     <div class="card">
@@ -186,6 +200,8 @@
       <p><b>Thứ tự nặng nhẹ của tín hiệu</b> — thời gian xem, tỷ lệ coi hết và chia sẻ nặng nhất; bình luận, theo dõi từ clip và lưu đứng sau; tim nhẹ hơn. TikTok không công bố trọng số chính thức, đây là mức tổng hợp từ tài liệu của họ và hành vi quan sát được.</p>
       <p><b>Giai đoạn kênh mới</b> — 7 đến 14 ngày đầu là lúc nền tảng dò tệp, 50 đến 300 view mỗi clip là bình thường.</p>
       <p><b>Tỷ lệ lưu</b> — không tổ chức nào công bố mốc chuẩn, nên tool chỉ so các clip của chính kênh với nhau, không chấm đạt hay chưa.</p>
+      <p><b>Tỷ lệ bình luận</b> — cũng không có mốc. Chưa nhà nghiên cứu nào chia số bình luận cho số view; con số hay được dẫn là lấy bình luận trung bình chia view trung bình, mà chính nơi công bố đã cảnh báo đó là tỷ lệ của hai số trung bình, không phải tỷ lệ một kênh thật ghi nhận. Nên ngách này cũng chỉ so nội bộ kênh.</p>
+      <p><b>Nhịp đăng</b> — 11,4 triệu bài đăng của hơn 150.000 tài khoản: nhóm đăng từ 11 bài một tuần có view trung bình mỗi clip cao hơn nhóm đăng 1 bài khoảng 34%. Đây là tương quan, không phải nhân quả, nên tool nêu ra như chỗ còn dư địa chứ không chấm là lỗi.</p>
       <p class="note" style="margin-top:12px">Một chỗ tool cố tình không chấm: số clip đăng trong tuần. Nhiều nơi dạy rằng đăng nhiều thì clip cũ bị bóp view. Khảo sát 11,4 triệu bài đăng của hơn 150.000 tài khoản cho kết quả ngược lại — đăng dày hơn thì view trung bình mỗi clip cao hơn, nhóm đăng từ 11 bài một tuần hơn nhóm đăng 1 bài khoảng 34%. Nên tool chỉ ghi nhận con số đó để đưa vào câu lệnh AI, không lấy ra bắt lỗi ai.</p>
     </div>
   </section>
@@ -217,12 +233,36 @@ var RET_TOT = 0.50, RET_YEU = 0.25;
 /* Kênh mới: 7–14 ngày đầu là giai đoạn hiệu chỉnh, 50–300 view mỗi bài là bình thường. */
 var MOI_NGAY = 14, MOI_CLIP = 10;
 
+/* Bình luận: KHÔNG có mốc nào để chấm. Nguồn tra được nói thẳng là chưa nhà
+   nghiên cứu nào chia bình luận cho view, và con số 0,29% suy ra từ việc lấy
+   trung bình chia trung bình thì chính họ cảnh báo là không dùng được cho một
+   kênh cụ thể. Nên ngách này chỉ so nội bộ kênh, không chấm lỗi — y như ngách Lưu. */
+
+/* Nhịp đăng: 11,4 triệu bài của hơn 150.000 tài khoản cho thấy đăng dày hơn thì
+   view trung bình mỗi clip CAO hơn — nhóm đăng từ 11 bài/tuần hơn nhóm 1 bài/tuần
+   khoảng 34%. Vì là tương quan chứ không phải nhân quả, ngách này cũng không chấm lỗi,
+   chỉ nêu cơ hội. */
+var DAY_TUAN = 11, LOI_DAY = 34;
+
+/* Bỏ bê: không cần mốc ngoài, đây là phép tính trên chính kênh đó —
+   mở lâu rồi mà số clip vẫn đếm trên đầu ngón tay. */
+var CU_NGAY = 180;
+
 function med(a){
   var b = a.slice().sort(function(x,y){ return x-y; });
   var m = Math.floor(b.length/2);
   return b.length % 2 ? b[m] : (b[m-1]+b[m])/2;
 }
 function sum(a, k){ var s=0; for (var i=0;i<a.length;i++) s += a[i][k]; return s; }
+
+/* Số thuần Việt: dấu phẩy ngăn phần thập phân, dấu chấm ngăn hàng nghìn.
+   Chỉ dùng để hiển thị, mọi phép tính vẫn chạy trên số gốc. */
+function so(n, d){
+  if (!isFinite(n)) return "0";
+  return Number(n).toFixed(d == null ? 0 : d)
+    .replace(".", ",");
+}
+function soNghin(n){ return Math.round(n).toLocaleString("vi-VN"); }
 
 /* Chuẩn hoá hashtag: tách theo dấu cách, bỏ dấu, so khớp NGUYÊN TỪ.
    Không dò chuỗi con — "#banhxeo" không được tính là dính "#xh". */
@@ -245,6 +285,50 @@ function locTag(raw){
     else rieng.push(tho[i].replace(/^#*/,"#"));
   }
   return { rong:rong, rieng:rieng, tong:rong.length + rieng.length };
+}
+
+/* Đọc nhịp đăng từ chữ chủ quán tự gõ: "1 ngày 2 video", "tuần 3 clip",
+   "2 ngày 1 video", "không đều"... Trả về số clip mỗi tuần, hoặc null nếu
+   không chắc. Không đoán bừa: đọc không ra thì trả null và ngách sẽ nói
+   là không đọc được, chứ không bịa ra một con số. */
+function docNhip(raw){
+  var s = slug2(raw);
+  if (!s) return null;
+  if (/khongdeu|thatthuong|tuyhung|khongcodinh/.test(s.replace(/\s/g,""))) return null;
+
+  var so = s.match(/\d+(?:[.,]\d+)?/g);
+  var n1 = so && so[0] ? parseFloat(so[0].replace(",", ".")) : null;
+  var n2 = so && so[1] ? parseFloat(so[1].replace(",", ".")) : null;
+
+  /* Mỗi đơn vị quy ra số ngày, để cuối cùng đổi hết về clip mỗi tuần */
+  var DV = [["ngay",1],["tuan",7],["thang",30.4]];
+  for (var i=0;i<DV.length;i++){
+    var ten = DV[i][0], ngay = DV[i][1];
+    if (s.indexOf(ten) === -1) continue;
+
+    /* Dạng "N <đơn vị> M video" => M clip mỗi N đơn vị.
+       Bắt cả "2 ngay 1 video" lẫn "1 thang 8 video". */
+    var hai = s.match(new RegExp("(\\d+)\\s*" + ten + "\\D{0,14}?(\\d+)"));
+    if (hai) {
+      var sodv = +hai[1], soclip = +hai[2];
+      return sodv > 0 ? soclip / (sodv * ngay) * 7 : null;
+    }
+    /* Dạng "<đơn vị> N video" hoặc "N video mỗi <đơn vị>" => N clip mỗi 1 đơn vị */
+    if (n1 != null) return n1 / ngay * 7;
+    return null;
+  }
+  return null;
+}
+function slug2(s){
+  /* Bỏ dấu không dùng ký tự thoát \u — so thẳng mã ký tự cho chắc.
+     768–879 là vùng dấu thanh tổ hợp, 273 là chữ đ. */
+  var t = (s||"").toLowerCase().normalize("NFD"), o = "";
+  for (var i=0;i<t.length;i++){
+    var c = t.charCodeAt(i);
+    if (c >= 768 && c <= 879) continue;
+    o += (c === 273) ? "d" : t.charAt(i);
+  }
+  return o.trim();
 }
 
 /* ===== chấm ===== */
@@ -288,10 +372,10 @@ function cham(d){
     key:"giuchan", bad:retYeu, chinh:true,
     title:"Ba giây đầu giữ được người xem không",
     text: ret >= 1
-      ? "Người xem coi hết rồi coi lại, giữ chân " + (ret*100).toFixed(0) + "%. Đây là tín hiệu mạnh nhất mà một clip có thể có. Giữ nguyên cách mở đầu này."
+      ? "Người xem coi hết rồi coi lại, giữ chân " + so(ret*100, 0) + "%. Đây là tín hiệu mạnh nhất mà một clip có thể có. Giữ nguyên cách mở đầu này."
       : retYeu
-        ? "Người xem ở lại trung bình " + avgWatch.toFixed(1) + " giây trên clip " + avgDur.toFixed(0) + " giây, tức " + (ret*100).toFixed(0) + "%. Vòng phát đầu tiên chỉ vài trăm người, và thứ quyết định clip có đi tiếp hay không là họ có coi qua mấy giây đầu không. Sửa câu mở đầu trước, mọi thứ khác tính sau."
-        : "Người xem ở lại " + (ret*100).toFixed(0) + "% clip" + (ret >= RET_TOT ? ", đạt mức tốt" : ", mức này tạm được") + ". Phần mở đầu đang làm đúng việc của nó.",
+        ? "Người xem ở lại trung bình " + so(avgWatch, 1) + " giây trên clip " + so(avgDur, 0) + " giây, tức " + so(ret*100, 0) + "%. Vòng phát đầu tiên chỉ vài trăm người, và thứ quyết định clip có đi tiếp hay không là họ có coi qua mấy giây đầu không. Sửa câu mở đầu trước, mọi thứ khác tính sau."
+        : "Người xem ở lại " + so(ret*100, 0) + "% clip" + (ret >= RET_TOT ? ", đạt mức tốt" : ", mức này tạm được") + ". Phần mở đầu đang làm đúng việc của nó.",
     nguon:"Giữ chân sớm là bộ lọc lớn nhất của vòng phân phối đầu"
   });
 
@@ -305,8 +389,8 @@ function cham(d){
   V.push({
     key:"share", bad:shareYeu,
     title:"Người xem có gửi clip cho người khác không",
-    text:"Tỷ lệ chia sẻ " + shareRate.toFixed(2) + "%, " + bac + ". Trung bình ngành ăn uống là " +
-         SHARE_FNB + "%, toàn nền tảng 0,41%." +
+    text:"Tỷ lệ chia sẻ " + so(shareRate, 2) + "%, " + bac + ". Trung bình ngành ăn uống là " +
+         so(SHARE_FNB, 2) + "%, toàn nền tảng 0,41%." +
          (shareYeu
            ? " Chia sẻ là tín hiệu nặng ngang thời gian xem. Clip chưa có chỗ nào khiến người ta muốn gửi cho bạn bè — thiếu một câu nói hộ họ, hoặc một thứ đáng rủ nhau đi."
            : " Đang có người chịu gửi clip đi, đây là tín hiệu nặng ngang thời gian xem."),
@@ -318,9 +402,9 @@ function cham(d){
   V.push({
     key:"save", bad:false, info:true,
     title:"Clip nào được lưu nhiều nhất",
-    text:"Tỷ lệ lưu trung bình " + saveRate.toFixed(2) + "%. Không tổ chức nào công bố mốc chuẩn cho chỉ số này, nên chỉ so được với chính kênh mình. " +
+    text:"Tỷ lệ lưu trung bình " + so(saveRate, 2) + "%. Không tổ chức nào công bố mốc chuẩn cho chỉ số này, nên chỉ so được với chính kênh mình. " +
          (saveLech
-           ? "Clip cao nhất được lưu gấp hơn 3 lần clip thấp nhất (" + saveMax.toFixed(2) + "% so với " + saveMin.toFixed(2) + "%). Coi lại clip cao nhất làm về cái gì, làm thêm dạng đó."
+           ? "Clip cao nhất được lưu gấp hơn 3 lần clip thấp nhất (" + so(saveMax, 2) + "% so với " + so(saveMin, 2) + "%). Coi lại clip cao nhất làm về cái gì, làm thêm dạng đó."
            : "Các clip đang được lưu ngang nhau, chưa thấy dạng nào nổi hẳn."),
     nguon:"Không có mốc công bố, so nội bộ kênh"
   });
@@ -331,8 +415,8 @@ function cham(d){
     key:"tim", bad:timLech,
     title:"Tim đang đến từ người thật xem clip, hay từ người quen",
     text: timLech
-      ? "Tim đạt " + likeRate.toFixed(1) + "% số view, nhưng người xem chỉ ở lại " + (ret*100).toFixed(0) + "% clip. Hai con số này không đi với nhau: người coi chưa tới một phần tư clip thì khó mà thả tim thật. Nhiều khả năng tim tới từ nhân viên và người quen. Vấn đề không phải TikTok phạt, mà là tim vốn là tín hiệu nhẹ — nhờ người quen thả tim không bù được chỗ giữ chân đang thiếu."
-      : "Tim " + likeRate.toFixed(1) + "% đi cùng giữ chân " + (ret*100).toFixed(0) + "%, hai con số khớp nhau. Tương tác đang tới từ người xem thật.",
+      ? "Tim đạt " + so(likeRate, 1) + "% số view, nhưng người xem chỉ ở lại " + so(ret*100, 0) + "% clip. Hai con số này không đi với nhau: người coi chưa tới một phần tư clip thì khó mà thả tim thật. Nhiều khả năng tim tới từ nhân viên và người quen. Vấn đề không phải TikTok phạt, mà là tim vốn là tín hiệu nhẹ — nhờ người quen thả tim không bù được chỗ giữ chân đang thiếu."
+      : "Tim " + so(likeRate, 1) + "% đi cùng giữ chân " + so(ret*100, 0) + "%, hai con số khớp nhau. Tương tác đang tới từ người xem thật.",
     nguon:"Tim là tín hiệu nhẹ, dưới thời gian xem, chia sẻ, bình luận và lưu"
   });
 
@@ -347,6 +431,49 @@ function cham(d){
     nguon:"Thẻ chung chung không cộng thêm reach; khuyến nghị 3–5 thẻ cụ thể"
   });
 
+  /* 6 — bình luận: KHÔNG chấm lỗi, không có mốc công bố nào để dựa */
+  var cmtRate = tongView ? sum(clips,"cmt")/tongView*100 : 0;
+  var cmtMoi = clips.map(function(c){ return c.view ? c.cmt/c.view*100 : 0; });
+  var cmtMax = Math.max.apply(null, cmtMoi);
+  var cmtMin = Math.min.apply(null, cmtMoi);
+  var cmtLech = cmtMax > 0 && cmtMax >= cmtMin*3 && clips.length >= 3;
+  var imLang = sum(clips,"cmt") === 0 && ret >= RET_YEU;
+  V.push({
+    key:"cmt", bad:false, info:true,
+    title:"Clip có chừa chỗ cho người ta hỏi không",
+    text:"Tỷ lệ bình luận " + so(cmtRate, 2) + "% số view. Chỉ số này không có mốc chuẩn nào được công bố — chưa nơi nào chia bình luận cho view — nên tool không chấm đúng sai, chỉ so các clip với nhau. " +
+         (imLang
+           ? "Người xem ở lại tới " + so(ret*100, 0) + "% clip mà không một ai bình luận. Giữ được người thì nội dung không tệ; nhiều khả năng clip nói hết sạch, không chừa chỗ nào để hỏi. Thử bỏ lửng một chi tiết: giá, giờ mở cửa, đường vô quán."
+           : cmtLech
+             ? "Clip nhiều bình luận nhất gấp hơn 3 lần clip ít nhất (" + so(cmtMax, 2) + "% so với " + so(cmtMin, 2) + "%). Coi lại clip đó nói về cái gì, làm thêm dạng đó."
+             : "Các clip nhận bình luận ngang nhau, chưa thấy clip nào bật hẳn lên."),
+    nguon:"Không có mốc công bố, so nội bộ kênh"
+  });
+
+  /* 7 — nhịp đăng: nêu cơ hội, KHÔNG chấm lỗi (tương quan, không phải nhân quả) */
+  var nhip = docNhip(d.tanSo);
+  V.push({
+    key:"nhip", bad:false, info:true,
+    title:"Nhịp đăng đang dày hay thưa",
+    text: nhip == null
+      ? "Chưa đọc được nhịp đăng từ dòng bạn ghi, nên tool không nhận xét phần này. Ghi kiểu \"1 tuần 3 video\" hoặc \"2 ngày 1 video\" thì tool đọc được."
+      : nhip >= DAY_TUAN
+        ? "Khoảng " + so(nhip, 1) + " clip mỗi tuần. Đây đã là nhóm đăng dày, không cần đẩy thêm. Dồn sức vào chất lượng mấy giây đầu."
+        : "Khoảng " + so(nhip, 1) + " clip mỗi tuần. Khảo sát 11,4 triệu bài đăng cho thấy nhóm đăng từ " + DAY_TUAN + " bài một tuần có view trung bình mỗi clip cao hơn nhóm đăng 1 bài khoảng " + LOI_DAY + "%. Đây là tương quan chứ không phải nhân quả, nên tool không tính đây là lỗi — chỉ là chỗ còn dư địa.",
+    nguon:"11,4 triệu bài đăng, hơn 150.000 tài khoản"
+  });
+
+  /* 8 — kênh cũ mà ít clip: phép tính trên chính kênh, không cần mốc ngoài */
+  var boBe = d.tuoiNgay >= CU_NGAY && d.tongClip > 0 && d.tongClip < MOI_CLIP;
+  V.push({
+    key:"bobe", bad:boBe,
+    title:"Kênh mở lâu rồi mà đã đăng được bao nhiêu",
+    text: boBe
+      ? "Kênh mở trên 3 tháng nhưng mới khoảng " + d.tongClip + " clip. Ở mức này thì chưa đủ bài để nói nội dung hay hay dở — TikTok cũng chưa đủ dữ liệu để biết nên đưa kênh cho ai. Việc cần làm trước tiên là đăng cho đủ, chưa phải là sửa nội dung."
+      : "Số clip đang tương xứng với tuổi kênh. Nền tảng đã có đủ bài để hiểu kênh nói về cái gì.",
+    nguon:"Phép tính trên chính kênh, không dùng mốc ngoài"
+  });
+
   var loi = V.filter(function(v){ return v.bad; }).length;
 
   return {
@@ -359,10 +486,15 @@ function cham(d){
     shareRate: shareRate,
     saveRate: saveRate,
     likeRate: likeRate,
+    cmtRate: cmtRate,
+    nhip: nhip,
     tag: tag,
     V: V,
     loi: loi,
-    tongCham: V.filter(function(v){ return !v.info; }).length
+    tongCham: V.filter(function(v){ return !v.info; }).length,
+    /* Sạch hết các ngách chấm được mà kênh vẫn không lên: chỗ hỏng nằm ngoài
+       tầm tool. Nói thẳng ra, đừng để người ta tưởng kênh không có vấn đề gì. */
+    ngoaiTam: loi === 0 && !moi
   };
 }
 
@@ -376,8 +508,8 @@ function lenh(d, r){
         + "Người xem mục tiêu là khách sống hoặc làm việc gần " + d.khu + ".\n\n"
         + "Tình trạng kênh, lấy từ 5 clip gần nhất:\n"
         + "- View trung vị: " + Math.round(r.medView) + "\n"
-        + "- Người xem ở lại trung bình " + r.avgWatch.toFixed(1) + " giây trên clip dài " + r.avgDur.toFixed(0) + " giây (" + (r.ret*100).toFixed(0) + "%)\n"
-        + "- Tỷ lệ chia sẻ " + r.shareRate.toFixed(2) + "%, tỷ lệ lưu " + r.saveRate.toFixed(2) + "%\n"
+        + "- Người xem ở lại trung bình " + so(r.avgWatch, 1) + " giây trên clip dài " + so(r.avgDur, 0) + " giây (" + so(r.ret*100, 0) + "%)\n"
+        + "- Tỷ lệ chia sẻ " + so(r.shareRate, 2) + "%, tỷ lệ lưu " + so(r.saveRate, 2) + "%\n"
         + (d.tanSo ? "- Nhịp đăng, chủ quán tự mô tả: " + d.tanSo + "\n" : "")
         + "\n"
         + "Đang vướng:\n" + errs + "\n\n"
@@ -401,7 +533,7 @@ function goiTag(d){
           "#"+slug(monDau)+slug(d.khu), "#[theo đúng nội dung clip]"];
 }
 
-return { cham:cham, lenh:lenh, goiTag:goiTag, locTag:locTag, slug:slug,
+return { cham:cham, lenh:lenh, so:so, soNghin:soNghin, goiTag:goiTag, locTag:locTag, slug:slug,
          SHARE:SHARE, SHARE_FNB:SHARE_FNB, RET_TOT:RET_TOT, RET_YEU:RET_YEU };
 })();
 
@@ -451,17 +583,18 @@ if (typeof module !== "undefined" && module.exports) module.exports = SK;
   function run(){
     var d=thuThap(), r=SK.cham(d);
     if(!r){
-      ["out","fix","prompt","nguon","newbanner"].forEach(function(id){$(id).hidden=true});
+      ["out","fix","prompt","nguon","newbanner","ngoai"].forEach(function(id){$(id).hidden=true});
       var b=$("run");
       b.textContent="Cần ít nhất 1 clip có đủ thời lượng, view và thời gian xem";
       setTimeout(function(){b.textContent="Soát kênh"},3000);
       return;
     }
     $("newbanner").hidden=!r.moi;
+    $("ngoai").hidden=!r.ngoaiTam;
 
     $("s-view").textContent=fmt(r.medView);
-    $("s-ret").textContent=(r.ret*100).toFixed(0)+"%";
-    $("s-share").textContent=r.shareRate.toFixed(2)+"%";
+    $("s-ret").textContent=SK.so(r.ret*100,0)+"%";
+    $("s-share").textContent=SK.so(r.shareRate,2)+"%";
     $("s-n").textContent=r.loi+" / "+r.tongCham;
     var dem=$("socl"); if(dem) dem.textContent = r.soClip<5
       ? "Đang tính trên "+r.soClip+" clip. Điền thêm clip thì kết quả sát hơn."
